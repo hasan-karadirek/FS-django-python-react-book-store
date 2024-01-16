@@ -14,7 +14,5 @@ phases:
 
   post_build:
     commands:
-      - echo Tagging the Docker image...
-      - docker tag my-django-app:latest 875207630257.dkr.ecr.us-east-1.amazonaws.com/my-django-app:latest
       - echo Pushing the Docker image to Amazon ECR...
       - docker push 875207630257.dkr.ecr.us-east-1.amazonaws.com/my-django-app:latest
