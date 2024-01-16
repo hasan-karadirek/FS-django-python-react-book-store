@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'book_store_api',
         'USER': 'root',
         'PASSWORD': 'hackmyfuture',
-        'HOST': 'localhost',   
+        'HOST': 'host.docker.internal',   
         'PORT': '3306',
     }
 }
