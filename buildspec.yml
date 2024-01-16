@@ -13,6 +13,7 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 875207630257.dkr.ecr.eu-north-1.amazonaws.com
+      - docker login -u observer3 -p HasDocker123
 
   build:
     commands:
