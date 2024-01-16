@@ -1,0 +1,28 @@
+
+version: 0.2
+
+artifacts:
+  files:
+    - '**/*'
+  encryption_disabled: false # This line ensures encryption is not disabled
+  name: my-artifact # or the name of your artifact
+  encryption_key: 'arn:aws:kms:us-east-1:875207630257:key/fe4e61d1-d85e-4dae-9b3e-b187b90560ce' # KMS keyARN
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 875207630257.dkr.ecr.eu-north-1.amazonaws.com
+      - docker login -u observer3 -p HasDocker123
+
+  build:
+    commands:
+      - echo Building the Docker image...
+      - docker pull public.ecr.aws/docker/library/python:3.9
+      - docker build -t bookstoreapi .
+
+  post_build:
+    commands:
+      - echo Pushing the Docker image to Amazon ECR...
+      - docker tag bookstoreapi:latest 875207630257.dkr.ecr.eu-north-1.amazonaws.com/bookstoreapi:latest
+      - docker push 875207630257.dkr.ecr.eu-north-1.amazonaws.com/bookstoreapi:latest
