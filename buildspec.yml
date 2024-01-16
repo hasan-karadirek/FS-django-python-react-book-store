@@ -4,15 +4,16 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 875207630257.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 875207630257.dkr.ecr.eu-north-1.amazonaws.com
 
   build:
     commands:
       - echo Building the Docker image...
       - docker pull public.ecr.aws/docker/library/python:3.9
-      - docker build -t 875207630257.dkr.ecr.us-east-1.amazonaws.com/bookstoreapi:latest .
+      - docker build -t bookstoreapi .
 
   post_build:
     commands:
       - echo Pushing the Docker image to Amazon ECR...
-      - docker push 875207630257.dkr.ecr.us-east-1.amazonaws.com/bookstoreapi:latest
+      - docker tag bookstoreapi:latest 875207630257.dkr.ecr.eu-north-1.amazonaws.com/bookstoreapi:latest
+      - docker push 875207630257.dkr.ecr.eu-north-1.amazonaws.com/bookstoreapi:latest
