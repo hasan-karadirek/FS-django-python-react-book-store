@@ -24,5 +24,5 @@ RUN python manage.py collectstatic --noinput
 # Expose the port the app runs on
 EXPOSE 8000
 
-# Run the application
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Run the application with uWSGI
+CMD ["uwsgi", "--http", "0.0.0.0:8000", "--module", "bookStoreApi.wsgi:application", "--processes", "4", "--threads", "2"]
