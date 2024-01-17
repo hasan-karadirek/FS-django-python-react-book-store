@@ -20,7 +20,7 @@ phases:
     commands:
       - echo Building the Docker image...
       - docker pull public.ecr.aws/docker/library/python:3.9
-      - docker build -t bookstoreecr .
+      - docker build --build-arg SECRET_KEY=$SECRET_KEY -t bookstoreecr .
 
   post_build:
     commands:

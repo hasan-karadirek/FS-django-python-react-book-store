@@ -1,6 +1,7 @@
 # Use an official Python runtime as a parent image
 FROM python:3.9
-
+ARG SECRET_KEY
+ENV SECRET_KEY=${SECRET_KEY}
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
