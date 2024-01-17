@@ -1,12 +1,18 @@
-
 version: 0.2
 
 artifacts:
+  type: CODEPIPELINE
+  name: MyCodePipeline # Name of your CodePipeline
   files:
     - '**/*'
-  encryption_disabled: false # This line ensures encryption is not disabled
-  name: my-artifact # or the name of your artifact
-  encryption_key: 'arn:aws:kms:us-east-1:875207630257:key/fe4e61d1-d85e-4dae-9b3e-b187b90560ce' # KMS keyARN
+  discard-paths: yes
+  namespace-type: NONE
+  encryption-disabled: no
+  override-artifact-name: yes
+  artifact-identifier: MyArtifactIdentifier # Your desired artifact identifier
+  s3:
+    bucket: codepipeline-us-east-1-465525035470 # Specify your CodePipeline artifacts S3 bucket
+    object-key: BuildArtif/ # Specify the object key or prefix for build artifacts
 
 phases:
   pre_build:
