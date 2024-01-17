@@ -20,6 +20,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Adjust the COPY command to copy from the bookStoreApi subdirectory
 COPY ./bookStoreApi/ /usr/src/app/bookStoreApi/
 
+# Apply database migrations
+RUN python manage.py migrate
+
 # Collect static files
 RUN python manage.py collectstatic --noinput
 

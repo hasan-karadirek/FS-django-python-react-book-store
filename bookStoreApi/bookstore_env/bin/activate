@@ -74,3 +74,11 @@ fi
 if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
     hash -r
 fi
+
+export SECRET_KEY='django-insecure-%#-k72=3)37v0#ty-y1t*n((3lto8%88*s*jmqc#eynm0%=ee)'
+export ALLOWED_HOSTS='*'
+export RDS_DB_NAME='book_store_api'
+export RDS_USERNAME='root'
+export RDS_PASSWORD='hackmyfuture'
+export RDS_HOSTNAME='localhost'
+export RDS_PORT='3306'
