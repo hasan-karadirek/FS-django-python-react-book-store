@@ -79,10 +79,10 @@ WSGI_APPLICATION = 'bookStoreApi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'book_store_api',
-        'USER': 'root',
-        'PASSWORD': 'hackmyfuture',
-        'HOST': 'host.docker.internal',   
+        'NAME': 'awseb-e-376teawaxa-stack-awsebrdsdatabase-jfkxcdlsupdg',
+        'USER': 'admin',
+        'PASSWORD': 'HasAdmin123',
+        'HOST': 'awseb-e-376teawaxa-stack-awsebrdsdatabase-jfkxcdlsupdg.c1e0em4yuhv5.us-east-1.rds.amazonaws.com',   
         'PORT': '3306',
     }
 }
