@@ -5,8 +5,8 @@
     files:
       - '**/*'
     encryption_disabled: false # This line ensures encryption is not disabled
-    name: my-artifact # or the name of your artifact
-    encryption_key: 'arn:aws:kms:us-east-1:875207630257:key/fe4e61d1-d85e-4dae-9b3e-b187b90560ce' # KMS keyARN
+    name: SourceArti/ # or the name of your artifact
+    encryption_key: 'arn:aws:kms:us-east-1:875207630257:key/70c0b113-e63d-4e76-a3ac-f485914273ed' # KMS keyARN
 
   phases:
     pre_build:
