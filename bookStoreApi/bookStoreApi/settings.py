@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'bookStoreApi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'awseb-e-376teawaxa-stack-awsebrdsdatabase-jfkxcdlsupdg',
+        'NAME': 'ebdb',
         'USER': 'admin',
         'PASSWORD': 'HasAdmin123',
         'HOST': 'awseb-e-376teawaxa-stack-awsebrdsdatabase-jfkxcdlsupdg.c1e0em4yuhv5.us-east-1.rds.amazonaws.com',   
