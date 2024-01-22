@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'store',
     'customer',
+    'book',
 ]
 
 MIDDLEWARE = [
@@ -81,10 +82,10 @@ WSGI_APPLICATION = 'bookStoreApi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': "ebdb",
-        'USER': "admin",
-        'PASSWORD': "HasAdmin123",
-        'HOST': "awseb-e-rp2uex9f2n-stack-awsebrdsdatabase-jz2stvtnbojj.c1e0em4yuhv5.us-east-1.rds.amazonaws.com",
+        'NAME': "book_store_api",
+        'USER': "root",
+        'PASSWORD': "hackmyfuture",
+        'HOST': "localhost",
         'PORT': '3306',
     }
 }
