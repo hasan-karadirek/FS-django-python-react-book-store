@@ -33,3 +33,31 @@ class UpdateBookAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class DeleteBookAPIView(APIView):
+    
+    def delete(self, request, pk, *args, **kwargs):
+        try:
+            book = Book.objects.get(pk=pk)
+        except Book.DoesNotExist:
+            return Response({'error': 'Book not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        book.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+class GetBookAPIView(APIView):
+    
+    def get(self, request, pk, *args, **kwargs):
+        try:
+            book = Book.objects.get(pk=pk)
+        except Book.DoesNotExist:
+            return Response({'error': 'Book not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer=BookSerializer(book)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+class GetBooksAPIView(APIView):
+    
+    def get(self, request,  *args, **kwargs):
+        
+        books = Book.objects.all()
+
+        serializer=BookSerializer(books,many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
