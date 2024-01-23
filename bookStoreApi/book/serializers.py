@@ -31,7 +31,7 @@ class BookSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # pop before create Book obj
         images_data = validated_data.pop('uploaded_images')
-        
+
         # Get or create the author
         author_name = validated_data.pop('author')
         author, _ = Author.objects.get_or_create(name=author_name)
@@ -45,7 +45,29 @@ class BookSerializer(serializers.ModelSerializer):
         book = Book.objects.create(author=author, publishing_house=publishing_house, **validated_data)
 
         # Handle book images
-        
         for image_data in images_data:
             BookImage.objects.create(book=book, image=image_data)
         return book
+    def update(self, instance, validated_data):
+        
+        instance.ean = validated_data.get('ean', instance.ean)
+        instance.name = validated_data.get('name', instance.name)
+        
+        author_name = validated_data.pop('author', None)
+        if author_name:
+            author, _ = Author.objects.get_or_create(name=author_name)
+            instance.author = author
+        
+        publishing_house_name = validated_data.pop('publishing_house', None)
+        if publishing_house_name:
+            publishing_house, _ = PublishingHouse.objects.get_or_create(name=publishing_house_name)
+            instance.publishing_house = publishing_house
+
+        instance.save()
+
+        images_data = validated_data.pop('uploaded_images', [])
+        if images_data:
+            for image_data in images_data:
+                BookImage.objects.create(book=instance, image=image_data)
+
+        return instance
