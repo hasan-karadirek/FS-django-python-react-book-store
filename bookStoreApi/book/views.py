@@ -1,4 +1,4 @@
-from rest_framework import status
+from rest_framework import status,permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Book
@@ -7,6 +7,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 class AddBookAPIView(APIView):
     parser_classes = (MultiPartParser, FormParser)  # To handle file uploads
+    permission_classes=[permissions.IsAuthenticated]
     
     def post(self, request, *args, **kwargs):
         serializer = BookSerializer(data=request.data)
@@ -19,6 +20,7 @@ class AddBookAPIView(APIView):
         
 class UpdateBookAPIView(APIView):
     parser_classes = (MultiPartParser, FormParser)
+    permission_classes=[permissions.IsAdminUser]
 
     def put(self, request, pk, *args, **kwargs):
         try:
@@ -34,7 +36,7 @@ class UpdateBookAPIView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class DeleteBookAPIView(APIView):
-    
+    permission_classes=[permissions.IsAdminUser]
     def delete(self, request, pk, *args, **kwargs):
         try:
             book = Book.objects.get(pk=pk)
