@@ -13,13 +13,13 @@ class BookOnSale(models.Model):
     customer=models.ForeignKey(Customer, on_delete=models.CASCADE)
     condition=models.CharField(max_length=50,choices=conditionChoices,verbose_name="Condition of the Book")
     price=models.DecimalField(max_digits=10, decimal_places=2)
-    description=models.CharField(max_length=500)
+    description=models.CharField(max_length=255)
 
     def __str__(self):
         return f'{self.book.name} - {self.customer.username}'  
 class BookOnSaleImage(models.Model):
     book = models.ForeignKey(BookOnSale, related_name='on_sale_images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='on_sale_images/',max_length=1000000)  
+    image = models.ImageField(upload_to='on_sale_images/')  
 
     def __str__(self):
         return f'{self.book.book.name} - {self.image.url}'  

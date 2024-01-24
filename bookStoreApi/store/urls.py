@@ -1,10 +1,7 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import ItemViewSet
+from django.urls import path
+from .views import SellBookView
 
-router = DefaultRouter()
-router.register(r'items', ItemViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('sell-book/', SellBookView.as_view(),name="sell-book"),
 ]

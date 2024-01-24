@@ -26,7 +26,7 @@ class Book(models.Model):
         return self.name
 class BookImage(models.Model):
     book = models.ForeignKey(Book, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='book_images/',max_length=1000000)  
+    image = models.ImageField(upload_to='book_images/')  
 
     def __str__(self):
         return f'{self.book.name} - {self.image.url}'  

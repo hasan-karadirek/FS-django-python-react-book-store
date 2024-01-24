@@ -21,7 +21,7 @@ class BookSerializer(serializers.ModelSerializer):
     publishing_house = serializers.CharField()
     images = BookImageSerializer(many=True,read_only=True)
     uploaded_images=serializers.ListField(
-        child=serializers.ImageField(max_length = 1000000),
+        child=serializers.ImageField(max_length = 255),
         write_only=True
     )
     class Meta:
