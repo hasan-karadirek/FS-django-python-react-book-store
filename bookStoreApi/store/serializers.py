@@ -30,6 +30,6 @@ class BookOnSaleSerializer(serializers.ModelSerializer):
 
 
         for image_data in images_data:
-            BookOnSaleImage.objects.create(book=on_sale_book, **image_data)
+            BookOnSaleImage.objects.create(book=on_sale_book, image=image_data)
 
         return on_sale_book
