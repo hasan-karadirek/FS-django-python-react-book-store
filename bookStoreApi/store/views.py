@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from .models import BookOnSale
+from book.models import Book
+from book.serializers import BookSerializer
 
 class SellBookView(APIView):
     parser_classes = (MultiPartParser, FormParser)  # To handle file uploads
@@ -28,3 +30,20 @@ class GetOnSaleBookView(APIView):
             return Response({'error': 'Book not found'}, status=status.HTTP_404_NOT_FOUND)
         serializer=BookOnSaleSerializer(bookOnSale)
         return Response(serializer.data,status=status.HTTP_200_OK)
+    
+class GetOnSaleBooksByBookPkView(APIView):
+
+    def get(self,request,bookPk,*args,**kwargs):
+        try:
+            book = Book.objects.get(pk=bookPk)
+        except Book.DoesNotExist:
+            return Response({'error': 'Book not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        books_on_sale=BookOnSale.objects.filter(book=book,status="OPEN")
+        bookOnSaleSerializer=BookOnSaleSerializer(books_on_sale,many=True)
+        bookSerializer=BookSerializer(book)
+        response_data=bookSerializer.data
+        response_data["on_sale_books"]=bookOnSaleSerializer.data
+       
+        return Response(response_data,status=status.HTTP_200_OK)
+
