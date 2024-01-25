@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import BookOnSale,BookOnSaleImage
+from .models import BookOnSale,BookOnSaleImage,OrderDetail,Order
 from book.models import Book
 
 
@@ -16,7 +16,7 @@ class BookOnSaleSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = BookOnSale
-        fields = ["book","condition","price","images","onSale_images"]
+        fields = ["id","book","condition","price","images","onSale_images"]
     def create(self,validated_data):
         images_data=validated_data.pop("onSale_images")
         bookId=validated_data.pop("book")
@@ -33,3 +33,16 @@ class BookOnSaleSerializer(serializers.ModelSerializer):
             BookOnSaleImage.objects.create(book=on_sale_book, image=image_data)
 
         return on_sale_book
+
+class OrderDetailSerializer(serializers.ModelSerializer):
+    book_on_sale=BookOnSaleSerializer(read_only=True)
+    class Meta:
+        model = OrderDetail
+        fields = ["order",'book_on_sale']
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    order_details=OrderDetailSerializer(many=True,read_only=True)
+    class Meta:
+        model=Order
+        fields=["id","customer","cost","address","status","order_details"]

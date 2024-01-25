@@ -1,6 +1,9 @@
 from django.db import models
 from book.models import Book
 from customer.models import Customer
+from django.db import transaction
+from django.db.models import F
+
 class BookOnSale(models.Model):
     conditionChoices = [
     ("NEW", 'New'),
@@ -30,4 +33,40 @@ class BookOnSaleImage(models.Model):
     def __str__(self):
         return f'{self.book.book.name} - {self.image.url}'  
     
+
+class Order(models.Model):
+    statusChoices = [
+    ("OPEN", 'Open'),
+    ("PAID", 'Sold'),
+    ("PENDING", 'Pending'),
+    ]
+    customer = models.ForeignKey(Customer, related_name='orders', on_delete=models.CASCADE)
+    address = models.TextField(max_length=500, blank=False,default="Address")
+    cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    status=models.CharField(max_length=50, choices=statusChoices,verbose_name="Status of the order",default="OPEN")
+
+    def __str__(self):
+        return f"Order {self.id} by {self.customer.username}"  
+    
+class OrderDetail(models.Model):
+    order = models.ForeignKey(Order, related_name="order_details", on_delete=models.CASCADE)
+    book_on_sale = models.ForeignKey(BookOnSale, related_name="order_details", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Order Detail for Order {self.order.id}"
+
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            try:
+                book_on_sale = BookOnSale.objects.get(pk=self.book_on_sale_id)
+                # ? Use F() expression to avoid race conditions
+                self.order.cost = F('cost') + book_on_sale.price
+                self.order.save()
+
+                
+                self.order.refresh_from_db()
+
+                super().save(*args, **kwargs)
+            except (BookOnSale.DoesNotExist, Order.DoesNotExist):
+                raise Exception("database orderDetail save error")
 
