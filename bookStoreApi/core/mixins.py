@@ -1,15 +1,7 @@
-from rest_framework.response import Response
-from rest_framework import status,permissions
-from store.models import Order,BookOnSale
+from store.models import BookOnSale
 from book.models import Book
-from rest_framework.exceptions import NotFound,NotAuthenticated,ValidationError
+from rest_framework.exceptions import NotFound
 
-class OpenOrderMixin:
-    def get_or_create_open_order(self, request):
-        open_order = Order.objects.filter(customer=request.user, status='OPEN').first()
-        if not open_order:
-            open_order = Order.objects.create(customer=request.user, status='OPEN')
-        return open_order
 class IsBookExist:
     def dispatch(self, request,bookPk, *args, **kwargs):
         try:
