@@ -50,7 +50,7 @@ class Order(models.Model):
     
 class OrderDetail(models.Model):
     order = models.ForeignKey(Order, related_name="order_details", on_delete=models.CASCADE)
-    book_on_sale = models.ForeignKey(BookOnSale, related_name="order_details", on_delete=models.CASCADE)
+    book_on_sale = models.ForeignKey(BookOnSale, related_name="book_on_sale", on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Order Detail for Order {self.order.id}"
@@ -69,4 +69,15 @@ class OrderDetail(models.Model):
                 super().save(*args, **kwargs)
             except (BookOnSale.DoesNotExist, Order.DoesNotExist):
                 raise Exception("database orderDetail save error")
+        
+    def delete(self, *args, **kwargs):
+        with transaction.atomic():
+            try:
+                book_on_sale = BookOnSale.objects.get(pk=self.book_on_sale_id)
+                # ? Use F() expression to avoid race conditions
+                self.order.cost = F('cost') - book_on_sale.price
+                self.order.save()
+                super().delete(*args, **kwargs)
+            except (BookOnSale.DoesNotExist, Order.DoesNotExist):
+                raise Exception("database orderDetail delete error")
 

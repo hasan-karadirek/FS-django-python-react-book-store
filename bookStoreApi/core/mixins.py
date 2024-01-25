@@ -21,7 +21,6 @@ class IsBookExist:
 class IsSaleExist:
     def dispatch(self, request,salePk, *args, **kwargs):
         try:
-            print(salePk)
             bookOnSale=BookOnSale.objects.get(pk=salePk)
             request.bookOnSale=bookOnSale
         except BookOnSale.DoesNotExist:
