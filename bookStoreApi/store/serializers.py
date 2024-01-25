@@ -9,16 +9,16 @@ class BookOnSaleImageSerializer(serializers.ModelSerializer):
         fields = ["book",'image']
 class BookOnSaleSerializer(serializers.ModelSerializer):
     book=serializers.CharField(max_length=50)
-    images = BookOnSaleImageSerializer(many=True,read_only=True)
-    onSale_images=serializers.ListField(
+    on_sale_images = BookOnSaleImageSerializer(many=True,read_only=True)
+    images=serializers.ListField(
         child=serializers.ImageField(max_length = 255),
         write_only=True
     )
     class Meta:
         model = BookOnSale
-        fields = ["id","book","condition","price","images","onSale_images"]
+        fields = ["id","book","condition","price","images","on_sale_images"]
     def create(self,validated_data):
-        images_data=validated_data.pop("onSale_images")
+        images_data=validated_data.pop("images")
         bookId=validated_data.pop("book")
         customer=self.context["request"].user
         try:

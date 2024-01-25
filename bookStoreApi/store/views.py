@@ -51,7 +51,7 @@ class AddToCartView(IsSaleExist,APIView):
         return Response(serializer.data,status=status.HTTP_201_CREATED)
 class RemoveFromCartView(IsSaleExist,APIView):
     permission_classes=[permissions.IsAuthenticated]
-    def post(self,request,*args,**kwargs):
+    def put(self,request,*args,**kwargs):
         open_order,open_order_created=Order.objects.get_or_create(customer=request.user,status="OPEN")
         try:
             orderDetail = OrderDetail.objects.get(order=open_order or open_order_created, book_on_sale=request.bookOnSale)
@@ -63,3 +63,28 @@ class RemoveFromCartView(IsSaleExist,APIView):
         serializer=OrderSerializer(open_order)
 
         return Response(serializer.data,status=status.HTTP_201_CREATED)
+class CheckOutView(APIView):
+    permission_classes=[permissions.IsAuthenticated]
+    
+    def put(self,request,*args,**kwargs):
+        open_order,open_order_created=Order.objects.get_or_create(customer=request.user,status="OPEN")
+        if open_order_created or open_order.cost==0:
+            return Response({"message":"Your cart is empty! You can not continue to checkout."},status=status.HTTP_400_BAD_REQUEST)
+        deleted_detail=0
+        for order_detail in open_order.order_details.all():
+            if order_detail.book_on_sale.status != "OPEN":
+                order_detail.delete()
+                deleted_detail+=1
+        if deleted_detail>0:
+            open_order.refresh_from_db()
+            serializer=OrderSerializer(open_order)
+            return Response({"message":"The book(s) you have added to your cart is not available anymore! {}".format(order_detail.book_on_sale.book.name),"order":serializer.data},status=status.HTTP_404_NOT_FOUND)
+        
+        for order_detail in open_order.order_details.all():
+            order_detail.book_on_sale.status="PENDING"
+            order_detail.book_on_sale.save()
+        open_order.status="PENDING"
+        open_order.save()
+        open_order.refresh_from_db()
+        serializer=OrderSerializer(open_order)
+        return Response(serializer.data,status=status.HTTP_200_OK)

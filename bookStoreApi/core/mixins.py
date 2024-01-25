@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework import status,permissions
 from store.models import Order,BookOnSale
 from book.models import Book
-from rest_framework.exceptions import NotFound,NotAuthenticated
+from rest_framework.exceptions import NotFound,NotAuthenticated,ValidationError
 
 class OpenOrderMixin:
     def get_or_create_open_order(self, request):
@@ -21,8 +21,8 @@ class IsBookExist:
 class IsSaleExist:
     def dispatch(self, request,salePk, *args, **kwargs):
         try:
-            bookOnSale=BookOnSale.objects.get(pk=salePk)
+            bookOnSale=BookOnSale.objects.get(pk=salePk,status="OPEN")
             request.bookOnSale=bookOnSale
         except BookOnSale.DoesNotExist:
-            raise NotFound(detail="Book not found")
+            raise NotFound(detail="Book not found or no longer available")
         return super().dispatch(request,salePk *args, **kwargs)
