@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import BookOnSale,BookOnSaleImage,OrderDetail,Order
 from book.models import Book
+from core.custom_exceptions import CustomAPIException
 
 
 class BookOnSaleImageSerializer(serializers.ModelSerializer):
@@ -24,7 +25,7 @@ class BookOnSaleSerializer(serializers.ModelSerializer):
         try:
             book=Book.objects.get(id=bookId)
         except Book.DoesNotExist:
-            raise serializers.ValidationError({"book": "A book with this ID does not exist."})
+            raise CustomAPIException( "A book with this ID does not exist.",status=404)
 
         on_sale_book=BookOnSale.objects.create(book=book,customer=customer,**validated_data)
 

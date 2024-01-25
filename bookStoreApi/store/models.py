@@ -3,6 +3,7 @@ from book.models import Book
 from customer.models import Customer
 from django.db import transaction
 from django.db.models import F
+from core.custom_exceptions import CustomAPIException
 
 class BookOnSale(models.Model):
     conditionChoices = [
@@ -68,7 +69,7 @@ class OrderDetail(models.Model):
 
                 super().save(*args, **kwargs)
             except (BookOnSale.DoesNotExist, Order.DoesNotExist):
-                raise Exception("database orderDetail save error")
+                raise CustomAPIException("database orderDetail save error",500)
         
     def delete(self, *args, **kwargs):
         with transaction.atomic():
@@ -79,5 +80,5 @@ class OrderDetail(models.Model):
                 self.order.save()
                 super().delete(*args, **kwargs)
             except (BookOnSale.DoesNotExist, Order.DoesNotExist):
-                raise Exception("database orderDetail delete error")
+                raise CustomAPIException("database orderDetail delete error",500)
 
