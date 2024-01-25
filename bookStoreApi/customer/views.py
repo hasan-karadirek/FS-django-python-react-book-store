@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserRegistrationSerializer
+from core.custom_error_handler import CustomAPIException
 
 class UserRegistrationAPIView(APIView):
     def post(self, request):
@@ -11,7 +12,7 @@ class UserRegistrationAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        raise CustomAPIException(str(serializer.errors), status=400)
 class LoginAPIView(APIView):
     def post(self, request):
         username = request.data.get('username')
@@ -20,7 +21,7 @@ class LoginAPIView(APIView):
         if user:
             token, created = Token.objects.get_or_create(user=user)
             return Response({'token': token.key})
-        return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
+        raise CustomAPIException('Invalid Credentials', status=400)
     
 class LogoutAPIView(APIView):
     def post(self, request):
