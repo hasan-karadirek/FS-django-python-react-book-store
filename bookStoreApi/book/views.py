@@ -6,7 +6,7 @@ from .serializers import BookSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from core.custom_exceptions import CustomAPIException
 from core.mixins import IsBookExist
-from django.db.models import Exists, OuterRef, Subquery, Case, When, Value, IntegerField,Count,Q
+from django.db.models import Exists, OuterRef,Count,Q
 from store.models import BookOnSale,Book
 from django.core.paginator import Paginator,EmptyPage
 
@@ -81,3 +81,18 @@ class GetBooksAPIView(APIView):
         
         serializer=BookSerializer(page,many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class GetOrCreateBookByEANView(APIView):
+
+    def get(self, request, *args, **kwargs):
+
+        ean= request.query_params.get('ean', None)
+
+        if not ean:
+            raise CustomAPIException("Please provide a valid EAN!",status=400)
+        try:
+            book=Book.objects.get(ean=ean)
+        except Book.DoesNotExist:
+            pass
+        serializer=BookSerializer(book)
+        return Response(serializer.data,status=status.HTTP_200_OK)
