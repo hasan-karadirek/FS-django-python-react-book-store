@@ -17,6 +17,7 @@ class BookImageSerializer(serializers.ModelSerializer):
         fields = ["book",'image']
 
 class BookSerializer(serializers.ModelSerializer):
+    saleCount=serializers.IntegerField(read_only=True)
     author = serializers.CharField()
     publishing_house = serializers.CharField()
     images = BookImageSerializer(many=True,read_only=True)
@@ -26,7 +27,7 @@ class BookSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = Book
-        fields = ['ean', 'name', 'author', 'publishing_house', 'images','uploaded_images']
+        fields = ['ean', 'name', 'author', 'publishing_house', 'images','uploaded_images','saleCount']
 
     def create(self, validated_data):
         # pop before create Book obj
