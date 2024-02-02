@@ -6,11 +6,9 @@ from .serializers import BookSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from core.custom_exceptions import CustomAPIException
 from core.mixins import IsBookExist
-from bookStoreApi.tasks import run_spider_task
 from django.db.models import Exists, OuterRef,Count,Q
 from store.models import BookOnSale,Book
 from django.core.paginator import Paginator,EmptyPage
-import time
 
 
 
@@ -95,8 +93,6 @@ class GetOrCreateBookByEANView(APIView):
         try:
             book=Book.objects.get(ean=ean)
         except Book.DoesNotExist:
-            run_spider_task.delay(ean)
-            time.sleep(5)
             return Response(status=status.HTTP_400_BAD_REQUEST)
         serializer=BookSerializer(book)
         return Response(serializer.data,status=status.HTTP_200_OK)
