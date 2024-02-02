@@ -17,6 +17,8 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'bookStoreApi.settings'
 django.setup()
 
 
+
+
 BOT_NAME = "bookScraper"
 
 SPIDER_MODULES = ["bookScraper.bookScraper.spiders"]
@@ -24,11 +26,16 @@ NEWSPIDER_MODULE = "bookScraper.spiders"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = "bookScraper (+http://www.yourdomain.com)"
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36'
+
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 LOG_LEVEL = 'DEBUG'
+# In your Scrapy project's settings.py
+LOG_ENABLED = True
+LOG_FILE = 'scrapy.log'  # Specify the correct file path
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
@@ -73,7 +80,7 @@ LOG_LEVEL = 'DEBUG'
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    "bookScraper.pipelines.BookscraperPipeline": 300,
+    "bookScraper.bookScraper.pipelines.BookscraperPipeline": 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -1,12 +1,8 @@
 from scrapy.crawler import CrawlerProcess
-from scrapy.settings import Settings
+from scrapy.utils.project import get_project_settings
 from bookScraper.bookScraper.spiders.amazonBook import AmazonbookSpider
 
-async def run_book_spider(ean):
-    scrapy_settings = Settings()
-    scrapy_settings.setmodule("bookScraper.bookScraper.settings")
-
-    process = CrawlerProcess(settings=scrapy_settings)
+def run_book_spider(ean):
+    process = CrawlerProcess(get_project_settings())
     process.crawl(AmazonbookSpider, ean=ean)
     process.start()
-

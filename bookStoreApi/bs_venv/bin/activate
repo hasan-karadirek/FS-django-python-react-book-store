@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/hackyourfuture/Desktop/bs-workspace/FS-django-python-react-book-store/bookStoreApi/bookstore_env"
+VIRTUAL_ENV="/Users/hackyourfuture/Desktop/bs-workspace/FS-django-python-react-book-store/bookStoreApi/bs_venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
@@ -54,8 +54,8 @@ fi
 
 if [ -z "${VIRTUAL_ENV_DISABLE_PROMPT:-}" ] ; then
     _OLD_VIRTUAL_PS1="${PS1:-}"
-    if [ "x(bookstore_env) " != x ] ; then
-	PS1="(bookstore_env) ${PS1:-}"
+    if [ "x(bs_venv) " != x ] ; then
+	PS1="(bs_venv) ${PS1:-}"
     else
     if [ "`basename \"$VIRTUAL_ENV\"`" = "__" ] ; then
         # special case for Aspen magic directories
@@ -74,11 +74,3 @@ fi
 if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
     hash -r
 fi
-
-export SECRET_KEY='django-insecure-%#-k72=3)37v0#ty-y1t*n((3lto8%88*s*jmqc#eynm0%=ee)'
-export ALLOWED_HOSTS='*'
-export RDS_DB_NAME='book_store_api'
-export RDS_USERNAME='root'
-export RDS_PASSWORD='hackmyfuture'
-export RDS_HOSTNAME='localhost'
-export RDS_PORT='3306'
