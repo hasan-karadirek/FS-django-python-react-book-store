@@ -47,3 +47,6 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model=Order
         fields=["id","customer","cost","address","status","order_details"]
+
+class CheckoutSerializer(serializers.Serializer):
+    redirectUrl=serializers.CharField()
