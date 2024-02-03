@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'store',
     'customer',
     'book',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -147,4 +148,24 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'core.pagination.StandardResultsSetPagination', 
     'PAGE_SIZE': 20,
+}
+
+# In Django settings.py
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'scrapy_file': {
+            'level': 'DEBUG',  # Adjust the log level as needed.
+            'class': 'logging.FileHandler',
+            'filename': 'scrapy.log',  # Specify the correct file path.
+        },
+    },
+    'loggers': {
+        'scrapy': {
+            'handlers': ['scrapy_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
 }

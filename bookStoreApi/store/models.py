@@ -57,28 +57,29 @@ class OrderDetail(models.Model):
         return f"Order Detail for Order {self.order.id}"
 
     def save(self, *args, **kwargs):
-        with transaction.atomic():
-            try:
+        try:
+            with transaction.atomic():
+                
                 book_on_sale = BookOnSale.objects.get(pk=self.book_on_sale_id)
                 # ? Use F() expression to avoid race conditions
                 self.order.cost = F('cost') + book_on_sale.price
                 self.order.save()
 
-                
                 self.order.refresh_from_db()
 
                 super().save(*args, **kwargs)
-            except (BookOnSale.DoesNotExist, Order.DoesNotExist):
-                raise CustomAPIException("database orderDetail save error",500)
+        except (BookOnSale.DoesNotExist, Order.DoesNotExist):
+            raise CustomAPIException("database orderDetail save error",500)
         
     def delete(self, *args, **kwargs):
-        with transaction.atomic():
-            try:
+        try:
+            with transaction.atomic():
+                
                 book_on_sale = BookOnSale.objects.get(pk=self.book_on_sale_id)
                 # ? Use F() expression to avoid race conditions
                 self.order.cost = F('cost') - book_on_sale.price
                 self.order.save()
                 super().delete(*args, **kwargs)
-            except (BookOnSale.DoesNotExist, Order.DoesNotExist):
-                raise CustomAPIException("database orderDetail delete error",500)
+        except (BookOnSale.DoesNotExist, Order.DoesNotExist):
+            raise CustomAPIException("database orderDetail delete error",500)
 
