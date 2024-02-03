@@ -97,6 +97,9 @@ class CustomerLogoutTests(APITestCase):
         self.token, created = Token.objects.get_or_create(user=self.user)
 
     def test_user_logout_success(self):
+        """
+       Login user in fail (missing username).
+        """
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
         response = self.client.post(self.logout_url, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
