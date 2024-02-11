@@ -9,7 +9,6 @@ from rest_framework import status
 
 class MollieHookAPIView(APIView):
     def post(self, request, orderId, *args, **kwargs):
-        print(orderId)
         serializer= MollieHookSerializer(data=request.data)
         if serializer.is_valid():
             paymentId=serializer.data.id
@@ -24,5 +23,5 @@ class MollieHookAPIView(APIView):
                     order.save()
                 return Response(status=status.HTTP_200_OK)
             except Order.DoesNotExist:
-                raise CustomAPIException("",status=404)
+                raise CustomAPIException("order id: {}".format(orderId),status=404)
         raise CustomAPIException("",status=400)
