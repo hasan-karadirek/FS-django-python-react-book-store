@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('store', '0001_initial'),
+        ("store", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='bookonsale',
-            name='status',
-            field=models.CharField(choices=[('OPEN', 'Open'), ('SOLD', 'Sold'), ('PENDING', 'Pending')], default='OPEN', max_length=50, verbose_name='Status of the Selling'),
+            model_name="bookonsale",
+            name="status",
+            field=models.CharField(
+                choices=[("OPEN", "Open"), ("SOLD", "Sold"), ("PENDING", "Pending")],
+                default="OPEN",
+                max_length=50,
+                verbose_name="Status of the Selling",
+            ),
         ),
     ]
