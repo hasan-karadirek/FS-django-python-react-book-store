@@ -11,7 +11,7 @@ class MollieHookAPIView(APIView):
     def post(self, request, orderId, *args, **kwargs):
         serializer= MollieHookSerializer(data=request.data)
         if serializer.is_valid():
-            paymentId=serializer.data.id
+            paymentId=serializer.data["id"]
             payment=getPayment(paymentId)
             try:
                 order=Order.objects.get(id=orderId)
