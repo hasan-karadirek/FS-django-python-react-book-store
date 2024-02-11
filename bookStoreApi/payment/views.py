@@ -9,6 +9,7 @@ from rest_framework import status
 
 class MollieHookAPIView(APIView):
     def post(self, request, orderId, *args, **kwargs):
+        print(orderId)
         serializer= MollieHookSerializer(data=request.data)
         if serializer.is_valid():
             paymentId=serializer.data.id
