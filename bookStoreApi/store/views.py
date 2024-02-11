@@ -119,6 +119,6 @@ class OrderStatusView(APIView):
         try:
             order=Order.objects.get(id=orderPk)
             serializer=OrderSerializer(order)
-            Response(serializer.data,status=status.HTTP_200_OK)
+            return Response(serializer.data,status=status.HTTP_200_OK)
         except Order.DoesNotExist:
             raise CustomAPIException("There is no order associated with this id!",status=404)
