@@ -7,13 +7,17 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('store', '0004_order_status'),
+        ("store", "0004_order_status"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='orderdetail',
-            name='book_on_sale',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='book_on_sale', to='store.bookonsale'),
+            model_name="orderdetail",
+            name="book_on_sale",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="book_on_sale",
+                to="store.bookonsale",
+            ),
         ),
     ]

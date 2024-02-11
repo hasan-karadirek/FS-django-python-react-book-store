@@ -8,44 +8,89 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Author',
+            name="Author",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
             ],
         ),
         migrations.CreateModel(
-            name='Book',
+            name="Book",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('ean', models.CharField(max_length=13, unique=True)),
-                ('name', models.CharField(max_length=255)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='book.author')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("ean", models.CharField(max_length=13, unique=True)),
+                ("name", models.CharField(max_length=255)),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="book.author"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='PublishingHouse',
+            name="PublishingHouse",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
             ],
         ),
         migrations.CreateModel(
-            name='BookImage',
+            name="BookImage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(upload_to='book_images/')),
-                ('book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='images', to='book.book')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("image", models.ImageField(upload_to="book_images/")),
+                (
+                    "book",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="images",
+                        to="book.book",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='book',
-            name='publishing_house',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='book.publishinghouse'),
+            model_name="book",
+            name="publishing_house",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="book.publishinghouse"
+            ),
         ),
     ]

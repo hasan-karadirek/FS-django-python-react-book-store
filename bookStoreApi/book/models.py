@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+
 # Author Model
 class Author(models.Model):
     name = models.CharField(max_length=255)
@@ -8,12 +9,14 @@ class Author(models.Model):
     def __str__(self):
         return self.name
 
+
 # Publishing House Model
 class PublishingHouse(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+
 
 # Book Model
 class Book(models.Model):
@@ -24,9 +27,11 @@ class Book(models.Model):
 
     def __str__(self):
         return self.name
+
+
 class BookImage(models.Model):
-    book = models.ForeignKey(Book, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='book_images/')  
+    book = models.ForeignKey(Book, related_name="images", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="book_images/")
 
     def __str__(self):
-        return f'{self.book.name} - {self.image.url}'  
+        return f"{self.book.name} - {self.image.url}"
