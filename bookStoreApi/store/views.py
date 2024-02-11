@@ -110,4 +110,15 @@ class CheckOutView(APIView):
             response_data["redirectUrl"]=payment["_links"]["checkout"]["href"]
 
             return Response(response_data,status=status.HTTP_200_OK)
-        raise CustomAPIException(str(checkoutSerializer.errors),status=400)
+        
+
+class OrderStatusView(APIView):
+    permission_classes=[permissions.IsAuthenticated]
+
+    def get(self,request,orderPk,*args,**kwargs):
+        try:
+            order=Order.objects.get(id=orderPk)
+            serializer=OrderSerializer(order)
+            Response(serializer.data,status=status.HTTP_200_OK)
+        except Order.DoesNotExist:
+            raise CustomAPIException("There is no order associated with this id!",status=404)
