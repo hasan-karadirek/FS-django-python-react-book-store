@@ -26,6 +26,9 @@ COPY ./bookStoreApi/ /usr/src/app/bookStoreApi/
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
+# Run migrate command
+RUN python manage.py migrate
+
 # Expose the port the app runs on
 EXPOSE 8000
 
