@@ -16,9 +16,10 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.conf import settings
+from frontend.views import index
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -26,5 +27,9 @@ urlpatterns = [
     path("api/customer/", include("customer.urls")),
     path("api/book/", include("book.urls")),
     path("api/payment/", include("payment.urls")),
+    re_path(r'^.*$',index)
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
