@@ -1,16 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ReactElement } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
+
+type AppWrapperProps = {
+  children: ReactElement;
+};
 
 /**
  * This component wraps our App with the providers we do not want to have in our tests
  */
-const AppWrapper = ({ children }) => {
+const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
   return <Router>{children}</Router>;
-};
-
-AppWrapper.propTypes = {
-  children: PropTypes.element.isRequired,
 };
 
 export default AppWrapper;
