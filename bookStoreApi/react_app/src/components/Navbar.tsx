@@ -1,7 +1,11 @@
 import React from "react";
+import "./CSS/Navbar.css"
 
-const Navbar : React.FC=()=>{
-    return <nav className="navbar navbar-expand-lg bg-body-tertiary">
+interface NavbarProps {
+    isSticky: boolean;
+  }
+const Navbar : React.FC<NavbarProps>=({isSticky})=>{
+    return <nav className={`navbar navbar-expand-lg ${isSticky ? 'bg-white sticky-navbar' : 'bg-transparent'}`}>
     <div className="container-fluid">
       <a className="navbar-brand" href="#">Navbar</a>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
