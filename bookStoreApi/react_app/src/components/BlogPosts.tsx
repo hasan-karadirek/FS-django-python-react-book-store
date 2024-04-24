@@ -36,7 +36,7 @@ const PostDisplay: React.FC = () => {
     }, [activePost]);
     return (
         <div className='blog-posts-container'>
-        <div className="blog-posts mt-4 d-flex">
+        <div className="blog-posts mt-4 d-flex flex-column flex-lg-row">
             
             <div className="flex-grow-1" style={{ flexBasis: '55%' }}>
 

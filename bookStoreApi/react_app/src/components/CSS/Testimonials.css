@@ -1,0 +1,52 @@
+.testimonials-images img{
+    height: 20vw;
+}
+.testimonials-images{
+    padding-top: 40px;
+}
+
+.testimonials .testimonial-blockquote blockquote::before{
+    color: rgb(191, 0, 10);
+    left: 10px;
+    top: 0px;
+    content: "“";
+    font-size: 80px;
+    font-style: normal;
+    line-height: 1;
+    display: block !important;
+    position: absolute;
+}
+
+.testimonials .testimonial-blockquote blockquote::after{
+    color: rgb(191, 0, 10);
+    right: 10px;
+    bottom: -0.5em;
+    content: "”";
+    font-size: 80px;
+    font-style: normal;
+    line-height: 1;
+    display: block !important;
+    position: absolute;
+}
+
+.testimonial-message{
+    line-height: 1.5;
+    font-size: 1.5rem;
+    padding: 50px;
+    margin-right: 25px;
+    margin-left: 25px;
+    text-align: center;
+    color: white;
+}
+#testimonials{
+    background-color: #35393f;
+}
+.testimonials .carousel-caption{
+    position: relative !important;
+}
+
+#testimonials-title{
+    color: white;
+    text-align: center;
+    font-size: 1.8rem;
+}
