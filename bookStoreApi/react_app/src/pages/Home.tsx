@@ -3,6 +3,7 @@ import WelcomeSection from "../components/WelcomeSection";
 import AboutUs from "../components/AboutUsSection";
 import BlogPosts from "../components/BlogPosts";
 import Testimonials from "../components/Testimonials";
+import ContactSection from "../components/ContactSection";
 
 const Home : React.FC = ()=>{
 
@@ -13,6 +14,7 @@ const Home : React.FC = ()=>{
         <br/>
         <BlogPosts/>
         <Testimonials/>
+        <ContactSection/>
     </>
 }
 
