@@ -6,18 +6,19 @@ import Testimonials from "../components/Testimonials";
 import ContactSection from "../components/ContactSection";
 import Footer from "../components/Footer";
 
-const Home : React.FC = ()=>{
-
-    return <>
-        <WelcomeSection/>
-        <br/>
-        <AboutUs/>
-        <br/>
-        <BlogPosts/>
-        <Testimonials/>
-        <ContactSection/>
-        <Footer/>
+const Home: React.FC = () => {
+  return (
+    <>
+      <WelcomeSection />
+      <br />
+      <AboutUs />
+      <br />
+      <BlogPosts />
+      <Testimonials />
+      <ContactSection />
+      <Footer />
     </>
-}
+  );
+};
 
-export default Home
+export default Home;

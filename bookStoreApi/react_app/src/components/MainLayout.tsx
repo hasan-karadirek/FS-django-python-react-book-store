@@ -1,26 +1,28 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 
-const MainLayout : React.FC = () => {
+const MainLayout: React.FC = () => {
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const navbarHeight = 56; 
+      const navbarHeight = 56;
       setIsSticky(window.scrollY > navbarHeight);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  return < >
-    <Navbar isSticky={isSticky}/>
-    <Outlet/>
-     </>;
+  return (
+    <>
+      <Navbar isSticky={isSticky} />
+      <Outlet />
+    </>
+  );
 };
 export default MainLayout;

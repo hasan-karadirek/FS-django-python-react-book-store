@@ -1,17 +1,15 @@
-.carousel{
-    position: relative;
-    
+.carousel {
+  position: relative;
 }
-.carousel-inner .carousel-item img{
-    height: 100vh;
+.carousel-inner .carousel-item img {
+  height: 100vh;
 }
-.carousel-caption{
-left: 0% !important;
-bottom: 35% !important;
+.carousel-caption {
+  left: 0% !important;
+  bottom: 35% !important;
 }
 @media (max-width: 992px) {
-    .carousel-inner .carousel-item img{
-        height: auto;
-    }
-    
+  .carousel-inner .carousel-item img {
+    height: auto;
   }
+}

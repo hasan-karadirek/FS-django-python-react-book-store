@@ -1,20 +1,20 @@
-.footer{
-    color: white;
-    background-color: #35393f;
+.footer {
+  color: white;
+  background-color: #35393f;
 }
-.footer-right ul{
-    list-style: none;
-    margin-top: 2rem;
+.footer-right ul {
+  list-style: none;
+  margin-top: 2rem;
 }
-.footer-right li{
-    display: inline;
+.footer-right li {
+  display: inline;
 }
 
-@media (max-width:768px){
-    .footer-right li{
-        display: list-item;
-    }
-    .footer-right ul{
-                margin-top: 0;
-    }
+@media (max-width: 768px) {
+  .footer-right li {
+    display: list-item;
+  }
+  .footer-right ul {
+    margin-top: 0;
+  }
 }
