@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent } from "react";
-import useWindowSize from "../hooks/UseWindowSize";
+import useWindowSize from "../hooks/useWindowSize";
 
 
 interface FormData {

@@ -4,6 +4,7 @@ import AboutUs from "../components/AboutUsSection";
 import BlogPosts from "../components/BlogPosts";
 import Testimonials from "../components/Testimonials";
 import ContactSection from "../components/ContactSection";
+import Footer from "../components/Footer";
 
 const Home : React.FC = ()=>{
 
@@ -15,6 +16,7 @@ const Home : React.FC = ()=>{
         <BlogPosts/>
         <Testimonials/>
         <ContactSection/>
+        <Footer/>
     </>
 }
 
