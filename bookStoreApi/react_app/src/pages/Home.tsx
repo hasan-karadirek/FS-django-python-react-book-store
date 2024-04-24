@@ -2,6 +2,7 @@ import React from "react";
 import WelcomeSection from "../components/WelcomeSection";
 import AboutUs from "../components/AboutUsSection";
 import BlogPosts from "../components/BlogPosts";
+import Testimonials from "../components/Testimonials";
 
 const Home : React.FC = ()=>{
 
@@ -11,6 +12,7 @@ const Home : React.FC = ()=>{
         <AboutUs/>
         <br/>
         <BlogPosts/>
+        <Testimonials/>
     </>
 }
 
