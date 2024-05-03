@@ -43,7 +43,7 @@ const ContactSection: React.FC = () => {
     <>
       <div className="mt-4 d-flex flex-column flex-lg-row">
         <div className="flex-grow-1" style={{ flexBasis: "45%" }}>
-          <div className={`container my-5 ${width > 720 ? "mx-5" : ""}`}>
+          <div className={`container my-5 ${width > 720 ? "me-5" : ""}`}>
             <h1>Contacgt Form</h1>
             <br />
             <p>
@@ -52,7 +52,7 @@ const ContactSection: React.FC = () => {
             <div>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2435.9421950390515!2d4.879917176778338!3d52.37146814721569!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c60972688bb851%3A0x32c0a3e2045a9a1e!2sLE%20FLANEUR%20AMSTERDAM!5e0!3m2!1str!2snl!4v1713944968223!5m2!1str!2snl"
-                width={width > 480 ? "500" : "350"}
+                width="100%"
                 height="450"
                 loading="lazy"
               ></iframe>
@@ -60,7 +60,7 @@ const ContactSection: React.FC = () => {
           </div>
         </div>
         <div className="flex-grow-1" style={{ flexBasis: "55%" }}>
-          <div className={`container my-5 ${width > 720 ? "mx-5" : ""}`}>
+          <div className={`container my-5 ${width > 720 ? "me-5" : ""}`}>
             <h2>Contact Us</h2>
             <br />
             <form onSubmit={handleSubmit}>
