@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./CSS/BlogPosts.css";
 import image1 from "../assets/books2.jpeg"
+import { Slide, Zoom } from "react-awesome-reveal";
 
 
 // Define the Post type
@@ -62,7 +63,9 @@ const PostDisplay: React.FC = () => {
   return (
     <div className="blog-posts-container">
       <div className="blog-posts mt-4 d-flex flex-column flex-lg-row">
+      <Zoom triggerOnce={true}>
         <div className="flex-grow-1" style={{ flexBasis: "55%" }}>
+        
           <img
             ref={imageRef}
             onLoad={() => setImageHeight(imageRef.current?.clientHeight || 0)}
@@ -70,11 +73,14 @@ const PostDisplay: React.FC = () => {
             className="blog-post-img"
             alt={`Active post: ${activePost.title}`}
           />
+         
         </div>
+        </Zoom>
         <div
           className="d-flex flex-column flex-grow-1 overflow-auto"
           style={{ flexBasis: "40%", maxHeight: imageHeight }}
         >
+           <Slide triggerOnce={true}>
           <div className="accordion" id="accordion-posts">
             {posts.map((post) => (
               <div
@@ -105,6 +111,7 @@ const PostDisplay: React.FC = () => {
               </div>
             ))}
           </div>
+          </Slide>
 
           <div></div>
         </div>

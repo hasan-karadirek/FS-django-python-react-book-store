@@ -1,11 +1,13 @@
 import React from "react";
 import "./CSS/AboutUs.css";
 import aboutUsImage from "../assets/books3.jpeg"
+import { Fade,Bounce,Flip,Hinge,JackInTheBox,Roll,Rotate,Slide, Zoom } from "react-awesome-reveal";
 
 const AboutUs: React.FC = () => {
   return (
     <div className="container">
       <div className="d-flex flex-column flex-lg-row">
+      <Slide triggerOnce={true}>
         <div className="flex-fill about-us">
           <h1>About Us</h1>
           <br />
@@ -34,13 +36,16 @@ const AboutUs: React.FC = () => {
             fermentum. Nulla aliquam fringilla mauris.
           </p>
         </div>
+        </Slide>
         <div className="flex-fill about-us">
+        <Slide  triggerOnce={true}>
           <img
             id="about-us-img"
             src={aboutUsImage}
             className="d-block"
             alt="..."
           />
+          </Slide>
         </div>
       </div>
     </div>
