@@ -62,7 +62,7 @@ const Testimonials: React.FC = () => {
           </div>
           <div className="carousel-inner">
             <div className="carousel-item active" data-bs-interval="5000">
-              <div className="carousel-caption  d-md-block">
+              <div className="testimonial-carousel-caption carousel-caption  d-md-block">
                 <div className="testimonial-blockquote">
                   <blockquote style={{ position: "relative" }}>
                     <p className="testimonial-message">
@@ -75,7 +75,7 @@ const Testimonials: React.FC = () => {
               </div>
             </div>
             <div className="carousel-item" data-bs-interval="5000">
-              <div className="carousel-caption  d-md-block">
+              <div className="testimonial-carousel-caption carousel-caption  d-md-block">
                 <div className="testimonial-blockquote">
                   <blockquote style={{ position: "relative" }}>
                     <p className="testimonial-message">
@@ -88,7 +88,7 @@ const Testimonials: React.FC = () => {
               </div>
             </div>
             <div className="carousel-item" data-bs-interval="5000">
-              <div className="carousel-caption  d-md-block">
+              <div className="testimonial-carousel-caption carousel-caption  d-md-block">
                 <div className="testimonial-blockquote">
                   <blockquote style={{ position: "relative" }}>
                     <p className="testimonial-message">

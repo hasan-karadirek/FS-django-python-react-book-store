@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
+import "./CSS/Main.css"
 
 const MainLayout: React.FC = () => {
   const [isSticky, setIsSticky] = useState(false);

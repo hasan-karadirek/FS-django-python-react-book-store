@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
     <div className="footer">
       <div className="d-flex px-4 py-4">
         <div className="footer-left flex-grow-1">
-          <a className="navbar-brand px-5 py-5 mt-5" href="#">
+          <a className="navbar-brand pe-5 py-5 mt-5" href="#">
             <img id="logo" src={Logo} alt="" />
           </a>
         </div>

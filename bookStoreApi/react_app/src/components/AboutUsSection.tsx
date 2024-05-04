@@ -1,10 +1,13 @@
 import React from "react";
 import "./CSS/AboutUs.css";
+import aboutUsImage from "../assets/books3.jpeg"
+import { Fade,Bounce,Flip,Hinge,JackInTheBox,Roll,Rotate,Slide, Zoom } from "react-awesome-reveal";
 
 const AboutUs: React.FC = () => {
   return (
     <div className="container">
       <div className="d-flex flex-column flex-lg-row">
+      <Slide triggerOnce={true}>
         <div className="flex-fill about-us">
           <h1>About Us</h1>
           <br />
@@ -19,7 +22,10 @@ const AboutUs: React.FC = () => {
             tincidunt posuere lacus, ac condimentum mi lacinia id. Nulla mollis
             lectus eu tortor viverra, fringilla aliquet felis molestie.
             Phasellus in sagittis ligula, quis congue diam. Quisque dictum nulla
-            eu mattis placerat. Nulla facilisi. Curabitur porttitor, tellus quis
+            eu mattis placerat. Nulla facilisi.
+            </p>
+            <p>
+             Curabitur porttitor, tellus quis
             sagittis consequat, risus est faucibus ipsum, et sodales massa purus
             id metus. Nulla ut tincidunt justo. Nullam tincidunt enim rutrum
             nunc mattis fringilla. Mauris interdum venenatis nunc, nec elementum
@@ -30,13 +36,16 @@ const AboutUs: React.FC = () => {
             fermentum. Nulla aliquam fringilla mauris.
           </p>
         </div>
+        </Slide>
         <div className="flex-fill about-us">
+        <Slide  triggerOnce={true}>
           <img
             id="about-us-img"
-            src="https://www.shutterstock.com/shutterstock/photos/1883859943/display_1500/stock-photo-the-word-example-is-written-on-a-magnifying-glass-on-a-yellow-background-1883859943.jpg"
+            src={aboutUsImage}
             className="d-block"
             alt="..."
           />
+          </Slide>
         </div>
       </div>
     </div>

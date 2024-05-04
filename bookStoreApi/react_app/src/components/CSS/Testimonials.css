@@ -50,3 +50,7 @@
   text-align: center;
   font-size: 1.8rem;
 }
+.testimonial-carousel-caption{
+  left: 0 !important;
+  bottom: 35% !important;
+}
