@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post
+from .models import Post,FormImage,Form
 from core.mixins import IsPostExist
 
 class PostSerializer(serializers.ModelSerializer):
@@ -31,3 +31,30 @@ class PostSerializer(serializers.ModelSerializer):
             instance.content=content
         instance.save()
         return instance
+
+
+class FormImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FormImage
+        fields = ["form", "image"]
+
+class FormSerializer(serializers.ModelSerializer):
+    uploaded_images = serializers.ListField(
+        child=serializers.ImageField(max_length=255), write_only=True
+    )
+    images=FormImageSerializer(many=True,read_only=True)
+
+    class Meta:
+        model=Post
+        fields=["name","email","message","images"]
+
+    def create(self, validated_data):
+        images_data = validated_data.pop("uploaded_images")
+        
+
+        form=Form.objects.create(**validated_data)
+
+        for image_data in images_data:
+            FormImage.objects.create(form=form, image=image_data)
+        return form
+        
