@@ -3,10 +3,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from core.custom_exceptions import CustomAPIException
-from core.mixins import IsPostExist
+from core.mixins import IsPostExist,IsFormExist
 from .serializers import PostSerializer,FormSerializer
-from .models import Post
+from .models import Post, Form
 from django.core.paginator import Paginator, EmptyPage
+from core.helpers import pagination
 
 # Create your views here.
 class AddPostAPIView(APIView):
@@ -45,12 +46,7 @@ class GetPostsAPIView( APIView):
     
     def get(self, request, *args, **kwargs):
         books=Post.objects.all()
-        paginator=Paginator(books,10)
-        page_number = request.query_params.get("page", 1)
-        try:
-            page = paginator.page(page_number)
-        except EmptyPage:
-            raise CustomAPIException("No more pages", status=404)
+        page=pagination(books,10,request.query_params.get("page", 1))
         serializer=PostSerializer(page,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
 class GetPostAPIView( IsPostExist,APIView):
@@ -70,3 +66,29 @@ class CreateFormAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             raise CustomAPIException(str(serializer.errors), status=400)
+class DeleteFormAPIView(IsFormExist,APIView):
+    permission_classes = [permissions.IsAdminUser]
+    parser_classes = (MultiPartParser, FormParser, JSONParser) 
+    def delete(self, request, formPk, *args, **kwargs):
+        request.form.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class GetFormsAPIView(APIView):
+    permission_classes = [permissions.IsAdminUser]
+    parser_classes = (MultiPartParser, FormParser, JSONParser) 
+
+    def get(self, request, *args,**kwargs):
+        forms=Form.objects.all()
+        
+        page=pagination(forms,10,request.query_params.get("page", 1))
+        serializer=FormSerializer(page, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class GetFormAPIView(IsFormExist, APIView):
+    permission_classes = [permissions.IsAdminUser]
+    parser_classes = (MultiPartParser, FormParser, JSONParser) 
+
+    def get(self, request, formPk,*args,**kwargs):
+       
+        serializer=FormSerializer(request.form)
+        return Response(serializer.data, status=status.HTTP_200_OK)

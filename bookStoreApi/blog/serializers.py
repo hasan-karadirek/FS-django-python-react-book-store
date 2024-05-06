@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Post,FormImage,Form
 from core.mixins import IsPostExist
+from core.custom_exceptions import CustomAPIException
 
 class PostSerializer(serializers.ModelSerializer):
     title = serializers.CharField(required=False)
@@ -41,17 +42,16 @@ class FormImageSerializer(serializers.ModelSerializer):
 
 class FormSerializer(serializers.ModelSerializer):
     uploaded_images = serializers.ListField(
-        child=serializers.ImageField(max_length=255), write_only=True
+        child=serializers.ImageField(max_length=255), write_only=True,required=False
     )
     images=FormImageSerializer(many=True,read_only=True)
 
     class Meta:
-        model=Post
-        fields=["name","email","message","images"]
+        model=Form
+        fields=["id","name","email","message","images","uploaded_images"]
 
     def create(self, validated_data):
-        images_data = validated_data.pop("uploaded_images")
-        
+        images_data = validated_data.pop("uploaded_images",[])
 
         form=Form.objects.create(**validated_data)
 
