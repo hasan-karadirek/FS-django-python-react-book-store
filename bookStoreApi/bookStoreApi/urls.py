@@ -25,6 +25,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/store/", include("store.urls")),
     path("api/customer/", include("customer.urls")),
+    path("api/blog/", include("blog.urls")),
     path("api/book/", include("book.urls")),
     path("api/payment/", include("payment.urls")),
     re_path(r'^.*$',index)

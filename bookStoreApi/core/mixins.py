@@ -2,6 +2,7 @@ from store.models import BookOnSale
 from book.models import Book
 from rest_framework.exceptions import NotFound
 from core.custom_exceptions import CustomAPIException
+from blog.models import Post
 
 
 class IsBookExist:
@@ -22,3 +23,12 @@ class IsSaleExist:
         except BookOnSale.DoesNotExist:
             raise CustomAPIException("Book not found or no longer available", 404)
         return super().dispatch(request, salePk * args, **kwargs)
+    
+class IsPostExist:
+    def dispatch(self, request, postPk, *args, **kwargs):
+        try:
+            post = Post.objects.get(pk=postPk)
+            request.post = post
+        except BookOnSale.DoesNotExist:
+            raise CustomAPIException("There is no such a post associated with this PK!", 404)
+        return super().dispatch(request, postPk * args, **kwargs)
