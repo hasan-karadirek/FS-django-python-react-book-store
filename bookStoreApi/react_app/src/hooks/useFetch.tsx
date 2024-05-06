@@ -10,6 +10,7 @@ interface FetchOptions extends RequestInit {
 interface FetchResponse {
   success: boolean;
   msg?: string;
+  data?: unknown;
 }
 
 /**
@@ -56,7 +57,7 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
 
     const fetchData = async () => {
       // We add the /api subsection here to make it a single point of change if our configuration changes
-      const url = `${process.env.BASE_SERVER_URL}/api${route}`;
+      const url = `http://localhost:8000/api${route}`;
 
       const res = await fetch(url, { ...baseOptions, ...options, signal });
 

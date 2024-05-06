@@ -48,7 +48,7 @@ class GetPostsAPIView( APIView):
         books=Post.objects.all()
         page=pagination(books,10,request.query_params.get("page", 1))
         serializer=PostSerializer(page,many=True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response({"success":True,"data":serializer.data},status=status.HTTP_200_OK)
 class GetPostAPIView( IsPostExist,APIView):
     
     def get(self, request, *args, **kwargs):
