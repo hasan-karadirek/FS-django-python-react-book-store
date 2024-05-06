@@ -28,7 +28,8 @@ urlpatterns = [
     path("api/blog/", include("blog.urls")),
     path("api/book/", include("book.urls")),
     path("api/payment/", include("payment.urls")),
-    re_path(r'^.*$',index)
+    path("", index, name="home")
+
 ]
 
 if settings.DEBUG:

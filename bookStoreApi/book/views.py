@@ -56,7 +56,6 @@ class GetBookAPIView(IsBookExist, APIView):
         serializer = BookSerializer(request.book)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
 class GetBooksAPIView(APIView):
 
     def get(self, request, *args, **kwargs):
