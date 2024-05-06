@@ -1,14 +1,17 @@
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from core.custom_exceptions import CustomAPIException
-from core.mixins import IsPostExist
+from core.mixins import IsPostExist,IsFormExist
 from .serializers import PostSerializer,FormSerializer
+from .models import Post, Form
+from django.core.paginator import Paginator, EmptyPage
+from core.helpers import pagination
 
 # Create your views here.
 class AddPostAPIView(APIView):
-    parser_classes = (MultiPartParser, FormParser)  # To handle file uploads
+    parser_classes = (MultiPartParser, FormParser,JSONParser)  # To handle file uploads
     permission_classes = [permissions.IsAdminUser]
 
     def post(self, request, *args, **kwargs):
@@ -21,11 +24,10 @@ class AddPostAPIView(APIView):
             raise CustomAPIException(str(serializer.errors), status=400)
 
 class UpdatePostAPIView(IsPostExist, APIView):
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (MultiPartParser, FormParser,JSONParser)
     permission_classes = [permissions.IsAdminUser]
 
-    def put(self, request, pk, *args, **kwargs):
-
+    def put(self, request, postPk, *args, **kwargs):
         serializer = PostSerializer(request.post, data=request.data)
 
         if serializer.is_valid():
@@ -40,10 +42,22 @@ class DeletePostAPIView(IsPostExist, APIView):
     def delete(self, request, pk, *args, **kwargs):
         request.post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+class GetPostsAPIView( APIView):
+    
+    def get(self, request, *args, **kwargs):
+        books=Post.objects.all()
+        page=pagination(books,10,request.query_params.get("page", 1))
+        serializer=PostSerializer(page,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+class GetPostAPIView( IsPostExist,APIView):
+    
+    def get(self, request, *args, **kwargs):
+
+        serializer=PostSerializer(request.post)
+        return Response(serializer.data,status=status.HTTP_200_OK)
 
 class CreateFormAPIView(APIView):
-    parser_classes = (MultiPartParser, FormParser)  # To handle file uploads
-
+    parser_classes = (MultiPartParser, FormParser, JSONParser) 
     def post(self, request, *args, **kwargs):
         serializer = FormSerializer(data=request.data)
 
@@ -52,3 +66,29 @@ class CreateFormAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             raise CustomAPIException(str(serializer.errors), status=400)
+class DeleteFormAPIView(IsFormExist,APIView):
+    permission_classes = [permissions.IsAdminUser]
+    parser_classes = (MultiPartParser, FormParser, JSONParser) 
+    def delete(self, request, formPk, *args, **kwargs):
+        request.form.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class GetFormsAPIView(APIView):
+    permission_classes = [permissions.IsAdminUser]
+    parser_classes = (MultiPartParser, FormParser, JSONParser) 
+
+    def get(self, request, *args,**kwargs):
+        forms=Form.objects.all()
+        
+        page=pagination(forms,10,request.query_params.get("page", 1))
+        serializer=FormSerializer(page, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class GetFormAPIView(IsFormExist, APIView):
+    permission_classes = [permissions.IsAdminUser]
+    parser_classes = (MultiPartParser, FormParser, JSONParser) 
+
+    def get(self, request, formPk,*args,**kwargs):
+       
+        serializer=FormSerializer(request.form)
+        return Response(serializer.data, status=status.HTTP_200_OK)
