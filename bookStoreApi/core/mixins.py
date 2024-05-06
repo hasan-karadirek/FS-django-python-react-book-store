@@ -29,6 +29,6 @@ class IsPostExist:
         try:
             post = Post.objects.get(pk=postPk)
             request.post = post
-        except BookOnSale.DoesNotExist:
+        except Post.DoesNotExist:
             raise CustomAPIException("There is no such a post associated with this PK!", 404)
         return super().dispatch(request, postPk * args, **kwargs)

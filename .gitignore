@@ -166,3 +166,4 @@ staticfiles/
 static/
 templates/
 media/
+bs_env/
