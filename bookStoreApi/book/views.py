@@ -13,7 +13,7 @@ from django.core.paginator import Paginator, EmptyPage
 
 class AddBookAPIView(APIView):
     parser_classes = (MultiPartParser, FormParser)  # To handle file uploads
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
     def post(self, request, *args, **kwargs):
         serializer = BookSerializer(data=request.data)
@@ -88,18 +88,3 @@ class GetBooksAPIView(APIView):
         serializer = BookSerializer(page, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
-class GetOrCreateBookByEANView(APIView):
-
-    def get(self, request, *args, **kwargs):
-
-        ean = request.query_params.get("ean", None)
-
-        if not ean:
-            raise CustomAPIException("Please provide a valid EAN!", status=400)
-        try:
-            book = Book.objects.get(ean=ean)
-        except Book.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        serializer = BookSerializer(book)
-        return Response(serializer.data, status=status.HTTP_200_OK)
