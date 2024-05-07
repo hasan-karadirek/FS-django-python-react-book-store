@@ -125,8 +125,6 @@ class BookSerializer(serializers.ModelSerializer):
             tag,_=Tag.objects.get_or_create(name=tag_name )
             BookTagAssociation.objects.create(book=book,tag=tag)
         
-        book_data=book.__dict__
-        book_data["images"]=book_images
         return book
         
     def update(self, instance, validated_data):
@@ -180,6 +178,5 @@ class BookSerializer(serializers.ModelSerializer):
             for tag_name in tag_names:
                 tag,_=Tag.objects.get_or_create(name=tag_name, )
                 BookTagAssociation.objects.get_or_create(tag=tag,book=instance)
-        book_data=instance.__dict__
-        book_data["images"]=book_images
+
         return instance

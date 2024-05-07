@@ -89,7 +89,7 @@ class Book(models.Model):
 
 
 class BookImage(models.Model):
-    book = models.ForeignKey(Book, related_name="books", on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, related_name="images", on_delete=models.CASCADE)
     image = models.ImageField(upload_to="book_images/")
 
     def __str__(self):
