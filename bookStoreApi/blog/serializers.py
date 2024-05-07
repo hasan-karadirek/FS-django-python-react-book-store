@@ -38,7 +38,7 @@ class PostSerializer(serializers.ModelSerializer):
 class FormImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = FormImage
-        fields = ["form", "image"]
+        fields = ["image"]
 
 class FormSerializer(serializers.ModelSerializer):
     uploaded_images = serializers.ListField(
@@ -52,9 +52,8 @@ class FormSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         images_data = validated_data.pop("uploaded_images",[])
-
+        
         form=Form.objects.create(**validated_data)
-
         for image_data in images_data:
             FormImage.objects.create(form=form, image=image_data)
         return form

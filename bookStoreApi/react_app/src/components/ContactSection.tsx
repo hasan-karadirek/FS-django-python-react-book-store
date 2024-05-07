@@ -1,5 +1,6 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import useWindowSize from "../hooks/useWindowSize";
+import useFetch from "../hooks/useFetch";
 
 interface FormData {
   name: string;
@@ -9,14 +10,44 @@ interface FormData {
 }
 
 const ContactSection: React.FC = () => {
+  const {isLoading,error,performFetch,cancelFetch}=useFetch("/blog/create-form/",(res)=>{return})
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     message: "",
     images: null,
   });
-
+  
   const { width } = useWindowSize();
+
+  const submitForm = () => {
+    const form = new FormData();
+    form.append("name", formData.name);
+    form.append("email", formData.email);
+    form.append("message", formData.message);
+    if (formData.images) {
+      Array.from(formData.images).forEach((file, index) =>
+        form.append(`uploaded_images[${index}]`, file, file.name)
+      );
+    }
+    console.log("fff",form)
+    performFetch({
+      method: "POST",
+      body: form,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(formData)
+    submitForm();
+  };
+
+  useEffect(() => {
+    return () => {
+      cancelFetch();
+    };
+  }, []);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -34,11 +65,7 @@ const ContactSection: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
 
-    alert("Form submitted. Check console for data.");
-  };
   return (
     <>
       <div className="mt-4 d-flex flex-column flex-lg-row">
@@ -119,7 +146,7 @@ const ContactSection: React.FC = () => {
                   required
                 ></textarea>
               </div>
-              <button type="submit" className="btn btn-primary">
+              <button type="submit"  className="btn btn-primary">
                 Submit
               </button>
             </form>
