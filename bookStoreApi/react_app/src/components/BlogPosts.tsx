@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./CSS/BlogPosts.css";
-import image1 from "../assets/books2.jpeg"
 import { Slide, Zoom } from "react-awesome-reveal";
 import useFetch from "../hooks/useFetch";
 
@@ -19,12 +18,15 @@ const PostDisplay: React.FC = () => {
   const [response,setResponse] = useState<Post[] | null>(null)
   const {isLoading,error,performFetch,cancelFetch}=useFetch("/blog/get-posts/",(res)=>{
     setResponse(res.data as Post[])
-    setActivePost(response[0])
+    
   })
 
   useEffect(()=>{
     performFetch({method:"GET"})
   },[])
+  useEffect(()=>{
+    setActivePost(response? response[0] : null);
+  },[response])
   const [activePost, setActivePost] = useState<Post | null>(null);
   const [imageHeight, setImageHeight] = useState(0);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -33,6 +35,7 @@ const PostDisplay: React.FC = () => {
     if (imageRef.current) {
       setImageHeight(imageRef.current.clientHeight);
     }
+    
   }, [activePost]);
 
 
@@ -45,7 +48,7 @@ const PostDisplay: React.FC = () => {
           <img
             ref={imageRef}
             onLoad={() => setImageHeight(imageRef.current?.clientHeight || 0)}
-            src={image1}
+            src={`http://localhost:8000${activePost?.image}`}
             className="blog-post-img"
             alt={`Active post: ${activePost?.title}`}
           />

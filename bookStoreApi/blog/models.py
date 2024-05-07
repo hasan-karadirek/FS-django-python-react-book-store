@@ -15,7 +15,7 @@ class Form(models.Model):
     message = models.TextField()
 
     def __str__(self):
-        return self.title
+        return self.name
 
 class FormImage(models.Model):
     form=models.ForeignKey(Form,on_delete=models.CASCADE)

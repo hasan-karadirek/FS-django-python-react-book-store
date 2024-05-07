@@ -22,7 +22,7 @@ const Testimonials: React.FC = () => {
 
   return (
     <div id="testimonials">
-      <div className="container testimonials">
+      <div className=" testimonials">
         <div className="testimonials-images d-flex">
           <img src={ImageG} alt="" />
           <img src={ImageG1} alt="" />

@@ -28,10 +28,12 @@ urlpatterns = [
     path("api/blog/", include("blog.urls")),
     path("api/book/", include("book.urls")),
     path("api/payment/", include("payment.urls")),
-    path("", index, name="home")
+    
 
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+urlpatterns.append(path("", index, name="home"))

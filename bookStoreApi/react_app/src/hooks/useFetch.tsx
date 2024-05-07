@@ -51,7 +51,7 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
     const baseOptions: FetchOptions = {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        
       },
     };
 
