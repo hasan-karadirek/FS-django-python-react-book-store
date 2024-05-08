@@ -6,14 +6,14 @@ from .serializers import BookSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from core.custom_exceptions import CustomAPIException
 from core.mixins import IsBookExist
-from django.db.models import Exists, OuterRef, Count, Q
-from store.models import BookOnSale, Book
-from django.core.paginator import Paginator, EmptyPage
+from core.helpers import pagination
+from django.db.models import Q
+from store.models import  Book
 
 
 class AddBookAPIView(APIView):
     parser_classes = (MultiPartParser, FormParser)  # To handle file uploads
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
     def post(self, request, *args, **kwargs):
         serializer = BookSerializer(data=request.data)
@@ -61,45 +61,30 @@ class GetBooksAPIView(APIView):
     def get(self, request, *args, **kwargs):
 
         # Subquery to check for open sales for a book
-        open_sales = BookOnSale.objects.filter(book=OuterRef("pk"), status="OPEN")
-        books = Book.objects.annotate(
-            has_open_sale=Exists(open_sales),
-            saleCount=Count("bookonsale", filter=Q(bookonsale__status="OPEN")),
-        )
+        category_query = request.query_params.get("category",None)
+        if category_query:
+            books = Book.objects.filter(category__name=category_query)
+        else:
+            books = Book.objects.all()
         search_query = request.query_params.get("search", None)
         if search_query:
             books = books.filter(
-                Q(name__icontains=search_query)
+                Q(status="OPEN") 
+                &                 
+                (
+                Q(title__icontains=search_query)
                 | Q(author__name__icontains=search_query)
-                | Q(ean__icontains=search_query)
+                | Q(isbn__icontains=search_query)
                 | Q(publishing_house__name__icontains=search_query)
-            )
-        books = books.order_by("-has_open_sale")
+                | Q(tags__name__icontains=search_query)
+
+                )
+            ).distinct() 
 
         page_number = request.query_params.get("page", 1)
 
-        paginator = Paginator(books, 20)
-
-        try:
-            page = paginator.page(page_number)
-        except EmptyPage:
-            raise CustomAPIException("No more pages", status=404)
+        page=pagination(books,20,page_number)
 
         serializer = BookSerializer(page, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
-class GetOrCreateBookByEANView(APIView):
-
-    def get(self, request, *args, **kwargs):
-
-        ean = request.query_params.get("ean", None)
-
-        if not ean:
-            raise CustomAPIException("Please provide a valid EAN!", status=400)
-        try:
-            book = Book.objects.get(ean=ean)
-        except Book.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        serializer = BookSerializer(book)
-        return Response(serializer.data, status=status.HTTP_200_OK)
