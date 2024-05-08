@@ -7,9 +7,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from core.custom_exceptions import CustomAPIException
 from core.mixins import IsBookExist
 from core.helpers import pagination
-from django.db.models import Exists, OuterRef, Count, Q
+from django.db.models import Q
 from store.models import  Book
-from django.core.paginator import Paginator, EmptyPage
 
 
 class AddBookAPIView(APIView):
@@ -62,7 +61,7 @@ class GetBooksAPIView(APIView):
     def get(self, request, *args, **kwargs):
 
         # Subquery to check for open sales for a book
-        category_query = request.query_params.get("category")
+        category_query = request.query_params.get("category",None)
         if category_query:
             books = Book.objects.filter(category__name=category_query)
         else:
