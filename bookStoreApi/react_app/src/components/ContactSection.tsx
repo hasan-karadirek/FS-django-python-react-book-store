@@ -30,7 +30,7 @@ const ContactSection: React.FC = () => {
         form.append(`uploaded_images[${index}]`, file, file.name)
       );
     }
-    console.log("fff",form)
+
     performFetch({
       method: "POST",
       body: form,
@@ -39,7 +39,6 @@ const ContactSection: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData)
     submitForm();
   };
 
