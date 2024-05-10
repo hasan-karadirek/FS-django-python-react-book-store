@@ -1,52 +1,13 @@
-from .serializers import BookOnSaleSerializer, OrderSerializer, CheckoutSerializer
+from .serializers import OrderSerializer, CheckoutSerializer
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser
-from .models import BookOnSale, OrderDetail, Order
-from book.serializers import BookSerializer
-from core.mixins import IsBookExist, IsSaleExist
+from .models import  OrderDetail, Order
+from core.mixins import  IsSaleExist
 from core.custom_exceptions import CustomAPIException
 from core.mollie import createMolliePayment
 from django.db import transaction
-
-
-class SellBookView(APIView):
-    parser_classes = (MultiPartParser, FormParser)  # To handle file uploads
-    permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request, *args, **kwargs):
-        serializer = BookOnSaleSerializer(
-            data=request.data, context={"request": request}
-        )
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        raise CustomAPIException(
-            str(serializer.errors), status=status.HTTP_400_BAD_REQUEST
-        )
-
-
-class GetOnSaleBookView(IsSaleExist, APIView):
-
-    def get(self, request, salePk, *args, **kwargs):
-
-        serializer = BookOnSaleSerializer(request.bookOnSale)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-class GetOnSaleBooksByBookPkView(IsBookExist, APIView):
-
-    def get(self, request, bookPk, *args, **kwargs):
-
-        books_on_sale = BookOnSale.objects.filter(book=request.book, status="OPEN")
-        bookOnSaleSerializer = BookOnSaleSerializer(books_on_sale, many=True)
-        bookSerializer = BookSerializer(request.book)
-        response_data = bookSerializer.data
-        response_data["on_sale_books"] = bookOnSaleSerializer.data
-
-        return Response(response_data, status=status.HTTP_200_OK)
+from rest_framework.parsers import  FormParser, JSONParser
 
 
 class AddToCartView(IsSaleExist, APIView):
@@ -57,7 +18,7 @@ class AddToCartView(IsSaleExist, APIView):
             customer=request.user, status="OPEN"
         )
         orderDetail, created = OrderDetail.objects.get_or_create(
-            order=open_order or open_order_created, book_on_sale=request.bookOnSale
+            order=open_order or open_order_created, book=request.book
         )
         if not created:
             raise CustomAPIException("Book is already in your cart.", status=400)
@@ -73,9 +34,11 @@ class RemoveFromCartView(IsSaleExist, APIView):
         open_order, open_order_created = Order.objects.get_or_create(
             customer=request.user, status="OPEN"
         )
+        if open_order_created:
+            raise CustomAPIException("Book is already not in your cart.", status=400)
         try:
             orderDetail = OrderDetail.objects.get(
-                order=open_order or open_order_created, book_on_sale=request.bookOnSale
+                order=open_order or open_order_created, book=request.book
             )
             orderDetail.delete()
             open_order.refresh_from_db()
@@ -88,7 +51,7 @@ class RemoveFromCartView(IsSaleExist, APIView):
 
 class CheckOutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-
+    parser_classes=[FormParser,JSONParser]
     def put(self, request, *args, **kwargs):
         checkoutSerializer = CheckoutSerializer(data=request.data)
         if checkoutSerializer.is_valid():
@@ -104,9 +67,9 @@ class CheckOutView(APIView):
             order_details = open_order.order_details.all()
 
             for order_detail in order_details:
-                if order_detail.book_on_sale.status != "OPEN":
+                if order_detail.book.status != "OPEN":
                     order_detail.delete()
-                    deleted_details.append(order_detail.book_on_sale.book.name)
+                    deleted_details.append(order_detail.book.title)
 
             if len(deleted_details) > 0:
                 open_order.refresh_from_db()
@@ -122,8 +85,8 @@ class CheckOutView(APIView):
 
                 with transaction.atomic():
                     for order_detail in order_details:
-                        order_detail.book_on_sale.status = "PENDING"
-                        order_detail.book_on_sale.save()
+                        order_detail.book.status = "PENDING"
+                        order_detail.book.save()
 
                     open_order.status = "PENDING"
                     open_order.save()
@@ -147,6 +110,8 @@ class CheckOutView(APIView):
             response_data["redirectUrl"] = payment["_links"]["checkout"]["href"]
 
             return Response(response_data, status=status.HTTP_200_OK)
+        else:
+            raise CustomAPIException(str(checkoutSerializer.errors), status=400)
 
 
 class OrderStatusView(APIView):

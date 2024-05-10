@@ -1,6 +1,4 @@
-from store.models import BookOnSale
 from book.models import Book
-from rest_framework.exceptions import NotFound
 from core.custom_exceptions import CustomAPIException
 from blog.models import Post,Form
 
@@ -16,13 +14,13 @@ class IsBookExist:
 
 
 class IsSaleExist:
-    def dispatch(self, request, salePk, *args, **kwargs):
+    def dispatch(self, request, bookPk, *args, **kwargs):
         try:
-            bookOnSale = BookOnSale.objects.get(pk=salePk, status="OPEN")
-            request.bookOnSale = bookOnSale
-        except BookOnSale.DoesNotExist:
+            book = Book.objects.get(pk=bookPk, status="OPEN")
+            request.book = book
+        except Book.DoesNotExist:
             raise CustomAPIException("Book not found or no longer available", 404)
-        return super().dispatch(request, salePk * args, **kwargs)
+        return super().dispatch(request, bookPk * args, **kwargs)
     
 class IsPostExist:
     def dispatch(self, request, postPk, *args, **kwargs):

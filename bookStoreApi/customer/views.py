@@ -5,9 +5,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserRegistrationSerializer
 from core.custom_error_handler import CustomAPIException
+from rest_framework.parsers import  FormParser, JSONParser
 
 
 class UserRegistrationAPIView(APIView):
+    parser_classes = (FormParser,JSONParser)
     def post(self, request):
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
@@ -17,6 +19,7 @@ class UserRegistrationAPIView(APIView):
 
 
 class LoginAPIView(APIView):
+    parser_classes = (FormParser,JSONParser)
     def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
