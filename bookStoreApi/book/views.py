@@ -86,5 +86,6 @@ class GetBooksAPIView(APIView):
         page=pagination(books,20,page_number)
 
         serializer = BookSerializer(page, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        response={"data":serializer.data,"success":True}
+        return Response(response, status=status.HTTP_200_OK)
 
