@@ -4,7 +4,7 @@ import { useState } from "react";
  * TypeScript types for the response and the options used in fetch.
  */
 interface FetchOptions extends RequestInit {
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  method?: "GET" | "POST" | "PUT" | "DELETE";
 }
 
 interface FetchResponse {

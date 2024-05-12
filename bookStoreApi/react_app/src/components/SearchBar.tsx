@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 
 export interface SearchFormData{
-    search:String
+    search:string
 }
 interface SearchBarProps{
     handleSearchFormSubmit:(formData:SearchFormData)=>void

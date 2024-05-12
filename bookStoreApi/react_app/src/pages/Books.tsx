@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import SearchBar,{SearchFormData} from "../components/SearchBar";
 import useFetch from "../hooks/useFetch";
-import ProductList from "../components/ProductList";
+import BookList from "../components/BookList";
 
 interface BookImage{
     book:number,
     image:string
+}
+interface Tag{
+    tag:{
+        id:number,
+        name:string
+    }
 }
 export interface Book{
     id:number,
@@ -13,7 +19,7 @@ export interface Book{
     env_no:number,
     title:string,
     author:string,
-    publishng_house:string,
+    publishing_house:string,
     language:string,
     cover:string,
     year:number,
@@ -23,7 +29,7 @@ export interface Book{
     condition:string,
     price:string,
     status:string,
-    tag:string[],
+    tags:Tag[],
     images:BookImage[]
 }
 const Books: React.FC = () => {
@@ -35,13 +41,9 @@ const Books: React.FC = () => {
     }
   return (
     <>
-    <br/>
-    <br/>
-    <br/> 
-    <br/>
-    <br/>
+   <div className="gap"></div>
       <SearchBar handleSearchFormSubmit={handleSearchFormSubmit}/>
-      {isLoading ? "wait" : <ProductList products={products}/> }
+      {isLoading ? "wait" : <BookList products={products}/> }
     </>
   );
 };
