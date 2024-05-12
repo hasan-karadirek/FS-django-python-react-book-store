@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Book } from "../pages/Books";
 import "./CSS/BookList.css";
 import slide1 from "../assets/booksImg.jpeg";
@@ -12,12 +12,12 @@ const BookList: React.FC<BookListProps> = ({ products }) => {
   return (
     <div className="d-flex flex-wrap">
       {products?.map((product) => (
-        <Link to={`/shop/books/${product.id.toString()}`} className="product-card" key={product.id.toString()}>
-          <div
-            className="card "
-            id={product.id.toString()}
-            
-          >
+        <Link
+          to={`/shop/books/${product.id.toString()}`}
+          className="product-card"
+          key={product.id.toString()}
+        >
+          <div className="card " id={product.id.toString()}>
             <img
               src={
                 product.images[0]

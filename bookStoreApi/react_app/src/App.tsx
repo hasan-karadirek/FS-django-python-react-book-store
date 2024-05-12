@@ -12,9 +12,8 @@ const App: React.FC = () => {
         <Route index element={<Home />} />
       </Route>
       <Route path="shop/books" element={<MainLayout />}>
-        <Route index element={<Books  />} />
+        <Route index element={<Books />} />
         <Route path=":id" element={<BookPage />} />
-        
       </Route>
     </Routes>
   );

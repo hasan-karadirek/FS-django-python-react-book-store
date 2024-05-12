@@ -10,13 +10,13 @@
     height: auto;
   }
 }
-.main-slider .carousel-caption{
+.main-slider .carousel-caption {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.main-slider .carousel-caption h5{
+.main-slider .carousel-caption h5 {
   font-size: xx-large;
 }
-.main-slider .carousel-caption p{
+.main-slider .carousel-caption p {
   font-size: x-large;
 }

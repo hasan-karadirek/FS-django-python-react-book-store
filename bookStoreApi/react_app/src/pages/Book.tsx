@@ -12,23 +12,27 @@ const BookPage: React.FC = () => {
     `/book/${id}`,
     (res) => {
       setBook(res.data as Book);
-    }
+    },
   );
   useEffect(() => {
     performFetch();
+
+    return () => {
+      if (!isLoading) {
+        cancelFetch();
+      }
+    };
   }, []);
-  return isLoading ? (
-    "loading"
-  ) : book ? (
+  return error ? (
+    <p>{error.message}</p>
+  ) : isLoading ? (
+    <p>loading</p>
+  ) : (
     <>
       <div className="gap"></div>
-     <BookDetail book={book}/>
-      
+      {book ? <BookDetail book={book} /> : <p>loading</p>}
     </>
-  ) : (
-    "loading"
   );
 };
 
 export default BookPage;
- 

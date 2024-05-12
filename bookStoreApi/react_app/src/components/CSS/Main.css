@@ -1,13 +1,13 @@
-body{
-    font-family: inter-light;
+body {
+  font-family: inter-light;
 }
-.gap{
-    height: 120px;
-    background-color: brown;
+.gap {
+  height: 120px;
+  background-color: brown;
 }
 
 @media (max-width: 992px) {
-    .gap{
-        display: none;
-    }
+  .gap {
+    display: none;
+  }
 }
