@@ -8,7 +8,7 @@ import BookDetail from "../components/BookDetail";
 const BookPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [book, setBook] = useState<Book | null>(null);
-  const { isLoading, error, performFetch, cancelFetch } = useFetch(
+  const { isLoading, error, performFetch } = useFetch(
     `/book/${id}`,
     (res) => {
       setBook(res.data as Book);
@@ -17,11 +17,6 @@ const BookPage: React.FC = () => {
   useEffect(() => {
     performFetch();
 
-    return () => {
-      if (!isLoading) {
-        cancelFetch();
-      }
-    };
   }, []);
   return error ? (
     <p>{error.message}</p>

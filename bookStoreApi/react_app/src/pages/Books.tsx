@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar, { SearchFormData } from "../components/SearchBar";
 import useFetch from "../hooks/useFetch";
 import BookList from "../components/BookList";
@@ -33,22 +33,23 @@ export interface Book {
   images: BookImage[];
 }
 const Books: React.FC = () => {
-  const [products, setProducts] = useState<Book[] | null>(null);
+  const [books, setBooks] = useState<Book[] | null>(null);
   const [searchFormData, setSearchFormData] = useState<SearchFormData | null>(
     null,
   );
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    "/book/",
+    `/book/?search=${searchFormData?.search ? searchFormData.search : ""}`,
     (res) => {
-      setProducts(res.data as Book[]);
+      setBooks(res.data as Book[]);
     },
   );
+  useEffect(()=>{
+    performFetch()
+    
+  },[searchFormData])
 
   const handleSearchFormSubmit = (formData: SearchFormData) => {
-    performFetch();
-    if (!searchFormData) {
-      setSearchFormData(formData);
-    }
+    setSearchFormData(formData)
     return () => {
       if (!isLoading) {
         return cancelFetch();
@@ -63,7 +64,7 @@ const Books: React.FC = () => {
     <>
       <div className="gap"></div>
       <SearchBar handleSearchFormSubmit={handleSearchFormSubmit} />
-      {isLoading ? "wait" : <BookList products={products} />}
+      {isLoading ? "wait" : <BookList books={books} />}
     </>
   );
 };

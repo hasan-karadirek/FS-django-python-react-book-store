@@ -3,32 +3,35 @@ import { Book } from "../pages/Books";
 import "./CSS/BookList.css";
 import slide1 from "../assets/booksImg.jpeg";
 import { Link } from "react-router-dom";
+import AddToCartButton from "./AddToCartButton";
 
 interface BookListProps {
-  products: Book[] | null;
+  books: Book[] | null;
 }
 
-const BookList: React.FC<BookListProps> = ({ products }) => {
+const BookList: React.FC<BookListProps> = ({ books }) => {
   return (
     <div className="d-flex flex-wrap">
-      {products?.map((product) => (
+      {books?.map((book) => (
         <Link
-          to={`/shop/books/${product.id.toString()}`}
-          className="product-card"
-          key={product.id.toString()}
+          to={`/shop/books/${book.id.toString()}`}
+          className="book-card"
+          key={book.id.toString()}
         >
-          <div className="card " id={product.id.toString()}>
+          <div className="card " id={book.id.toString()}>
             <img
               src={
-                product.images[0]
-                  ? `http://localhost:8000${product.images[0].image}`
+                book.images[0]
+                  ? `http://localhost:8000${book.images[0].image}`
                   : slide1
               }
               className="card-img-top"
-              alt={product.title}
+              alt={book.title}
             />
             <div className="card-body">
-              <p className="card-text">{product.title}</p>
+              <h3 className="card-text">{`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}</h3>
+              <p>{book.price}</p>
+              <AddToCartButton btnClasses="btn btn-outline-success" btnText="Add To Cart" bookId={book.id}/>
             </div>
           </div>
         </Link>
