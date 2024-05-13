@@ -23,8 +23,8 @@ class AddToCartView(IsSaleExist, APIView):
         if not created:
             raise CustomAPIException("Book is already in your cart.", status=400)
         serializer = OrderSerializer(open_order)
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        response={"success":True,"data":serializer.data}
+        return Response(response, status=status.HTTP_201_CREATED)
 
 
 class RemoveFromCartView(IsSaleExist, APIView):

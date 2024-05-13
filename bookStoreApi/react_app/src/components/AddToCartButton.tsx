@@ -11,7 +11,7 @@ interface OrderDetail {
   order: number;
   book: Book;
 }
-interface Order {
+export interface Order {
   id: number;
   customer: number;
   cost: string;
@@ -49,7 +49,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     <p>loading</p>
   ) : (
     <button id={bookId.toString()} onClick={handleClick} className={btnClasses}>
-      {btnText} {order?.id}
+      {btnText}
     </button>
   );
 };

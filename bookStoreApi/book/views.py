@@ -54,7 +54,8 @@ class GetBookAPIView(IsBookExist, APIView):
     def get(self, request, pk, *args, **kwargs):
 
         serializer = BookSerializer(request.book)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        response={"data":serializer.data,"success":True}
+        return Response(response, status=status.HTTP_200_OK)
 
 class GetBooksAPIView(APIView):
 
