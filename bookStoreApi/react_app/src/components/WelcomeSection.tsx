@@ -1,8 +1,8 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import "./CSS/WelcomeSection.css";
-import slide1 from "../assets/booksImg.jpeg"
+import slide1 from "../assets/booksImg.jpeg";
 import { Carousel } from "bootstrap";
-import {Rotate} from "react-awesome-reveal";
+import { Rotate } from "react-awesome-reveal";
 
 const WelcomeSection: React.FC = () => {
   useEffect(() => {
@@ -19,7 +19,10 @@ const WelcomeSection: React.FC = () => {
   }, []);
   return (
     <>
-      <div id="main-carousel" className="main-slider  carousel carousel-white slide">
+      <div
+        id="main-carousel"
+        className="main-slider  carousel carousel-white slide"
+      >
         <div className="carousel-indicators">
           <button
             type="button"
@@ -44,33 +47,23 @@ const WelcomeSection: React.FC = () => {
         </div>
         <div className="carousel-inner">
           <div className="carousel-item active" data-bs-interval="8000">
-            <img
-              src={slide1}
-              className="d-block w-100"
-              alt="..."
-            />
+            <img src={slide1} className="d-block w-100" alt="..." />
             <Rotate triggerOnce={true}>
-            <div className="carousel-caption  d-md-block">
-              <h5>Le Flaneur Amsterdam</h5>
-              <p>
-                Buy, sell Turkish, English and Dutch Books.
-              </p>
-            </div>
+              <div className="carousel-caption  d-md-block">
+                <h5>Le Flaneur Amsterdam</h5>
+                <p>Buy, sell Turkish, English and Dutch Books.</p>
+              </div>
             </Rotate>
           </div>
           <div className="carousel-item" data-bs-interval="8000">
-            <img
-              src={slide1}
-              className="d-block w-100"
-              alt="..."
-            />
+            <img src={slide1} className="d-block w-100" alt="..." />
             <Rotate triggerOnce={true}>
-            <div className="carousel-caption  d-md-block">
-              <h5>Second slide label</h5>
-              <p>
-                Some representative placeholder content for the second slide.
-              </p>
-            </div>
+              <div className="carousel-caption  d-md-block">
+                <h5>Second slide label</h5>
+                <p>
+                  Some representative placeholder content for the second slide.
+                </p>
+              </div>
             </Rotate>
           </div>
           <div className="carousel-item">
@@ -80,12 +73,12 @@ const WelcomeSection: React.FC = () => {
               alt="..."
             />
             <Rotate triggerOnce={true}>
-            <div className="carousel-caption  d-md-block">
-              <h5>Third slide label</h5>
-              <p>
-                Some representative placeholder content for the third slide.
-              </p>
-            </div>
+              <div className="carousel-caption  d-md-block">
+                <h5>Third slide label</h5>
+                <p>
+                  Some representative placeholder content for the third slide.
+                </p>
+              </div>
             </Rotate>
           </div>
         </div>

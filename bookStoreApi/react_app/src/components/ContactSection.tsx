@@ -10,14 +10,19 @@ interface FormData {
 }
 
 const ContactSection: React.FC = () => {
-  const {isLoading,error,performFetch,cancelFetch}=useFetch("/blog/create-form/",(res)=>{return})
+  const { isLoading, error, performFetch, cancelFetch } = useFetch(
+    "/blog/create-form/",
+    (res) => {
+      return res;
+    },
+  );
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     message: "",
     images: null,
   });
-  
+
   const { width } = useWindowSize();
 
   const submitForm = () => {
@@ -27,20 +32,30 @@ const ContactSection: React.FC = () => {
     form.append("message", formData.message);
     if (formData.images) {
       Array.from(formData.images).forEach((file, index) =>
-        form.append(`uploaded_images[${index}]`, file, file.name)
+        form.append(`uploaded_images[${index}]`, file, file.name),
       );
     }
-    console.log("fff",form)
+
     performFetch({
       method: "POST",
       body: form,
     });
+    return () => {
+      if (!isLoading) {
+        cancelFetch();
+      }
+    };
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData)
     submitForm();
+    setFormData({
+      name: "",
+      email: "",
+      message: "",
+      images: null,
+    });
   };
 
   useEffect(() => {
@@ -65,8 +80,11 @@ const ContactSection: React.FC = () => {
     });
   };
 
-
-  return (
+  return error ? (
+    <p>{error.message}</p>
+  ) : isLoading ? (
+    <p>loading</p>
+  ) : (
     <>
       <div className="mt-4 d-flex flex-column flex-lg-row">
         <div className="flex-grow-1" style={{ flexBasis: "45%" }}>
@@ -146,7 +164,7 @@ const ContactSection: React.FC = () => {
                   required
                 ></textarea>
               </div>
-              <button type="submit"  className="btn btn-primary">
+              <button type="submit" className="btn btn-primary">
                 Submit
               </button>
             </form>

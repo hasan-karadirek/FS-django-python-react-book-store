@@ -4,7 +4,7 @@ import { useState } from "react";
  * TypeScript types for the response and the options used in fetch.
  */
 interface FetchOptions extends RequestInit {
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  method?: "GET" | "POST" | "PUT" | "DELETE";
 }
 
 interface FetchResponse {
@@ -38,7 +38,9 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
      * We add this check here to provide a better error message if you accidentally add the api part
      * As an error that happens later because of this can be very confusing!
      */
-    throw new Error("When using the useFetch hook, the route should not include the /api/ part");
+    throw new Error(
+      "When using the useFetch hook, the route should not include the /api/ part",
+    );
   }
 
   const [error, setError] = useState<Error | null>(null);
@@ -50,9 +52,7 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
 
     const baseOptions: FetchOptions = {
       method: "GET",
-      headers: {
-        
-      },
+      headers: {},
     };
 
     const fetchData = async () => {
@@ -62,7 +62,11 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
       const res = await fetch(url, { ...baseOptions, ...options, signal });
 
       if (!res.ok) {
-        setError(new Error(`Fetch for ${url} returned an invalid status (${res.status}). Received: ${JSON.stringify(res)}`));
+        setError(
+          new Error(
+            `Fetch for ${url} returned an invalid status (${res.status}). Received: ${JSON.stringify(res)}`,
+          ),
+        );
         setIsLoading(false);
         return;
       }
@@ -72,7 +76,12 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
       if (jsonResult.success === true) {
         onReceived(jsonResult);
       } else {
-        setError(new Error(jsonResult.msg || `The result from our API did not have an error message. Received: ${JSON.stringify(jsonResult)}`));
+        setError(
+          new Error(
+            jsonResult.msg ||
+              `The result from our API did not have an error message. Received: ${JSON.stringify(jsonResult)}`,
+          ),
+        );
       }
 
       setIsLoading(false);

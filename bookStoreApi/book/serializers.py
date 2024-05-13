@@ -53,7 +53,7 @@ class BookSerializer(serializers.ModelSerializer):
     condition_description=serializers.CharField(max_length=255)
     condition=serializers.ChoiceField(choices=Book.conditionChoices)
     price=serializers.DecimalField(max_digits=10, decimal_places=2)
-    entry=serializers.DateField()
+    entry=serializers.DateField(write_only=True)
     status=serializers.ChoiceField(choices=Book.statusChoices)
     tags= BookTagSerializer(source='booktagassociation_set', many=True,required=False)
     tag_names=serializers.ListField(
@@ -88,6 +88,7 @@ class BookSerializer(serializers.ModelSerializer):
             "images",
             "uploaded_images",
         ]
+        
 
     def create(self, validated_data):
         # pop before create Book obj
