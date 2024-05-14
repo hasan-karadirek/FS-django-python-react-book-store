@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import "./CSS/Main.css";
+import { OrderProvider } from "../contexts/OrderContext";
 
 const MainLayout: React.FC = () => {
   const [isSticky, setIsSticky] = useState(false);
@@ -20,9 +21,10 @@ const MainLayout: React.FC = () => {
     };
   }, []);
   return (
-    <>
+    <><OrderProvider>
       <Navbar isSticky={isSticky} />
       <Outlet />
+      </OrderProvider>
     </>
   );
 };

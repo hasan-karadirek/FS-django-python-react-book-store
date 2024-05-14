@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { Book } from "../pages/Books";
+import { OrderContext } from "../contexts/OrderContext";
 interface AddToCartButtonProps {
   bookId: number;
   btnClasses: string;
@@ -17,17 +18,21 @@ export interface Order {
   cost: string;
   address: string;
   status: string;
-  orderDetails: OrderDetail[];
+  order_details: OrderDetail[];
 }
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   bookId,
   btnClasses,
   btnText,
 }) => {
-  const [order, setOrder] = useState<Order | null>(null);
+  const {order,setOrder} =  useContext(OrderContext)
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     `/store/add-to-cart/${bookId}/`,
-    (response) => setOrder(response.data as Order),
+    (response) => 
+        {
+            
+            localStorage.setItem("order",JSON.stringify(response.data))
+        setOrder(response.data as Order)}
   );
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -47,10 +52,10 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     <p>{error.message}</p>
   ) : isLoading ? (
     <p>loading</p>
-  ) : (
+  ) : (order?.order_details?.some(detail=>detail.book.id===bookId) ? "":
     <button id={bookId.toString()} onClick={handleClick} className={btnClasses}>
       {btnText}
-    </button>
+    </button> 
   );
 };
 

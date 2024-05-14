@@ -45,8 +45,8 @@ class RemoveFromCartView(IsSaleExist, APIView):
         except OrderDetail.DoesNotExist:
             raise CustomAPIException("Book is already not in your cart.", status=400)
         serializer = OrderSerializer(open_order)
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        response={"success":True,"data":serializer.data}
+        return Response(response, status=status.HTTP_201_CREATED)
 
 
 class CheckOutView(APIView):
