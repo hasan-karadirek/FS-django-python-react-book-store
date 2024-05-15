@@ -43,13 +43,12 @@ const Books: React.FC = () => {
       setBooks(res.data as Book[]);
     },
   );
-  useEffect(()=>{
-    performFetch()
-    
-  },[searchFormData])
+  useEffect(() => {
+    performFetch();
+  }, [searchFormData]);
 
   const handleSearchFormSubmit = (formData: SearchFormData) => {
-    setSearchFormData(formData)
+    setSearchFormData(formData);
     return () => {
       if (!isLoading) {
         return cancelFetch();

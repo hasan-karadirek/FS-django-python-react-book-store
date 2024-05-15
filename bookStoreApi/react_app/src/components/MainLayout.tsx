@@ -21,9 +21,10 @@ const MainLayout: React.FC = () => {
     };
   }, []);
   return (
-    <><OrderProvider>
-      <Navbar isSticky={isSticky} />
-      <Outlet />
+    <>
+      <OrderProvider>
+        <Navbar isSticky={isSticky} />
+        <Outlet />
       </OrderProvider>
     </>
   );

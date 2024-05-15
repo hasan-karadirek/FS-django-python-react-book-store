@@ -66,7 +66,8 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
           </a>
           <a href="#">
             <img src={twitter} alt="twitter" />
-          </a> | |
+          </a>{" "}
+          | |
         </div>
         <NavCart />
       </div>
