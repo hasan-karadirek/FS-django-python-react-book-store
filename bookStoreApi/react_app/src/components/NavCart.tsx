@@ -32,6 +32,7 @@ const NavCart: React.FC = () => {
         <>
         
         <ul onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
          className="nav-cart-list">
           {order?.order_details?.map((detail) => (
             <li className="d-flex p-3 nav-cart-list-item">
