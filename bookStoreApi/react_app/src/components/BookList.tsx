@@ -12,14 +12,14 @@ interface BookListProps {
 
 const BookList: React.FC<BookListProps> = ({ books }) => {
   return (
-    <div className="d-flex flex-wrap">
+    <div className="d-flex flex-wrap cards-container">
       {books?.map((book) => (
         <Link
           to={`/shop/books/${book.id.toString()}`}
           className="book-card"
           key={book.id.toString()}
         >
-          <div className="card " id={book.id.toString()}>
+          <div className="card" id={book.id.toString()}>
             <img
               src={
                 book.images[0]
@@ -30,10 +30,20 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
               alt={book.title}
             />
             <div className="card-body">
-              <h3 className="card-text">{`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}</h3>
+              <h3 className="card-text">
+                {`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}
+              </h3>
               <p>{book.price}</p>
-              <AddToCartButton btnClasses="btn btn-outline-success" btnText="Add To Cart" bookId={book.id}/>
-              <RemoveFromCartButton btnClasses="btn btn-outline-danger" btnText="Remove From Cart" bookId={book.id}/>
+              <AddToCartButton
+                btnClasses="btn btn-outline-success"
+                btnText="Add To Cart"
+                bookId={book.id}
+              />
+              <RemoveFromCartButton
+                btnClasses="btn btn-danger"
+                btnText="Remove From Cart"
+                bookId={book.id}
+              />
             </div>
           </div>
         </Link>

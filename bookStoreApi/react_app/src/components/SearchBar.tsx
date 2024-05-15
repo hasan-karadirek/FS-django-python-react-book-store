@@ -13,19 +13,18 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleSearchFormSubmit }) => {
   });
   const searchFormOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value: string = e.target.value;
-    console.log("hasan",value,searchForm)
+
     setSearchForm((prevForm) => ({
       ...prevForm,
       search: value,
     }));
-    console.log("hasan",value,searchForm)
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("handle",searchForm)
+
     handleSearchFormSubmit(searchForm);
-    setSearchForm({search:""})
+    setSearchForm({ search: "" });
   };
 
   return (
