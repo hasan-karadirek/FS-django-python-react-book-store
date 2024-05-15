@@ -4,6 +4,7 @@ import Logo from "../assets/303178780_487833293365662_2765766073040987699_n.jpg"
 import facebook from "../assets/facebook.png";
 import instagram from "../assets/instagram.png";
 import twitter from "../assets/twitter.png";
+import NavCart from "./NavCart";
 
 interface NavbarProps {
   isSticky: boolean;
@@ -65,8 +66,9 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
           </a>
           <a href="#">
             <img src={twitter} alt="twitter" />
-          </a>
+          </a> | |
         </div>
+        <NavCart />
       </div>
     </nav>
   );

@@ -33,7 +33,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
               <h3 className="card-text">{`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}</h3>
               <p>{book.price}</p>
               <AddToCartButton btnClasses="btn btn-outline-success" btnText="Add To Cart" bookId={book.id}/>
-              <RemoveFromCartButton btnClasses="btn btn-outline-danger" btnText="Remove From Cart" bookId={book.id}/>
+              <RemoveFromCartButton btnClasses="btn btn-danger" btnText="Remove From Cart" bookId={book.id}/>
             </div>
           </div>
         </Link>
