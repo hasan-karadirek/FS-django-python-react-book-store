@@ -40,18 +40,14 @@
     text-overflow: ellipsis;
   }
 
-@media (max-width: 992px) {
-  .book-card {
-    padding: 10px;
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .book-card {
     padding: 10px;
     flex-basis: 33%;
   }
 }
+
+
 
 @media (max-width: 481px) {
   .book-card {

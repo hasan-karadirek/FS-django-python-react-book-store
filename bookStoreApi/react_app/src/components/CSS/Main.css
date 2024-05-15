@@ -3,7 +3,7 @@ body {
 }
 .gap {
   height: 120px;
-  background-color: brown;
+  
 }
 
 @media (max-width: 992px) {

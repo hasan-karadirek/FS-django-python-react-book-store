@@ -19,7 +19,7 @@ const NavCart: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="nav-cart-container">
       <img
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -61,7 +61,7 @@ const NavCart: React.FC = () => {
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 };
 

@@ -23,7 +23,7 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
           <span style={{ fontSize: "2rem" }}>Le Flaneur</span>
         </a>
         <button
-          className="navbar-toggler"
+          className="navbar-toggler navbar-toggler-btn"
           type="button"
           aria-label="Toggle navigation"
           onClick={toggleNavbar}

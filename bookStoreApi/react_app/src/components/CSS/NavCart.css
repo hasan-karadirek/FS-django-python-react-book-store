@@ -56,7 +56,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
+.navbar-toggler-btn{
+    position: absolute;
+    right: 50px;
+}
 @media (max-width: 768px) {
     .nav-cart-list-body{
         width: 50vw;
