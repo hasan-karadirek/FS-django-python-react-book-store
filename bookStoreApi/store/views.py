@@ -2,7 +2,7 @@ from .serializers import OrderSerializer, CheckoutSerializer
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import  OrderDetail, Order
+from .models import  OrderDetail, Order, Address
 from core.mixins import  IsSaleExist
 from core.custom_exceptions import CustomAPIException
 from core.mollie import createMolliePayment
@@ -89,6 +89,7 @@ class CheckOutView(APIView):
                         order_detail.book.save()
 
                     open_order.status = "PENDING"
+                    open_order.address=Address.objects.create(**checkoutSerializer.validated_data["address"])
                     open_order.save()
                     payment = createMolliePayment(
                         str(open_order.cost),

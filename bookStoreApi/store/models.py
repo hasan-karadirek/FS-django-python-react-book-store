@@ -6,6 +6,27 @@ from django.db.models import F
 from core.custom_exceptions import CustomAPIException
 
 
+class Address(models.Model):
+    full_name=models.CharField(max_length=50,null=True)
+    email=models.EmailField(null=True,)
+    street=models.CharField(max_length=255)
+    city=models.CharField(max_length=255)
+    postcode=models.CharField(max_length=10)
+    country=models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.postcode} - {self.city}"
+    
+    def save(self,*args,**kwargs):
+        if self.full_name == None or self.email == None:
+            try:
+                order=Order.objects.get(address=self)
+                if order.customer == None:
+                    raise CustomAPIException(status=400, message="Guest customer should provide full name and email.")
+            except Order.DoesNotExist:
+                raise CustomAPIException(status=404, message="There is no order associated with this address.")
+                   
+        super.save(*args,**kwargs)    
 
 
 class Order(models.Model):
@@ -17,8 +38,8 @@ class Order(models.Model):
     customer = models.ForeignKey(
         Customer, related_name="orders", on_delete=models.SET_NULL, null=True
     )
-    address = models.TextField(max_length=500, blank=False, default="Address")
     cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    address=models.ForeignKey(Address,related_name="orders",on_delete=models.SET_NULL,null=True)
     status = models.CharField(
         max_length=50,
         choices=statusChoices,
