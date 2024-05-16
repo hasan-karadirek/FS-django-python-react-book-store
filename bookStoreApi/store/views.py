@@ -7,7 +7,7 @@ from core.mixins import  IsSaleExist
 from core.custom_exceptions import CustomAPIException
 from core.mollie import createMolliePayment
 from django.db import transaction
-from rest_framework.parsers import  FormParser, JSONParser
+from rest_framework.parsers import  FormParser, JSONParser,MultiPartParser
 
 
 class AddToCartView(IsSaleExist, APIView):
@@ -51,8 +51,9 @@ class RemoveFromCartView(IsSaleExist, APIView):
 
 class CheckOutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    parser_classes=[FormParser,JSONParser]
+    parser_classes=[FormParser, JSONParser, MultiPartParser]
     def put(self, request, *args, **kwargs):
+        print(request.data)
         checkoutSerializer = CheckoutSerializer(data=request.data)
         if checkoutSerializer.is_valid():
             open_order, open_order_created = Order.objects.get_or_create(
@@ -107,8 +108,7 @@ class CheckOutView(APIView):
             open_order.refresh_from_db()
 
             serializer = OrderSerializer(open_order)
-            response_data = serializer.data
-            response_data["redirectUrl"] = payment["_links"]["checkout"]["href"]
+            response_data = {"order":serializer.data,"redirectUrl":  payment["_links"]["checkout"]["href"]}
 
             return Response(response_data, status=status.HTTP_200_OK)
         else:

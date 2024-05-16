@@ -38,7 +38,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     performFetch({
       method: "POST",
       headers: {
-        Authorization: "Token 555ef6a75ff78bc5c2d1f20dda814493039a9a89",
+        Authorization: "Token 7d546d9cd5527e6fb7ce6883a0e9b75ff8db5e44",
       },
     });
     return () => {

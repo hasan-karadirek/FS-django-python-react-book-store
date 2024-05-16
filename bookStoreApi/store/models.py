@@ -26,7 +26,7 @@ class Address(models.Model):
             except Order.DoesNotExist:
                 raise CustomAPIException(status=404, message="There is no order associated with this address.")
                    
-        super.save(*args,**kwargs)    
+        super().save(*args,**kwargs)    
 
 
 class Order(models.Model):
