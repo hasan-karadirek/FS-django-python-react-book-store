@@ -2,6 +2,7 @@ import React, { ChangeEvent, useContext, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { Order } from "./AddToCartButton";
 import { OrderContext } from "../contexts/OrderContext";
+import Cookies from "js-cookie";
 interface CheckoutFormData {
   full_name: string;
   email: string;
@@ -49,7 +50,7 @@ const AddressForm: React.FC = () => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Token e434cdd2e5150d848a0477e83f61f3f501cb428f",
+        Authorization: `Token ${Cookies.get("token") ? Cookies.get("token") : ""}`,
       },
       body: JSON.stringify(addressForm),
     });

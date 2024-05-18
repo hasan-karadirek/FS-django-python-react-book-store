@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import { Book } from "../pages/Books";
 import { OrderContext } from "../contexts/OrderContext";
+import Cookies from "js-cookie";
+
 interface AddToCartButtonProps {
   bookId: number;
   btnClasses: string;
@@ -38,7 +40,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     performFetch({
       method: "POST",
       headers: {
-        Authorization: "Token e434cdd2e5150d848a0477e83f61f3f501cb428f",
+        Authorization: `Token ${Cookies.get("token") ? Cookies.get("token") : ""}`,
       },
     });
     return () => {

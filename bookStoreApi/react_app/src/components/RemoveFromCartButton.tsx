@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import { Order } from "./AddToCartButton";
 import { OrderContext } from "../contexts/OrderContext";
+import Cookies from "js-cookie";
 
 interface RemoveFromCartButtonProps {
   bookId: number;
@@ -27,7 +28,7 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
     performFetch({
       method: "PUT",
       headers: {
-        Authorization: "Token e434cdd2e5150d848a0477e83f61f3f501cb428f",
+        Authorization: `Token ${Cookies.get("token") ? Cookies.get("token") : ""}`,
       },
     });
     return () => {
