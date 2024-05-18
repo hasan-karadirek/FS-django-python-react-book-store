@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import { Book } from "../pages/Books";
 import { OrderContext } from "../contexts/OrderContext";
+import Cookies from "js-cookie";
+
 interface AddToCartButtonProps {
   bookId: number;
   btnClasses: string;
@@ -35,10 +37,15 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   );
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (!Cookies.get("session_id")) {
+      Cookies.set("session_id", Date.now().toString());
+    }
     performFetch({
       method: "POST",
       headers: {
-        Authorization: "Token 555ef6a75ff78bc5c2d1f20dda814493039a9a89",
+        Authorization: Cookies.get("token")
+          ? `Token ${Cookies.get("token")}`
+          : "",
       },
     });
     return () => {

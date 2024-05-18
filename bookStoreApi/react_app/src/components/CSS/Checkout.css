@@ -1,0 +1,16 @@
+.checkout-cart {
+  flex-basis: 45%;
+}
+
+.checkout-address-form {
+  flex-basis: 45%;
+}
+@media (max-width: 768px) {
+  .checkout-container {
+    display: block !important;
+  }
+  .checkout-submit-btn {
+    position: absolute;
+    bottom: 0;
+  }
+}
