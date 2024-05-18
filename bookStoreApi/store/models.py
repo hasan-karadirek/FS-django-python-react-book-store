@@ -38,6 +38,7 @@ class Order(models.Model):
     customer = models.ForeignKey(
         Customer, related_name="orders", on_delete=models.SET_NULL, null=True
     )
+    session_id=models.CharField(max_length=255)
     cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     address=models.ForeignKey(Address,related_name="orders",on_delete=models.SET_NULL,null=True)
     status = models.CharField(

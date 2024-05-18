@@ -11,12 +11,20 @@ from rest_framework.parsers import  FormParser, JSONParser,MultiPartParser
 
 
 class AddToCartView(IsSaleExist, APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    
 
     def post(self, request, *args, **kwargs):
-        open_order, open_order_created = Order.objects.get_or_create(
-            customer=request.user, status="OPEN"
-        )
+        print(request.user, request.COOKIES.get("session_id"))
+        if str(request.user) =="AnonymousUser":
+           if request.COOKIES.get("session_id")==None:
+              raise CustomAPIException("Please provide session_id in cookies.", status=400) 
+           open_order, open_order_created = Order.objects.get_or_create(
+                session_id=request.COOKIES.get("session_id"), status="OPEN"
+            )
+        else:
+            open_order, open_order_created = Order.objects.get_or_create(
+                customer=request.user, status="OPEN"
+            )
         orderDetail, created = OrderDetail.objects.get_or_create(
             order=open_order or open_order_created, book=request.book
         )
@@ -28,12 +36,19 @@ class AddToCartView(IsSaleExist, APIView):
 
 
 class RemoveFromCartView(IsSaleExist, APIView):
-    permission_classes = [permissions.IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
-        open_order, open_order_created = Order.objects.get_or_create(
-            customer=request.user, status="OPEN"
-        )
+        if str(request.user) =="AnonymousUser":
+            if request.COOKIES.get("session_id")==None:
+              raise CustomAPIException("Please provide session_id in cookies.", status=400) 
+            open_order, open_order_created = Order.objects.get_or_create(
+            session_id=request.COOKIES.get("session_id"), status="OPEN"
+            )
+        else:
+            open_order, open_order_created = Order.objects.get_or_create(
+                customer=request.user, status="OPEN"
+            )
+
         if open_order_created:
             raise CustomAPIException("Book is already not in your cart.", status=400)
         try:
@@ -50,15 +65,19 @@ class RemoveFromCartView(IsSaleExist, APIView):
 
 
 class CheckOutView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    
     parser_classes=[FormParser, JSONParser, MultiPartParser]
     def put(self, request, *args, **kwargs):
-        print(request.data)
         checkoutSerializer = CheckoutSerializer(data=request.data)
         if checkoutSerializer.is_valid():
-            open_order, open_order_created = Order.objects.get_or_create(
-                customer=request.user, status="OPEN"
-            )
+            if str(request.user) =="AnonymousUser":
+                open_order, open_order_created = Order.objects.get_or_create(
+                    session_id=request.COOKIES.get("session_id"), status="OPEN"
+                )
+            else:
+                open_order, open_order_created = Order.objects.get_or_create(
+                    customer=request.user, status="OPEN"
+                )
             if open_order_created or open_order.cost == 0:
                 raise CustomAPIException(
                     "Your cart is empty! You can not continue to checkout.", status=400

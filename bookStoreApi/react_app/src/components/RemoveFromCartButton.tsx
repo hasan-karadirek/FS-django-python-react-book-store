@@ -25,10 +25,15 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
   );
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (!Cookies.get("session_id")) {
+      Cookies.set("session_id", Date.now().toString());
+    }
     performFetch({
       method: "PUT",
       headers: {
-        Authorization: `Token ${Cookies.get("token") ? Cookies.get("token") : ""}`,
+        Authorization: Cookies.get("token")
+          ? `Token ${Cookies.get("token")}`
+          : "",
       },
     });
     return () => {

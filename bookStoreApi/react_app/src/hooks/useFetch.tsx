@@ -53,6 +53,7 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
     const baseOptions: FetchOptions = {
       method: "GET",
       headers: {},
+      credentials: "include",
     };
 
     const fetchData = async () => {

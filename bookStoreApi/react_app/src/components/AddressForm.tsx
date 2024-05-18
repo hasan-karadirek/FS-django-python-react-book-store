@@ -50,7 +50,9 @@ const AddressForm: React.FC = () => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${Cookies.get("token") ? Cookies.get("token") : ""}`,
+        Authorization: Cookies.get("token")
+          ? `Token ${Cookies.get("token")}`
+          : "",
       },
       body: JSON.stringify(addressForm),
     });
@@ -63,6 +65,9 @@ const AddressForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!Cookies.get("session_id")) {
+      Cookies.set("session_id", Date.now().toString());
+    }
     submitForm();
   };
 
