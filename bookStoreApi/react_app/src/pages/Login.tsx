@@ -3,6 +3,7 @@ import useFetch from "../hooks/useFetch";
 import Cookies from "js-cookie";
 import "../components/CSS/Login.css";
 import { useNavigate } from "react-router-dom";
+import { Order } from "../components/AddToCartButton";
 interface LoginFormData {
   email: string;
   password: string;
@@ -16,6 +17,7 @@ interface Customer {
 interface LoginResponse {
   token: string;
   customer: Customer;
+  order: Order | null;
 }
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({
@@ -29,6 +31,9 @@ const Login: React.FC = () => {
       const data = res.data as LoginResponse;
       Cookies.set("token", data.token);
       localStorage.setItem("customer", JSON.stringify(data.customer));
+      data.order
+        ? localStorage.setItem("order", JSON.stringify(data.order))
+        : "";
       navigate("/shop/books/");
     },
   );

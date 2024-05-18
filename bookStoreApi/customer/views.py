@@ -7,6 +7,8 @@ from .serializers import UserSerializer
 from core.custom_error_handler import CustomAPIException
 from rest_framework.parsers import  FormParser, JSONParser
 from .models import Customer
+from store.models import Order
+from store.serializers import OrderSerializer
 
 
 class UserRegistrationAPIView(APIView):
@@ -30,9 +32,17 @@ class LoginAPIView(APIView):
             raise CustomAPIException("Invalid Credentials", status=400)
         user = authenticate(username=customer.username,password=password)
         if user:
+            if request.COOKIES.get("session_id"):
+                try:
+                    order=Order.objects.get(session_id=request.COOKIES.get("session_id"),status="OPEN")
+                    order.customer=customer
+                    order.save()
+                except Order.DoesNotExist:
+                    pass
             token, created = Token.objects.get_or_create(user=user)
             serializer=UserSerializer(customer)
-            return Response({"success":True,"data":{"token": token.key, "customer":serializer.data}})
+            orderSerializer=OrderSerializer(order)
+            return Response({"success":True,"data":{"token": token.key, "customer":serializer.data,"order":orderSerializer.data}})
         raise CustomAPIException("Invalid Credentials", status=400)
 
 

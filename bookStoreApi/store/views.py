@@ -22,9 +22,13 @@ class AddToCartView(IsSaleExist, APIView):
                 session_id=request.COOKIES.get("session_id"), status="OPEN"
             )
         else:
-            open_order, open_order_created = Order.objects.get_or_create(
-                customer=request.user, status="OPEN"
-            )
+            order_qs=Order.objects.filter(customer=request.user, status='OPEN').order_by('-id')
+            if order_qs.exists():
+                open_order=order_qs.first()
+                open_order_created=False
+            else:
+                open_order=Order.objects.create(customer=request.user,status="OPEN")
+                open_order_created=True
         orderDetail, created = OrderDetail.objects.get_or_create(
             order=open_order or open_order_created, book=request.book
         )
@@ -45,9 +49,13 @@ class RemoveFromCartView(IsSaleExist, APIView):
             session_id=request.COOKIES.get("session_id"), status="OPEN"
             )
         else:
-            open_order, open_order_created = Order.objects.get_or_create(
-                customer=request.user, status="OPEN"
-            )
+            order_qs=Order.objects.filter(customer=request.user, status='OPEN').order_by('-id')
+            if order_qs.exists():
+                open_order=order_qs.first()
+                open_order_created=False
+            else:
+                open_order=Order.objects.create(customer=request.user,status="OPEN")
+                open_order_created=True
 
         if open_order_created:
             raise CustomAPIException("Book is already not in your cart.", status=400)
@@ -75,9 +83,14 @@ class CheckOutView(APIView):
                     session_id=request.COOKIES.get("session_id"), status="OPEN"
                 )
             else:
-                open_order, open_order_created = Order.objects.get_or_create(
-                    customer=request.user, status="OPEN"
-                )
+                order_qs=Order.objects.filter(customer=request.user, status='OPEN').order_by('-id')
+                if order_qs.exists():
+                    open_order=order_qs.first()
+                    open_order_created=False
+                else:
+                    open_order=Order.objects.create(customer=request.user,status="OPEN")
+                    open_order_created=True
+
             if open_order_created or open_order.cost == 0:
                 raise CustomAPIException(
                     "Your cart is empty! You can not continue to checkout.", status=400
