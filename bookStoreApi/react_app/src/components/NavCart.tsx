@@ -59,7 +59,7 @@ const NavCart: React.FC = () => {
               </li>
             ))}
             <li id="nav-cart-list-cost">
-              <p>Total : {order.cost}$</p>
+              <p>Total : {order?.cost}$</p>
             </li>
             <li id="nav-cart-list-checkout-btn">
               <Link to="/shop/checkout">

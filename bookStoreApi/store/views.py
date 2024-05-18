@@ -108,7 +108,7 @@ class CheckOutView(APIView):
             open_order.refresh_from_db()
 
             serializer = OrderSerializer(open_order)
-            response_data = {"order":serializer.data,"redirectUrl":  payment["_links"]["checkout"]["href"]}
+            response_data = {"success":True,"data":{"order":serializer.data,"redirectUrl":  payment["_links"]["checkout"]["href"]}}
 
             return Response(response_data, status=status.HTTP_200_OK)
         else:
