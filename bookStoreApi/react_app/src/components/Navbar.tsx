@@ -5,6 +5,7 @@ import facebook from "../assets/facebook.png";
 import instagram from "../assets/instagram.png";
 import twitter from "../assets/twitter.png";
 import NavCart from "./NavCart";
+import NavbarUser from "./NavbarUser";
 
 interface NavbarProps {
   isSticky: boolean;
@@ -58,18 +59,20 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
               </a>
             </li>
           </ul>
-          <a href="#">
-            <img src={facebook} alt="facebook" />
-          </a>
-          <a href="#">
-            <img src={instagram} alt="instagram" />
-          </a>
-          <a href="#">
-            <img src={twitter} alt="twitter" />
-          </a>{" "}
-          | |
+          <div id="social-container">
+            <a href="#">
+              <img src={facebook} alt="facebook" />
+            </a>
+            <a href="#">
+              <img src={instagram} alt="instagram" />
+            </a>
+            <a href="#">
+              <img src={twitter} alt="twitter" />
+            </a>
+          </div>
+          <NavCart />
+          <NavbarUser />
         </div>
-        <NavCart />
       </div>
     </nav>
   );

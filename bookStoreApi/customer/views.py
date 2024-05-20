@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
-from rest_framework import status
+from rest_framework import status,permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer
@@ -31,6 +31,7 @@ class LoginAPIView(APIView):
         except Customer.DoesNotExist:
             raise CustomAPIException("Invalid Credentials", status=400)
         user = authenticate(username=customer.username,password=password)
+        order=None
         if user:
             if request.COOKIES.get("session_id"):
                 try:
@@ -41,12 +42,16 @@ class LoginAPIView(APIView):
                     pass
             token, created = Token.objects.get_or_create(user=user)
             serializer=UserSerializer(customer)
-            orderSerializer=OrderSerializer(order)
-            return Response({"success":True,"data":{"token": token.key, "customer":serializer.data,"order":orderSerializer.data}})
+            orderSerializer=OrderSerializer(order) if order else None
+            return Response({"success":True,"data":{"token": token.key, "customer":serializer.data,"order":orderSerializer.data  if orderSerializer else None}})
         raise CustomAPIException("Invalid Credentials", status=400)
 
 
 class LogoutAPIView(APIView):
-    def post(self, request):
+    permission_classes={permissions.IsAuthenticated}
+    def get(self, request):
         request.user.auth_token.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        response=Response({"success":True},status=status.HTTP_200_OK)
+        response.delete_cookie("session_id")
+        response.delete_cookie("token")
+        return response
