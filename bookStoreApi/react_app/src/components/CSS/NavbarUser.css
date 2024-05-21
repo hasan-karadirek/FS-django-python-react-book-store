@@ -1,0 +1,8 @@
+.nav-login-container {
+  position: absolute;
+  margin-top: 1rem;
+  background-color: gray;
+  right: 1rem;
+  padding: 20px;
+  border-radius: 10px;
+}

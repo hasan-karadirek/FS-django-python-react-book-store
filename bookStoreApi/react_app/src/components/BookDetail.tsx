@@ -3,6 +3,7 @@ import { Book } from "../pages/Books";
 import { Link } from "react-router-dom";
 import "../components/CSS/BookDetail.css";
 import AddToCartButton from "./AddToCartButton";
+import slide1 from "../assets/booksImg.jpeg";
 
 interface BookDetailProps {
   book: Book;
@@ -17,7 +18,11 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
         <img
           id="book-image-active"
           className="book-image"
-          src={`http://localhost:8000${book.images[bookImageIndex]?.image}`}
+          src={
+            book.images.length > 0
+              ? `http://localhost:8000${book.images[bookImageIndex]?.image}`
+              : slide1
+          }
           alt={book.title}
         />
         <div className="d-flex  w-100 book-image-thumb-container ">

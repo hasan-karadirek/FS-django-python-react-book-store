@@ -1,7 +1,10 @@
 from django.contrib import admin
 from .models import Book, BookTagAssociation, BookImage,Author,Language,Category,PublishingHouse,Tag
 
-admin.site.register(Book)
+
+class BookAdmin(admin.ModelAdmin):
+    search_fields = ['title', 'author__name',"category__title"]
+admin.site.register(Book,BookAdmin)
 admin.site.register(BookTagAssociation)
 admin.site.register(Tag)
 admin.site.register(BookImage)
