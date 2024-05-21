@@ -5,6 +5,35 @@
 .checkout-address-form {
   flex-basis: 45%;
 }
+.checkout-register-container {
+  position: absolute;
+  left: 40vw;
+  background-color: #35393fdb;
+  width: 30vw;
+  padding: 2rem;
+  border-radius: 20px;
+  color: white;
+}
+.checkout-login {
+  max-width: 720px;
+  margin: auto;
+}
+.checkout-login span {
+  text-align: center;
+}
+#checkout-create-account {
+  text-align: center;
+}
+#register-close {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  background-color: red;
+  border-radius: 5px;
+  width: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+}
 @media (max-width: 768px) {
   .checkout-container {
     display: block !important;
@@ -12,5 +41,15 @@
   .checkout-submit-btn {
     position: absolute;
     bottom: 0;
+  }
+  .checkout-register-container {
+    width: 50vw;
+    left: 30vw;
+  }
+}
+@media (max-width: 576px) {
+  .checkout-register-container {
+    width: 70vw;
+    left: 15vw;
   }
 }
