@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "../CSS/BookDetail.css";
 import AddToCartButton from "../checkout/AddToCartButton";
 import slide1 from "../../assets/booksImg.jpeg";
+import RemoveFromCartButton from "../checkout/RemoveFromCartButton";
 
 interface BookDetailProps {
   book: Book;
@@ -30,23 +31,28 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
             <img
               key={index}
               onClick={() => setBookImageIndex(index)}
-              className="book-image-thumb p-2"
+              className="book-image-thumb"
               src={`http://localhost:8000${image.image}`}
             />
           ))}
         </div>
       </div>
-      <div className="book-infos p-5">
+      <div className="book-infos">
         <h1>
           {`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}
         </h1>
         <span id="book-price">{book.price}$</span>
         <AddToCartButton
           bookId={book.id}
-          btnClasses="btn btn-outline-success"
+          btnClasses="btn btn-outline-success book-detail-btn"
           btnText="Add To Cart"
         />
-        <ul className="d-flex book-info-list my-4">
+        <RemoveFromCartButton
+          btnClasses="btn btn-danger book-detail-btn"
+          btnText="Remove From Cart"
+          bookId={book.id}
+        />
+        <ul className="d-flex book-info-list">
           <div>
             <li className="p-2">
               Author: <span>{book.author}</span>{" "}
