@@ -1,5 +1,5 @@
 import React from "react";
-import { Book } from "../pages/Books";
+import { Book } from "../types/models";
 import "./CSS/BookList.css";
 import slide1 from "../assets/booksImg.jpeg";
 import { Link } from "react-router-dom";

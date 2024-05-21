@@ -3,18 +3,8 @@ import useFetch from "../hooks/useFetch";
 import Cookies from "js-cookie";
 import "../components/CSS/Login.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Order } from "../components/AddToCartButton";
-import { Customer } from "../pages/Login";
-export interface LoginFormData {
-  email: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  token: string;
-  customer: Customer;
-  order: Order | null;
-}
+import { LoginFormData } from "../types/forms";
+import { LoginResponse } from "../types/responses";
 
 interface LoginFormProps {
   containerClasses: string;

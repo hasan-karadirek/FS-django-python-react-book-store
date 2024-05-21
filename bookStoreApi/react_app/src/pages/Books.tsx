@@ -1,37 +1,10 @@
 import React, { useEffect, useState } from "react";
-import SearchBar, { SearchFormData } from "../components/SearchBar";
+import SearchBar from "../components/SearchBar";
+import { SearchFormData } from "../types/forms";
 import useFetch from "../hooks/useFetch";
 import BookList from "../components/BookList";
+import { Book } from "../types/models";
 
-interface BookImage {
-  book: number;
-  image: string;
-}
-interface Tag {
-  tag: {
-    id: number;
-    name: string;
-  };
-}
-export interface Book {
-  id: number;
-  isbn: string;
-  env_no: number;
-  title: string;
-  author: string;
-  publishing_house: string;
-  language: string;
-  cover: string;
-  year: number;
-  edition: string;
-  category: string;
-  condition_description: string;
-  condition: string;
-  price: string;
-  status: string;
-  tags: Tag[];
-  images: BookImage[];
-}
 const Books: React.FC = () => {
   const [books, setBooks] = useState<Book[] | null>(null);
   const [searchFormData, setSearchFormData] = useState<SearchFormData | null>(

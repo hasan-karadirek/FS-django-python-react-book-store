@@ -1,5 +1,5 @@
 import React, { createContext, useState, ReactNode } from "react";
-import { Order } from "../components/AddToCartButton";
+import { Order } from "../types/models";
 export interface OrderContextType {
   order: Order | null;
   setOrder: React.Dispatch<React.SetStateAction<Order | null>>;

@@ -2,22 +2,9 @@ import React, { ChangeEvent, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import Cookies from "js-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Order } from "../components/AddToCartButton";
-import { Customer } from "../pages/Login";
 import "./CSS/RegisterForm.css";
-
-interface RegisterFormData {
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-}
-interface RegisterResponse {
-  customer: Customer;
-  token: string;
-  order: Order;
-}
+import { RegisterResponse } from "../types/responses";
+import { RegisterFormData } from "../types/forms";
 
 const RegisterForm: React.FC = () => {
   const [formData, setFormData] = useState<RegisterFormData>({

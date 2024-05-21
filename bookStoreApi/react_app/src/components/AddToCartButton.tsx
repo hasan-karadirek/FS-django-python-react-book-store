@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import useFetch from "../hooks/useFetch";
-import { Book } from "../pages/Books";
+import { Order } from "../types/models";
 import { OrderContext } from "../contexts/OrderContext";
 import Cookies from "js-cookie";
 
@@ -9,19 +9,7 @@ interface AddToCartButtonProps {
   btnClasses: string;
   btnText: string;
 }
-interface OrderDetail {
-  id: number;
-  order: number;
-  book: Book;
-}
-export interface Order {
-  id: number;
-  customer: number;
-  cost: string;
-  address: string;
-  status: string;
-  order_details: OrderDetail[];
-}
+
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   bookId,
   btnClasses,

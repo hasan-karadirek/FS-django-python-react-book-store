@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Book } from "../pages/Books";
+import { Book } from "../types/models";
 import { Link } from "react-router-dom";
 import "../components/CSS/BookDetail.css";
 import AddToCartButton from "./AddToCartButton";

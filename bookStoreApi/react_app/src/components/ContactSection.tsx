@@ -1,13 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import useWindowSize from "../hooks/useWindowSize";
 import useFetch from "../hooks/useFetch";
-
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-  images: FileList | null;
-}
+import { ContactFormData } from "../types/forms";
 
 const ContactSection: React.FC = () => {
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
@@ -16,7 +10,7 @@ const ContactSection: React.FC = () => {
       return res;
     },
   );
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     message: "",
