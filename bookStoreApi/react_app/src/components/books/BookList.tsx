@@ -1,10 +1,10 @@
 import React from "react";
-import { Book } from "../types/models";
-import "./CSS/BookList.css";
-import slide1 from "../assets/booksImg.jpeg";
+import { Book } from "../../types/models";
+import "../CSS/BookList.css";
+import slide1 from "../../assets/booksImg.jpeg";
 import { Link } from "react-router-dom";
-import AddToCartButton from "./AddToCartButton";
-import RemoveFromCartButton from "./RemoveFromCartButton";
+import AddToCartButton from "../checkout/AddToCartButton";
+import RemoveFromCartButton from "../checkout/RemoveFromCartButton";
 
 interface BookListProps {
   books: Book[] | null;

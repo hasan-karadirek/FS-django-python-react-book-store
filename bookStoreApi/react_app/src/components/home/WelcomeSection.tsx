@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import "./CSS/WelcomeSection.css";
-import slide1 from "../assets/booksImg.jpeg";
+import "../CSS/WelcomeSection.css";
+import slide1 from "../../assets/booksImg.jpeg";
 import { Carousel } from "bootstrap";
 import { Rotate } from "react-awesome-reveal";
 

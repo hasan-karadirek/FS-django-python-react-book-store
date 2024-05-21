@@ -1,6 +1,6 @@
 import React from "react";
-import "./CSS/AboutUs.css";
-import aboutUsImage from "../assets/books3.jpeg";
+import "../CSS/AboutUs.css";
+import aboutUsImage from "../../assets/books3.jpeg";
 import { Slide } from "react-awesome-reveal";
 
 const AboutUs: React.FC = () => {

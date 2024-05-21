@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import useWindowSize from "../hooks/useWindowSize";
-import useFetch from "../hooks/useFetch";
-import { ContactFormData } from "../types/forms";
+import useWindowSize from "../../hooks/useWindowSize";
+import useFetch from "../../hooks/useFetch";
+import { ContactFormData } from "../../types/forms";
 
 const ContactSection: React.FC = () => {
   const { isLoading, error, performFetch, cancelFetch } = useFetch(

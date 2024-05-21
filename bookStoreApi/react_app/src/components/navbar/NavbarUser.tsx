@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import userIcon from "../assets/user.png";
+import userIcon from "../../assets/user.png";
 import Cookies from "js-cookie";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import { Link } from "react-router-dom";
-import LoginForm from "./LoginForm";
-import "./CSS/NavbarUser.css";
+import LoginForm from "../customer/LoginForm";
+import "../CSS/NavbarUser.css";
 
 const NavbarUser: React.FC = () => {
   const [isHover, setIsHover] = useState<boolean>(false);

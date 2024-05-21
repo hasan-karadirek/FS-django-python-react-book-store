@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Book } from "../types/models";
+import { Book } from "../../types/models";
 import { Link } from "react-router-dom";
-import "../components/CSS/BookDetail.css";
-import AddToCartButton from "./AddToCartButton";
-import slide1 from "../assets/booksImg.jpeg";
+import "../CSS/BookDetail.css";
+import AddToCartButton from "../checkout/AddToCartButton";
+import slide1 from "../../assets/booksImg.jpeg";
 
 interface BookDetailProps {
   book: Book;

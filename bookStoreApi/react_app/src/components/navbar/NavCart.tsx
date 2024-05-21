@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import cartImage from "../assets/shopping-bag.png";
-import "./CSS/NavCart.css";
-import { OrderContext } from "../contexts/OrderContext";
-import slide1 from "../assets/booksImg.jpeg";
-import RemoveFromCartButton from "./RemoveFromCartButton";
+import cartImage from "../../assets/shopping-bag.png";
+import "../CSS/NavCart.css";
+import { OrderContext } from "../../contexts/OrderContext";
+import slide1 from "../../assets/booksImg.jpeg";
+import RemoveFromCartButton from "../checkout/RemoveFromCartButton";
 import { Link } from "react-router-dom";
 
 const NavCart: React.FC = () => {

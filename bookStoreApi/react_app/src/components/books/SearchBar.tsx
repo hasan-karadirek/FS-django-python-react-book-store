@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SearchFormData } from "../types/forms";
+import { SearchFormData } from "../../types/forms";
 
 interface SearchBarProps {
   handleSearchFormSubmit: (formData: SearchFormData) => void;

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import AddressForm from "../components/AddressForm";
-import CheckoutCart from "../components/CheckoutCart";
+import AddressForm from "../components/checkout/AddressForm";
+import CheckoutCart from "../components/checkout/CheckoutCart";
 import "../components/CSS/Checkout.css";
-import RegisterForm from "../components/RegisterForm";
-import LoginForm from "../components/LoginForm";
+import RegisterForm from "../components/customer/RegisterForm";
+import LoginForm from "../components/customer/LoginForm";
 
 const Checkout: React.FC = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../components/books/SearchBar";
 import { SearchFormData } from "../types/forms";
 import useFetch from "../hooks/useFetch";
-import BookList from "../components/BookList";
+import BookList from "../components/books/BookList";
 import { Book } from "../types/models";
 
 const Books: React.FC = () => {

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import "./CSS/Testimonials.css";
-import ImageG from "../assets/books3.jpeg";
-import ImageG1 from "../assets/books4.jpeg";
-import ImageG2 from "../assets/books12.jpeg";
-import ImageG3 from "../assets/books11.jpeg";
+import "../CSS/Testimonials.css";
+import ImageG from "../../assets/books3.jpeg";
+import ImageG1 from "../../assets/books4.jpeg";
+import ImageG2 from "../../assets/books12.jpeg";
+import ImageG3 from "../../assets/books11.jpeg";
 import { Carousel } from "bootstrap";
 
 const Testimonials: React.FC = () => {

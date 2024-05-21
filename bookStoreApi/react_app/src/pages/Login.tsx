@@ -1,6 +1,6 @@
 import React from "react";
 import "../components/CSS/Login.css";
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/customer/LoginForm";
 
 const Login: React.FC = () => {
   return (

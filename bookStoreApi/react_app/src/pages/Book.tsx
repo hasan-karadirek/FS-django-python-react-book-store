@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import { Book } from "../types/models";
 
-import BookDetail from "../components/BookDetail";
+import BookDetail from "../components/book/BookDetail";
 
 const BookPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();

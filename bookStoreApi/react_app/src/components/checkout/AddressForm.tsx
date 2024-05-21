@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useContext, useState } from "react";
-import useFetch from "../hooks/useFetch";
-import { OrderContext } from "../contexts/OrderContext";
+import useFetch from "../../hooks/useFetch";
+import { OrderContext } from "../../contexts/OrderContext";
 import Cookies from "js-cookie";
-import { CheckoutResponse } from "../types/responses";
-import { CheckoutFormData } from "../types/forms";
+import { CheckoutResponse } from "../../types/responses";
+import { CheckoutFormData } from "../../types/forms";
 
 const AddressForm: React.FC = () => {
   const { setOrder } = useContext(OrderContext);

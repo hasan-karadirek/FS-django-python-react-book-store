@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import Cookies from "js-cookie";
-import "../components/CSS/Login.css";
+import "../CSS/Login.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { LoginFormData } from "../types/forms";
-import { LoginResponse } from "../types/responses";
+import { LoginFormData } from "../../types/forms";
+import { LoginResponse } from "../../types/responses";
 
 interface LoginFormProps {
   containerClasses: string;

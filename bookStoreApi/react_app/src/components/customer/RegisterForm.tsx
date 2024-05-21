@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import Cookies from "js-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./CSS/RegisterForm.css";
-import { RegisterResponse } from "../types/responses";
-import { RegisterFormData } from "../types/forms";
+import "../CSS/RegisterForm.css";
+import { RegisterResponse } from "../../types/responses";
+import { RegisterFormData } from "../../types/forms";
 
 const RegisterForm: React.FC = () => {
   const [formData, setFormData] = useState<RegisterFormData>({

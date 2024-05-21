@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import useFetch from "../hooks/useFetch";
-import { Order } from "../types/models";
-import { OrderContext } from "../contexts/OrderContext";
+import useFetch from "../../hooks/useFetch";
+import { Order } from "../../types/models";
+import { OrderContext } from "../../contexts/OrderContext";
 import Cookies from "js-cookie";
 
 interface RemoveFromCartButtonProps {

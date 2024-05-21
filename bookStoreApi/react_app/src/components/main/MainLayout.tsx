@@ -1,9 +1,9 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "./Navbar";
+import Navbar from "../navbar/Navbar";
 import { useEffect, useState } from "react";
-import "./CSS/Main.css";
-import { OrderProvider } from "../contexts/OrderContext";
+import "../CSS/Main.css";
+import { OrderProvider } from "../../contexts/OrderContext";
 
 const MainLayout: React.FC = () => {
   const [isSticky, setIsSticky] = useState(false);

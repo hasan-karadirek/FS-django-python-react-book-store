@@ -1,10 +1,10 @@
 import React from "react";
-import WelcomeSection from "../components/WelcomeSection";
-import AboutUs from "../components/AboutUsSection";
-import BlogPosts from "../components/BlogPosts";
-import Testimonials from "../components/Testimonials";
-import ContactSection from "../components/ContactSection";
-import Footer from "../components/Footer";
+import WelcomeSection from "../components/home/WelcomeSection";
+import AboutUs from "../components/home/AboutUsSection";
+import BlogPosts from "../components/home/BlogPosts";
+import Testimonials from "../components/home/Testimonials";
+import ContactSection from "../components/home/ContactSection";
+import Footer from "../components/main/Footer";
 
 const Home: React.FC = () => {
   return (

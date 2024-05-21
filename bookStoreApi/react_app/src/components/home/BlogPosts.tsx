@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./CSS/BlogPosts.css";
+import "../CSS/BlogPosts.css";
 import { Slide, Zoom } from "react-awesome-reveal";
-import useFetch from "../hooks/useFetch";
-import { Post } from "../types/models";
+import useFetch from "../../hooks/useFetch";
+import { Post } from "../../types/models";
 
 const PostDisplay: React.FC = () => {
   const [response, setResponse] = useState<Post[] | null>(null);
