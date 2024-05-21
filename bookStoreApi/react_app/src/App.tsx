@@ -6,6 +6,7 @@ import Books from "./pages/Books";
 import BookPage from "./pages/Book";
 import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
       </Route>
       <Route path="customer" element={<MainLayout />}>
         <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
       </Route>
     </Routes>
   );

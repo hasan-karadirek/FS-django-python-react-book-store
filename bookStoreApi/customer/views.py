@@ -16,8 +16,20 @@ class UserRegistrationAPIView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            user=serializer.save()
+            token, created = Token.objects.get_or_create(user=user)
+            order=None
+            if request.COOKIES.get("session_id"):
+                try:
+                    order=Order.objects.get(session_id=request.COOKIES.get("session_id"),status="OPEN")
+                    order.customer=user
+                    order.save()
+                except Order.DoesNotExist:
+                    order=None
+            orderSerializer=OrderSerializer(order) if order else None
+            res_data={"success":True, "data":{"order":orderSerializer.data if orderSerializer else None, "customer":serializer.data, "token":token.key }}
+
+            return Response(res_data, status=status.HTTP_201_CREATED)
         raise CustomAPIException(str(serializer.errors), status=400)
 
 
