@@ -61,6 +61,14 @@
   position: absolute;
   right: 50px;
 }
+.nav-cart-container-responsive {
+  position: absolute;
+  right: 1rem;
+}
+.nav-cart-container-responsive .nav-cart-list {
+  top: 1rem;
+  right: 0.75rem;
+}
 @media (max-width: 768px) {
   .nav-cart-list-body {
     width: 50vw;

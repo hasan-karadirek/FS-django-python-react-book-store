@@ -6,11 +6,13 @@ import instagram from "../../assets/instagram.png";
 import twitter from "../../assets/twitter.png";
 import NavCart from "./NavCart";
 import NavbarUser from "./NavbarUser";
+import useWindowSize from "../../hooks/useWindowSize";
 
 interface NavbarProps {
   isSticky: boolean;
 }
 const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
+  const { width } = useWindowSize();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleNavbar = () => setIsOpen(!isOpen);
@@ -70,10 +72,19 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
               <img src={twitter} alt="twitter" />
             </a>
           </div>
-          <NavCart />
+          {width >= 992 ? (
+            <NavCart navContainerClass="nav-cart-container" />
+          ) : (
+            ""
+          )}
           <NavbarUser />
         </div>
       </div>
+      {width < 992 ? (
+        <NavCart navContainerClass="nav-cart-container-responsive" />
+      ) : (
+        ""
+      )}
     </nav>
   );
 };

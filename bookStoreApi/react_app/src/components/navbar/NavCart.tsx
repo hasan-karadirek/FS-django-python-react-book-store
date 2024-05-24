@@ -6,7 +6,11 @@ import slide1 from "../../assets/booksImg.jpeg";
 import RemoveFromCartButton from "../checkout/RemoveFromCartButton";
 import { Link } from "react-router-dom";
 
-const NavCart: React.FC = () => {
+interface NavCartProps {
+  navContainerClass: string;
+}
+
+const NavCart: React.FC<NavCartProps> = ({ navContainerClass }) => {
   const { order } = useContext(OrderContext);
 
   const [isHover, setIsHover] = useState<boolean>(false);
@@ -19,7 +23,7 @@ const NavCart: React.FC = () => {
   };
 
   return (
-    <div className="nav-cart-container">
+    <div className={navContainerClass}>
       <img
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
