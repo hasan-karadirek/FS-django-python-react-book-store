@@ -6,7 +6,10 @@ const Login: React.FC = () => {
   return (
     <>
       <div className="gap"></div>
-      <LoginForm containerClasses="container login-form" />
+      <LoginForm
+        containerClasses="container login-form"
+        setIsLoginForm={null}
+      />
     </>
   );
 };

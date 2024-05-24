@@ -65,7 +65,10 @@ const NavbarUser: React.FC = () => {
             Logout
           </Link>
         ) : (
-          <LoginForm containerClasses="nav-login-container" />
+          <LoginForm
+            containerClasses="nav-login-container"
+            setIsLoginForm={null}
+          />
         )}
       </div>
     </div>

@@ -2,14 +2,18 @@ import React, { ChangeEvent, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import Cookies from "js-cookie";
 import "../CSS/Login.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LoginFormData } from "../../types/forms";
 import { LoginResponse } from "../../types/responses";
 
 interface LoginFormProps {
   containerClasses: string;
+  setIsLoginForm: React.Dispatch<React.SetStateAction<boolean | null>>;
 }
-const LoginForm: React.FC<LoginFormProps> = ({ containerClasses }) => {
+const LoginForm: React.FC<LoginFormProps> = ({
+  containerClasses,
+  setIsLoginForm,
+}) => {
   const [formData, setFormData] = useState<LoginFormData>({
     password: "",
     email: "",
@@ -70,10 +74,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ containerClasses }) => {
   return (
     <>
       <div className={containerClasses}>
+        <h3>Login:</h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="emailInput" className="form-label">
-              Full Name
+              Email
             </label>
             <input
               type="email"
@@ -87,7 +92,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ containerClasses }) => {
           </div>
           <div className="mb-3">
             <label htmlFor="full_nameInput" className="form-label">
-              Full Name
+              Password
             </label>
             <input
               type="password"
@@ -99,9 +104,21 @@ const LoginForm: React.FC<LoginFormProps> = ({ containerClasses }) => {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
+          <button type="submit" className="btn btn-success">
+            Login
           </button>
+          {setIsLoginForm ? (
+            <div id="checkout-create-account">
+              No Account? :{" "}
+              <a href="#" onClick={() => setIsLoginForm(false)}>
+                Create Account
+              </a>
+            </div>
+          ) : (
+            <div>
+              No Account? : <Link to="/customer/register">Create Account</Link>
+            </div>
+          )}
           {error ? error.message : ""}
         </form>
       </div>
