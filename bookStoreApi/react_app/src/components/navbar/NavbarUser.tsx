@@ -61,7 +61,7 @@ const NavbarUser: React.FC = () => {
         style={{ display: isHover ? "block" : "none" }}
       >
         {localStorage.getItem("customer") && Cookies.get("token") ? (
-          <Link to="#" onClick={handleLogout}>
+          <Link style={{ padding: "2rem" }} to="#" onClick={handleLogout}>
             Logout
           </Link>
         ) : (

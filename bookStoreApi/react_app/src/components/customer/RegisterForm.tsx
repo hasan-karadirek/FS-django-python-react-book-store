@@ -81,6 +81,7 @@ const RegisterForm: React.FC = () => {
     <>
       <div className="container register-container">
         <form onSubmit={handleSubmit}>
+          <h3>Register:</h3>
           <div className="mb-3">
             <label htmlFor="first_nameInput" className="form-label">
               First Name
@@ -151,8 +152,8 @@ const RegisterForm: React.FC = () => {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
+          <button type="submit" className="btn btn-success">
+            Register
           </button>
           {error ? error.message : ""}
         </form>

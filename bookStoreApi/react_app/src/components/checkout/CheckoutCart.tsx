@@ -30,6 +30,9 @@ const CheckoutCart: React.FC = () => {
           </div>
         </li>
       ))}
+      <li id="checkout-cart-list-cost">
+        <p>Total : {order?.cost}€</p>
+      </li>
     </ul>
   );
 };

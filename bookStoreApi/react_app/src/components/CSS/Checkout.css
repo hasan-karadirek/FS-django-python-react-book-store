@@ -34,6 +34,13 @@
   text-align: center;
   cursor: pointer;
 }
+#checkout-cart-list-cost {
+  font-size: large;
+  text-align: right;
+  padding-right: 2rem;
+  list-style: none;
+  padding-top: 1rem;
+}
 @media (max-width: 768px) {
   .checkout-container {
     display: block !important;
