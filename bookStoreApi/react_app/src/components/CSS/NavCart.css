@@ -20,6 +20,7 @@
   top: 4.5rem;
   right: 1rem;
   border-radius: 1rem;
+  position: absolute;
 }
 .nav-cart-list-image {
   height: fit-content;

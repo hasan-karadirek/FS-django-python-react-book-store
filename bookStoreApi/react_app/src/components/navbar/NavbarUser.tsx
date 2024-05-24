@@ -41,9 +41,10 @@ const NavbarUser: React.FC = () => {
   ) : isLoading ? (
     "Loading"
   ) : (
-    <>
+    <div className="nav-user-container">
       <div
         className="d-flex"
+        style={{ justifyContent: "center" }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -54,6 +55,7 @@ const NavbarUser: React.FC = () => {
         />
       </div>
       <div
+        className="nav-login-dropdown"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         style={{ display: isHover ? "block" : "none" }}
@@ -66,7 +68,7 @@ const NavbarUser: React.FC = () => {
           <LoginForm containerClasses="nav-login-container" />
         )}
       </div>
-    </>
+    </div>
   );
 };
 
