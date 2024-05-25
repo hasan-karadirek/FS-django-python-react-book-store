@@ -9,6 +9,8 @@ from rest_framework.parsers import  FormParser, JSONParser
 from .models import Customer
 from store.models import Order
 from store.serializers import OrderSerializer
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 class UserRegistrationAPIView(APIView):
@@ -17,6 +19,7 @@ class UserRegistrationAPIView(APIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user=serializer.save()
+            send_mail("You are registered.","You are registered Le Fleneur Amsterdam Book Store's website.",settings.DEFAULT_FROM_EMAIL,[user.email], fail_silently=False)
             token, created = Token.objects.get_or_create(user=user)
             order=None
             if request.COOKIES.get("session_id"):
