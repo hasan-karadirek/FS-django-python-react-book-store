@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../CSS/RegisterForm.css";
 import { RegisterResponse } from "../../types/responses";
 import { RegisterFormData } from "../../types/forms";
+import { Circles } from "react-loader-spinner";
 
 const RegisterForm: React.FC = () => {
   const [formData, setFormData] = useState<RegisterFormData>({
@@ -152,9 +153,21 @@ const RegisterForm: React.FC = () => {
               required
             />
           </div>
-          <button type="submit" className="btn btn-success">
-            Register
-          </button>
+          {isLoading ? (
+            <Circles
+              height="80"
+              width="80"
+              color="#4fa94d"
+              ariaLabel="circles-loading"
+              wrapperStyle={{ padding: "2rem", justifyContent: "center" }}
+              wrapperClass=""
+              visible={true}
+            />
+          ) : (
+            <button type="submit" className="btn btn-success">
+              Register
+            </button>
+          )}
           {error ? error.message : ""}
         </form>
       </div>

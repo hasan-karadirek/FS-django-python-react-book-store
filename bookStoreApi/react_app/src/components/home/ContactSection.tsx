@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent, useEffect } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import useFetch from "../../hooks/useFetch";
 import { ContactFormData } from "../../types/forms";
+import { Circles } from "react-loader-spinner";
 
 const ContactSection: React.FC = () => {
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
@@ -76,8 +77,6 @@ const ContactSection: React.FC = () => {
 
   return error ? (
     <p>{error.message}</p>
-  ) : isLoading ? (
-    <p>loading</p>
   ) : (
     <>
       <div className="mt-4 d-flex flex-column flex-lg-row">
@@ -158,9 +157,21 @@ const ContactSection: React.FC = () => {
                   required
                 ></textarea>
               </div>
-              <button type="submit" className="btn btn-primary">
-                Submit
-              </button>
+              {isLoading ? (
+                <Circles
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  ariaLabel="circles-loading"
+                  wrapperStyle={{ padding: "2rem", justifyContent: "center" }}
+                  wrapperClass=""
+                  visible={true}
+                />
+              ) : (
+                <button type="submit" className="btn btn-success">
+                  Submit
+                </button>
+              )}
             </form>
           </div>
         </div>

@@ -41,6 +41,10 @@
   list-style: none;
   padding-top: 1rem;
 }
+
+.cart-buttons-loading svg {
+  height: 2rem;
+}
 @media (max-width: 768px) {
   .checkout-container {
     display: block !important;

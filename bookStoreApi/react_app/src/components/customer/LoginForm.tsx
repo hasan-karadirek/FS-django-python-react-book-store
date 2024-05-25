@@ -5,6 +5,7 @@ import "../CSS/Login.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LoginFormData } from "../../types/forms";
 import { LoginResponse } from "../../types/responses";
+import { Circles } from "react-loader-spinner";
 
 interface LoginFormProps {
   containerClasses: string;
@@ -104,9 +105,21 @@ const LoginForm: React.FC<LoginFormProps> = ({
               required
             />
           </div>
-          <button type="submit" className="btn btn-success">
-            Login
-          </button>
+          {isLoading ? (
+            <Circles
+              height="80"
+              width="80"
+              color="#4fa94d"
+              ariaLabel="circles-loading"
+              wrapperStyle={{ padding: "2rem", justifyContent: "center" }}
+              wrapperClass=""
+              visible={true}
+            />
+          ) : (
+            <button type="submit" className="btn btn-success">
+              Login
+            </button>
+          )}
           {setIsLoginForm ? (
             <div id="checkout-create-account">
               No Account? :{" "}

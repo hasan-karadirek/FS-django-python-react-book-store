@@ -4,6 +4,7 @@ import { SearchFormData } from "../types/forms";
 import useFetch from "../hooks/useFetch";
 import BookList from "../components/books/BookList";
 import { Book } from "../types/models";
+import { Circles } from "react-loader-spinner";
 
 const Books: React.FC = () => {
   const [books, setBooks] = useState<Book[] | null>(null);
@@ -30,13 +31,23 @@ const Books: React.FC = () => {
   };
   return error ? (
     <p>{error.message}</p>
-  ) : isLoading ? (
-    <p>loading</p>
   ) : (
     <>
       <div className="gap"></div>
       <SearchBar handleSearchFormSubmit={handleSearchFormSubmit} />
-      {isLoading ? "wait" : <BookList books={books} />}
+      {isLoading ? (
+        <Circles
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="circles-loading"
+          wrapperStyle={{ padding: "2rem", justifyContent: "center" }}
+          wrapperClass=""
+          visible={true}
+        />
+      ) : (
+        <BookList books={books} />
+      )}
     </>
   );
 };

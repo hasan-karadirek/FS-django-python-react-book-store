@@ -174,9 +174,13 @@ const AddressForm: React.FC = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary checkout-submit-btn">
-          Submit
-        </button>
+        {isLoading ? (
+          ""
+        ) : (
+          <button type="submit" className="btn btn-success checkout-submit-btn">
+            Checkout
+          </button>
+        )}
         {error ? <p>error.message</p> : ""}
       </form>
     </div>

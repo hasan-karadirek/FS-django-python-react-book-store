@@ -3,6 +3,7 @@ import useFetch from "../../hooks/useFetch";
 import { Order } from "../../types/models";
 import { OrderContext } from "../../contexts/OrderContext";
 import Cookies from "js-cookie";
+import { Bars } from "react-loader-spinner";
 
 interface RemoveFromCartButtonProps {
   bookId: number;
@@ -45,11 +46,21 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
 
   return error ? (
     <p>{error.message}</p>
-  ) : isLoading ? (
-    <p>loading</p>
   ) : order?.order_details?.some((detail) => detail.book.id === bookId) ? (
     <button id={bookId.toString()} onClick={handleClick} className={btnClasses}>
-      {btnText}
+      {isLoading ? (
+        <Bars
+          height="80"
+          width="80"
+          color="#000"
+          ariaLabel="bars-loading"
+          wrapperStyle={{ justifyContent: "center" }}
+          wrapperClass="cart-buttons-loading"
+          visible={true}
+        />
+      ) : (
+        btnText
+      )}
     </button>
   ) : (
     ""

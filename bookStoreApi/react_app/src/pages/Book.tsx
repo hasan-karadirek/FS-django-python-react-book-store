@@ -4,6 +4,7 @@ import useFetch from "../hooks/useFetch";
 import { Book } from "../types/models";
 
 import BookDetail from "../components/book/BookDetail";
+import { Circles } from "react-loader-spinner";
 
 const BookPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,12 +17,22 @@ const BookPage: React.FC = () => {
   }, []);
   return error ? (
     <p>{error.message}</p>
-  ) : isLoading ? (
-    <p>loading</p>
   ) : (
     <>
       <div className="gap"></div>
-      {book ? <BookDetail book={book} /> : <p>loading</p>}
+      {isLoading || book === null ? (
+        <Circles
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="circles-loading"
+          wrapperStyle={{ padding: "2rem", justifyContent: "center" }}
+          wrapperClass=""
+          visible={true}
+        />
+      ) : (
+        <BookDetail book={book} />
+      )}
     </>
   );
 };
