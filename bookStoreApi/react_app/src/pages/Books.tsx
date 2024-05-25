@@ -45,6 +45,8 @@ const Books: React.FC = () => {
           wrapperClass=""
           visible={true}
         />
+      ) : error ? (
+        <p className="error">{error.message}</p>
       ) : (
         <BookList books={books} />
       )}

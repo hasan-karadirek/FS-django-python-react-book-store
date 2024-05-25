@@ -37,9 +37,7 @@ const NavbarUser: React.FC = () => {
     return () => cancelFetch();
   };
 
-  return error ? (
-    "error"
-  ) : (
+  return (
     <div className="nav-user-container">
       <div
         className="d-flex"
@@ -71,9 +69,20 @@ const NavbarUser: React.FC = () => {
           style={{ display: isHover ? "block" : "none" }}
         >
           {localStorage.getItem("customer") && Cookies.get("token") ? (
-            <Link style={{ padding: "2rem" }} to="#" onClick={handleLogout}>
-              Logout
-            </Link>
+            <>
+              {error ? (
+                <p
+                  className="error"
+                  style={{ color: "rgb(191, 0, 10)", padding: "1rem" }}
+                >
+                  {error.message}
+                </p>
+              ) : (
+                <Link style={{ padding: "2rem" }} to="#" onClick={handleLogout}>
+                  Logout
+                </Link>
+              )}
+            </>
           ) : (
             <LoginForm
               containerClasses="nav-login-container"

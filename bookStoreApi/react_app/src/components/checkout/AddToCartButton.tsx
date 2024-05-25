@@ -43,26 +43,31 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       }
     };
   };
-  return error ? (
-    <p>{error.message}</p>
-  ) : order?.order_details?.some((detail) => detail.book.id === bookId) ? (
+  return order?.order_details?.some((detail) => detail.book.id === bookId) ? (
     ""
   ) : (
-    <button id={bookId.toString()} onClick={handleClick} className={btnClasses}>
-      {isLoading ? (
-        <Bars
-          height="80"
-          width="80"
-          color="#4fa94d"
-          ariaLabel="bars-loading"
-          wrapperStyle={{ justifyContent: "center" }}
-          wrapperClass="cart-buttons-loading"
-          visible={true}
-        />
-      ) : (
-        btnText
-      )}
-    </button>
+    <>
+      <button
+        id={bookId.toString()}
+        onClick={handleClick}
+        className={btnClasses}
+      >
+        {isLoading ? (
+          <Bars
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="bars-loading"
+            wrapperStyle={{ justifyContent: "center" }}
+            wrapperClass="cart-buttons-loading"
+            visible={true}
+          />
+        ) : (
+          btnText
+        )}
+      </button>
+      {error ? <p className="error">{error.message}</p> : ""}
+    </>
   );
 };
 

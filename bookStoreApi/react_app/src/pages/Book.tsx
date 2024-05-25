@@ -15,12 +15,10 @@ const BookPage: React.FC = () => {
   useEffect(() => {
     performFetch();
   }, []);
-  return error ? (
-    <p>{error.message}</p>
-  ) : (
+  return (
     <>
       <div className="gap"></div>
-      {isLoading || book === null ? (
+      {isLoading ? (
         <Circles
           height="80"
           width="80"
@@ -31,7 +29,23 @@ const BookPage: React.FC = () => {
           visible={true}
         />
       ) : (
-        <BookDetail book={book} />
+        <>
+          {error ? (
+            <p className="error">{error.message}</p>
+          ) : book === null ? (
+            <Circles
+              height="80"
+              width="80"
+              color="#4fa94d"
+              ariaLabel="circles-loading"
+              wrapperStyle={{ padding: "2rem", justifyContent: "center" }}
+              wrapperClass=""
+              visible={true}
+            />
+          ) : (
+            <BookDetail book={book} />
+          )}
+        </>
       )}
     </>
   );

@@ -132,7 +132,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
               No Account? : <Link to="/customer/register">Create Account</Link>
             </div>
           )}
-          {error ? error.message : ""}
+          {error ? <p className="error">{error.message}</p> : ""}
         </form>
       </div>
     </>

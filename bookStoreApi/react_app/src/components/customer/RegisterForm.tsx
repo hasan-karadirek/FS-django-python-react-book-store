@@ -168,7 +168,7 @@ const RegisterForm: React.FC = () => {
               Register
             </button>
           )}
-          {error ? error.message : ""}
+          {error ? <p className="error">{error.message}</p> : ""}
         </form>
       </div>
     </>

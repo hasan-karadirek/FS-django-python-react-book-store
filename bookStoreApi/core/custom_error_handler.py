@@ -13,6 +13,6 @@ class CustomExceptionMiddleware:
     def process_exception(self, request, exception):
         if isinstance(exception, CustomAPIException):
             return JsonResponse(
-                {"message": exception.message, "data": exception.data},
+                {"success":False, "msg": exception.message, "data": exception.data},
                 status=exception.status,
             )
