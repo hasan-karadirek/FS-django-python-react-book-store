@@ -11,6 +11,7 @@ interface FetchResponse {
   success: boolean;
   msg?: string;
   data?: unknown;
+  name?: string;
 }
 
 /**
@@ -64,12 +65,12 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
 
       const jsonResult: FetchResponse = await res.json();
       if (!res.ok) {
-        setError(
-          new Error(
-            jsonResult.msg ||
-              `Fetch for ${url} returned an invalid status (${jsonResult}). Received: ${JSON.stringify(jsonResult)}`,
-          ),
+        const errorResponse = new Error(
+          jsonResult.msg ||
+            `Fetch for ${url} returned an invalid status (${jsonResult}). Received: ${JSON.stringify(jsonResult)}`,
         );
+        errorResponse.name = jsonResult.name;
+        setError(errorResponse);
         setIsLoading(false);
         return;
       }

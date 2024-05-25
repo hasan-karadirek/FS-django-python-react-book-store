@@ -161,7 +161,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ],
-    
+    'EXCEPTION_HANDLER': "core.custom_error_handler.custom_exception_handler"
 }
 
 # In Django settings.py

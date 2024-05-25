@@ -16,14 +16,12 @@ def pagination(instances,size,page_number):
 
 
 def isTokenExpired(request):
-    print("heyhey",str(request.user))
     if str(request.user)!="AnonymousUser":
         try:
-            print("heyhey",str(request.user))
             token = Token.objects.get(user=request.user.id)
-            if timezone.now() - token.created > timedelta(hours=12):
+            if timezone.now() - token.created > timedelta(minutes=1):
                 token.delete()
-                raise CustomAPIException("Token has expired. Please login again.",401)
+                raise CustomAPIException("Token has expired. Please login again.",401,name="expired_token")
         except Token.DoesNotExist:
-            raise CustomAPIException("Invalid Token.",401)
+            raise CustomAPIException("Invalid Token.",401,name="invalid_token")
     

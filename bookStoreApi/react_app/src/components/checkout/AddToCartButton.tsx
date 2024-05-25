@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
 import { Order } from "../../types/models";
 import { OrderContext } from "../../contexts/OrderContext";
@@ -24,6 +24,14 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       setOrder(response.data as Order);
     },
   );
+  useEffect(() => {
+    if (error?.name === "expired_token" || error?.name === "invalid_token") {
+      Cookies.remove("token");
+      Cookies.remove("session_id");
+      localStorage.clear();
+      location.reload();
+    }
+  }, [error]);
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!Cookies.get("session_id")) {

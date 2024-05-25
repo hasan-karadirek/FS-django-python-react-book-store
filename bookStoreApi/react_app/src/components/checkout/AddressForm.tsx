@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useContext, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import { OrderContext } from "../../contexts/OrderContext";
 import Cookies from "js-cookie";
@@ -18,6 +18,14 @@ const AddressForm: React.FC = () => {
       window.location.href = data.redirectUrl;
     },
   );
+  useEffect(() => {
+    if (error?.name === "expired_token" || error?.name === "invalid_token") {
+      Cookies.remove("token");
+      Cookies.remove("session_id");
+      localStorage.clear();
+      location.reload();
+    }
+  }, [error]);
 
   const [formData, setFormData] = useState<CheckoutFormData>({
     full_name: "",
