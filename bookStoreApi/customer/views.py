@@ -51,7 +51,11 @@ class LoginAPIView(APIView):
                     order.customer=customer
                     order.save()
                 except Order.DoesNotExist:
-                    pass
+                    order=None
+            else:
+                order_qs=Order.objects.filter(customer=user,status="OPEN").order_by("-id")
+                if order_qs.exists():
+                    order=order_qs.first()
             token, created = Token.objects.get_or_create(user=user)
             serializer=UserSerializer(customer)
             orderSerializer=OrderSerializer(order) if order else None
