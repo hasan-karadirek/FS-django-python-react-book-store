@@ -4,7 +4,6 @@ import AboutUs from "../components/home/AboutUsSection";
 import BlogPosts from "../components/home/BlogPosts";
 import Testimonials from "../components/home/Testimonials";
 import ContactSection from "../components/home/ContactSection";
-import Footer from "../components/main/Footer";
 import { useLocation } from "react-router-dom";
 
 const Home: React.FC = () => {
@@ -27,7 +26,6 @@ const Home: React.FC = () => {
       <BlogPosts />
       <Testimonials />
       <ContactSection />
-      <Footer />
     </>
   );
 };

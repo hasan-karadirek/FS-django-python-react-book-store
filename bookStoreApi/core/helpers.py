@@ -12,7 +12,6 @@ def pagination(instances,size,page_number):
         page = paginator.page(page_number)
     except EmptyPage:
         raise CustomAPIException("No more pages", status=404)
-    print(page,"haks")
     return {"total":paginator.count,"total_pages":paginator.num_pages,"current_page":int(page_number),"page_size":size,"page":page}
 
 

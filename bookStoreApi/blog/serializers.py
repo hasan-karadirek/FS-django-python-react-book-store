@@ -4,7 +4,7 @@ from core.mixins import IsPostExist
 from core.custom_exceptions import CustomAPIException
 
 class PostSerializer(serializers.ModelSerializer):
-    title = serializers.CharField(required=False)
+    title = serializers.CharField( required=False)
     content = serializers.CharField(required=False)
     image=serializers.ImageField(required=False)
     id = serializers.IntegerField(read_only=True)  # Add field for object id

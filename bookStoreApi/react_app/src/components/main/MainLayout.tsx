@@ -4,6 +4,7 @@ import Navbar from "../navbar/Navbar";
 import { useEffect, useState } from "react";
 import "../CSS/Main.css";
 import { OrderProvider } from "../../contexts/OrderContext";
+import Footer from "./Footer";
 
 const MainLayout: React.FC = () => {
   const [isSticky, setIsSticky] = useState(false);
@@ -25,6 +26,7 @@ const MainLayout: React.FC = () => {
       <OrderProvider>
         <Navbar isSticky={isSticky} />
         <Outlet />
+        <Footer />
       </OrderProvider>
     </>
   );

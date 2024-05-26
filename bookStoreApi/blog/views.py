@@ -45,14 +45,15 @@ class DeletePostAPIView(IsPostExist, APIView):
 class GetPostsAPIView( APIView):
     
     def get(self, request, *args, **kwargs):
+
         books=Post.objects.all()
-        page=pagination(books,10,request.query_params.get("page", 1))
+        paginated_data=pagination(books,10,request.query_params.get("page", 1))
+        page=paginated_data["page"]
         serializer=PostSerializer(page,many=True)
         return Response({"success":True,"data":serializer.data},status=status.HTTP_200_OK)
 class GetPostAPIView( IsPostExist,APIView):
     
     def get(self, request, *args, **kwargs):
-
         serializer=PostSerializer(request.post)
         return Response(serializer.data,status=status.HTTP_200_OK)
 
