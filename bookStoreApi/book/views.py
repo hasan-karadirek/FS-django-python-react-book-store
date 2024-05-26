@@ -82,10 +82,13 @@ class GetBooksAPIView(APIView):
             ).distinct() 
 
         page_number = request.query_params.get("page", 1)
+        paginated_data=pagination(books,20,page_number)
+        page=paginated_data["page"]
 
-        page=pagination(books,20,page_number)
 
         serializer = BookSerializer(page, many=True)
-        response={"data":serializer.data,"success":True}
+        paginated_data["page"]=serializer.data
+
+        response={"data":paginated_data,"success":True}
         return Response(response, status=status.HTTP_200_OK)
 
