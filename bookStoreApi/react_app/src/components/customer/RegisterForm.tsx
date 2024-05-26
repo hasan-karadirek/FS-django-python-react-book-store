@@ -19,6 +19,8 @@ const RegisterForm: React.FC = () => {
   const navigate = useNavigate();
   const loc = useLocation();
 
+  const [formError, setFormError] = useState<string | null>(null);
+
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/customer/register/",
     (res) => {
@@ -58,11 +60,14 @@ const RegisterForm: React.FC = () => {
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    if (formData.password !== formData.passwordConfirm) {
-      return; // show error passwords dont match
-    }
     e.preventDefault();
-    submitForm();
+    if (formData.password !== formData.passwordConfirm) {
+      setFormError(
+        "Passwords do not match. Please fill your passwords correctly.",
+      ); // show error passwords dont match
+    } else {
+      submitForm();
+    }
   };
 
   const handleChange = (
@@ -152,6 +157,7 @@ const RegisterForm: React.FC = () => {
               onChange={handleChange}
               required
             />
+            {formError ? <p className="error">{formError}</p> : ""}
           </div>
           {isLoading ? (
             <Circles
