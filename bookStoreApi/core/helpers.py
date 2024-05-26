@@ -19,7 +19,7 @@ def isTokenExpired(request):
     if str(request.user)!="AnonymousUser":
         try:
             token = Token.objects.get(user=request.user.id)
-            if timezone.now() - token.created > timedelta(minutes=1):
+            if timezone.now() - token.created > timedelta(hours=24):
                 token.delete()
                 raise CustomAPIException("Token has expired. Please login again.",401,name="expired_token")
         except Token.DoesNotExist:

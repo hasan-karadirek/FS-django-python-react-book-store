@@ -4,6 +4,7 @@ import { Slide, Zoom } from "react-awesome-reveal";
 import useFetch from "../../hooks/useFetch";
 import { Post } from "../../types/models";
 import { Circles } from "react-loader-spinner";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const PostDisplay: React.FC = () => {
   const [response, setResponse] = useState<Post[] | null>(null);
@@ -13,6 +14,7 @@ const PostDisplay: React.FC = () => {
       setResponse(res.data as Post[]);
     },
   );
+  const { width } = useWindowSize();
 
   useEffect(() => {
     performFetch({ method: "GET" });
@@ -39,7 +41,7 @@ const PostDisplay: React.FC = () => {
   return error ? (
     <p>{error.message}</p>
   ) : (
-    <div className="blog-posts-container">
+    <div className="blog-posts-container" id="blog-posts">
       <div className="blog-posts mt-4 d-flex flex-column flex-lg-row">
         {isLoading ? (
           <Circles
@@ -54,7 +56,10 @@ const PostDisplay: React.FC = () => {
         ) : (
           <>
             <Zoom triggerOnce={true}>
-              <div className="flex-grow-1" style={{ flexBasis: "55%" }}>
+              <div
+                className="flex-grow-1"
+                style={{ width: `${width > 992 ? "50vw" : "100%"}` }}
+              >
                 {activePost ? (
                   <img
                     ref={imageRef}
@@ -72,7 +77,7 @@ const PostDisplay: React.FC = () => {
             </Zoom>
             <div
               className="d-flex flex-column flex-grow-1 overflow-auto"
-              style={{ flexBasis: "40%", maxHeight: imageHeight }}
+              style={{ maxHeight: imageHeight }}
             >
               <Slide triggerOnce={true}>
                 <div className="accordion" id="accordion-posts">

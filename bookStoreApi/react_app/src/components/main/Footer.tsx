@@ -1,14 +1,24 @@
 import React from "react";
 import "../CSS/Footer.css";
-import Logo from "../../assets/303178780_487833293365662_2765766073040987699_n.jpg";
+import Logo from "../../assets/logo.png";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const Footer: React.FC = () => {
+  const { width } = useWindowSize();
   return (
     <div className="footer">
-      <div className="d-flex px-4 py-4">
+      <div className={`${width > 420 ? "d-flex" : "block"} py-4`}>
         <div className="footer-left flex-grow-1">
-          <a className="navbar-brand pe-5 py-5 mt-5" href="#">
+          <a className="navbar-brand" href="#">
             <img id="logo" src={Logo} alt="" />
+            <span
+              style={{
+                fontSize:
+                  width > 778 ? "2rem" : width > 481 ? "1.5rem" : "1rem",
+              }}
+            >
+              Le Flaneur Amsterdam
+            </span>
           </a>
         </div>
         <div className="footer-right flex-grow-1">
