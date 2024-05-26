@@ -9,36 +9,49 @@ import Pagination from "../components/books/Pagination";
 import { useNavigate } from "react-router-dom";
 import { BookListResponse } from "../types/responses";
 
-
-
 const Books: React.FC = () => {
   const searchParams = new URLSearchParams(window.location.search);
-  const navigate=useNavigate()
-
+  const navigate = useNavigate();
 
   const [books, setBooks] = useState<Book[] | null>(null);
   const [searchFormData, setSearchFormData] = useState<SearchFormData | null>({
-    search:searchParams.get("search"),
-    page:parseInt(searchParams.get("page"))
-  }
-  );
+    search: searchParams.get("search"),
+    page: parseInt(searchParams.get("page")),
+    category: searchParams.get("category"),
+    language: searchParams.get("language"),
+  });
   const [pagination, setPagination] = useState<BookListResponse | null>(null);
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    `/book/?search=${searchFormData?.search ? searchFormData.search : ""}&page=${searchFormData?.page ? searchFormData.page : 1}`,
+    `/book/?search=${searchFormData?.search ? searchFormData.search : ""}&page=${searchFormData?.page ? searchFormData.page : 1}&category=${searchFormData?.category ? searchFormData.category : ""}&language=${searchFormData?.language ? searchFormData.language : ""}`,
     (res) => {
       const resData = res.data as BookListResponse;
       setPagination(resData);
       setBooks(resData.page);
-    }
+    },
   );
   useEffect(() => {
-    
-      searchParams.set("page",searchFormData?.page ? searchFormData?.page?.toString() : "")
-    
-      searchParams.set("search",searchFormData?.search ? searchFormData.search : "")
+    searchParams.set(
+      "page",
+      searchFormData?.page ? searchFormData?.page?.toString() : "",
+    );
 
-      navigate({search:searchParams.toString()})
-    
+    searchParams.set(
+      "search",
+      searchFormData?.search ? searchFormData.search : "",
+    );
+
+    searchParams.set(
+      "category",
+      searchFormData?.category ? searchFormData.category : "",
+    );
+
+    searchParams.set(
+      "language",
+      searchFormData?.language ? searchFormData.language : "",
+    );
+
+    navigate({ search: searchParams.toString() });
+
     performFetch();
   }, [searchFormData]);
 
@@ -51,12 +64,6 @@ const Books: React.FC = () => {
     };
   };
 
-  const handlePageChange = (pageNumber: number) => {
-    setSearchFormData((prevForm) => ({
-      ...prevForm,
-      page: pageNumber,
-    }));
-  };
   return error ? (
     <p>{error.message}</p>
   ) : (
@@ -78,7 +85,10 @@ const Books: React.FC = () => {
       ) : (
         <>
           <BookList books={books} />
-          <Pagination pagination={pagination} setSearchFormData={setSearchFormData}/>
+          <Pagination
+            pagination={pagination}
+            setSearchFormData={setSearchFormData}
+          />
         </>
       )}
     </>

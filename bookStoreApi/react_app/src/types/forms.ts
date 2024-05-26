@@ -1,6 +1,8 @@
 export interface SearchFormData {
   search: string;
-  page:number
+  page: number;
+  category: string;
+  language: string;
 }
 
 export interface RegisterFormData {

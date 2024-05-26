@@ -52,6 +52,16 @@
     flex-basis: 33%;
   }
 }
+@media (max-width: 992px) {
+  .search-select {
+    margin-left: 1rem;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .search-form {
+    text-align: center;
+  }
+}
 @media (max-width: 768px) {
   .book-list-btn {
     left: 1.5rem;
@@ -59,6 +69,9 @@
 }
 
 @media (max-width: 481px) {
+  .search-select {
+    margin-left: auto;
+  }
   .book-card {
     padding: 5px;
     flex-basis: 50%;

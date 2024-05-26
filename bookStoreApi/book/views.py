@@ -1,14 +1,13 @@
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Book
-from .serializers import BookSerializer
+from .models import Book,Category,Language
+from .serializers import BookSerializer,CategorySerializer,LanguageSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from core.custom_exceptions import CustomAPIException
 from core.mixins import IsBookExist
 from core.helpers import pagination
 from django.db.models import Q
-from store.models import  Book
 
 
 class AddBookAPIView(APIView):
@@ -63,10 +62,14 @@ class GetBooksAPIView(APIView):
 
         # Subquery to check for open sales for a book
         category_query = request.query_params.get("category",None)
+        language_query = request.query_params.get("language",None)
+        filter_criteria={"status":"OPEN"}
+        
         if category_query:
-            books = Book.objects.filter(category__name=category_query,status="OPEN")
-        else:
-            books = Book.objects.filter(status="OPEN")
+            filter_criteria["category__title"]=category_query
+        if language_query:
+            filter_criteria["language__name"]=language_query
+        books = Book.objects.filter(**filter_criteria)
         search_query = request.query_params.get("search", None)
         if search_query:
             books = books.filter(
@@ -91,4 +94,21 @@ class GetBooksAPIView(APIView):
 
         response={"data":paginated_data,"success":True}
         return Response(response, status=status.HTTP_200_OK)
+
+class GetAllCategoriesApiView(APIView):
+
+    def get(self,request,*args,**kwargs):
+
+        categories=Category.objects.all().distinct()
+
+        serializer=CategorySerializer(categories,many=True)
+        response={"data":serializer.data,"success":True}
+        return Response(response,status=status.HTTP_200_OK)
+class GetAllLanguagesApiView(APIView):
+
+    def get(self,request,*args,**kwargs):
+        languages=Language.objects.all().distinct()
+        serializer=LanguageSerializer(languages,many=True)
+        response={"data":serializer.data,"success":True}
+        return Response(response,status=status.HTTP_200_OK)
 
