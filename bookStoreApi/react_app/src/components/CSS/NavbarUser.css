@@ -1,8 +1,39 @@
 .nav-login-container {
   position: absolute;
-  margin-top: 1rem;
-  background-color: gray;
-  right: 1rem;
-  padding: 20px;
+  right: 0.75rem;
+  padding: 1rem;
   border-radius: 10px;
+  background-color: #35393fdb;
+  color: white;
+  width: 30vw;
+}
+.nav-user-container {
+  display: block;
+}
+.nav-login-dropdown {
+  position: absolute;
+  background-color: #35393fdb;
+  border-radius: 10px;
+
+  right: 1rem;
+  border-radius: 1rem;
+}
+.nav-login-dropdown a {
+  color: white;
+}
+@media (max-width: 992px) {
+  .nav-login-dropdown {
+    right: 17vw;
+  }
+  .nav-login-container {
+    width: 60vw;
+  }
+}
+@media (max-width: 481px) {
+  .nav-login-dropdown {
+    right: 5vw;
+  }
+  .nav-login-container {
+    width: 80vw;
+  }
 }

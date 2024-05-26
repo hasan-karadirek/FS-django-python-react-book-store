@@ -1,13 +1,8 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import useWindowSize from "../hooks/useWindowSize";
-import useFetch from "../hooks/useFetch";
-
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-  images: FileList | null;
-}
+import useWindowSize from "../../hooks/useWindowSize";
+import useFetch from "../../hooks/useFetch";
+import { ContactFormData } from "../../types/forms";
+import { Circles } from "react-loader-spinner";
 
 const ContactSection: React.FC = () => {
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
@@ -16,7 +11,7 @@ const ContactSection: React.FC = () => {
       return res;
     },
   );
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     message: "",
@@ -82,17 +77,22 @@ const ContactSection: React.FC = () => {
 
   return error ? (
     <p>{error.message}</p>
-  ) : isLoading ? (
-    <p>loading</p>
   ) : (
     <>
-      <div className="mt-4 d-flex flex-column flex-lg-row">
+      <div className="mt-4 d-flex flex-column flex-lg-row" id="contact-section">
         <div className="flex-grow-1" style={{ flexBasis: "45%" }}>
           <div className={`container my-5 ${width > 720 ? "me-5" : ""}`}>
-            <h1>Contacgt Form</h1>
+            <h2 style={{ paddingLeft: "1rem" }}>Get in Touch</h2>
             <br />
-            <p>
-              Contact Form Message Get in Touch Message. Type here something.
+            <p style={{ padding: "1rem" }}>
+              Do not hesitate to donate, trade, or sell your books. If you
+              choose us, please send an e-mail to
+              leflaneuramsterdam@hotmail.com, or fill the contact form,
+              including photos of legible spines or faces (of books) together.
+              Let us know of any major issues like water damage, loose or
+              missing pages, broken spines, and depending on the amount, give us
+              2 to 5 days to run a series of highly complicated evaluation
+              processes.
             </p>
             <div>
               <iframe
@@ -106,7 +106,7 @@ const ContactSection: React.FC = () => {
         </div>
         <div className="flex-grow-1" style={{ flexBasis: "55%" }}>
           <div className={`container my-5 ${width > 720 ? "me-5" : ""}`}>
-            <h2>Contact Us</h2>
+            <h2>Contact Form</h2>
             <br />
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
@@ -164,9 +164,21 @@ const ContactSection: React.FC = () => {
                   required
                 ></textarea>
               </div>
-              <button type="submit" className="btn btn-primary">
-                Submit
-              </button>
+              {isLoading ? (
+                <Circles
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  ariaLabel="circles-loading"
+                  wrapperStyle={{ padding: "2rem", justifyContent: "center" }}
+                  wrapperClass=""
+                  visible={true}
+                />
+              ) : (
+                <button type="submit" className="btn btn-success">
+                  Submit
+                </button>
+              )}
             </form>
           </div>
         </div>

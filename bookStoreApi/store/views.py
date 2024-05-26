@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import  OrderDetail, Order, Address
 from core.mixins import  IsSaleExist
+from core.helpers import isTokenExpired
 from core.custom_exceptions import CustomAPIException
 from core.mollie import createMolliePayment
 from django.db import transaction
@@ -14,7 +15,6 @@ class AddToCartView(IsSaleExist, APIView):
     
 
     def post(self, request, *args, **kwargs):
-        print(request.user, request.COOKIES.get("session_id"))
         if str(request.user) =="AnonymousUser":
            if request.COOKIES.get("session_id")==None:
               raise CustomAPIException("Please provide session_id in cookies.", status=400) 
@@ -22,6 +22,7 @@ class AddToCartView(IsSaleExist, APIView):
                 session_id=request.COOKIES.get("session_id"), status="OPEN"
             )
         else:
+            isTokenExpired(request)
             order_qs=Order.objects.filter(customer=request.user, status='OPEN').order_by('-id')
             if order_qs.exists():
                 open_order=order_qs.first()
@@ -49,6 +50,7 @@ class RemoveFromCartView(IsSaleExist, APIView):
             session_id=request.COOKIES.get("session_id"), status="OPEN"
             )
         else:
+            isTokenExpired(request)
             order_qs=Order.objects.filter(customer=request.user, status='OPEN').order_by('-id')
             if order_qs.exists():
                 open_order=order_qs.first()
@@ -83,6 +85,7 @@ class CheckOutView(APIView):
                     session_id=request.COOKIES.get("session_id"), status="OPEN"
                 )
             else:
+                isTokenExpired(request)
                 order_qs=Order.objects.filter(customer=request.user, status='OPEN').order_by('-id')
                 if order_qs.exists():
                     open_order=order_qs.first()

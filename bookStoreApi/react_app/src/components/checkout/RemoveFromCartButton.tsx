@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
-import useFetch from "../hooks/useFetch";
-import { Order } from "./AddToCartButton";
-import { OrderContext } from "../contexts/OrderContext";
+import React, { useContext, useEffect } from "react";
+import useFetch from "../../hooks/useFetch";
+import { Order } from "../../types/models";
+import { OrderContext } from "../../contexts/OrderContext";
 import Cookies from "js-cookie";
+import { Bars } from "react-loader-spinner";
 
 interface RemoveFromCartButtonProps {
   bookId: number;
@@ -23,6 +24,15 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
       setOrder(response.data as Order);
     },
   );
+
+  useEffect(() => {
+    if (error?.name === "expired_token" || error?.name === "invalid_token") {
+      Cookies.remove("token");
+      Cookies.remove("session_id");
+      localStorage.clear();
+      location.reload();
+    }
+  }, [error]);
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!Cookies.get("session_id")) {
@@ -45,12 +55,29 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
 
   return error ? (
     <p>{error.message}</p>
-  ) : isLoading ? (
-    <p>loading</p>
   ) : order?.order_details?.some((detail) => detail.book.id === bookId) ? (
-    <button id={bookId.toString()} onClick={handleClick} className={btnClasses}>
-      {btnText}
-    </button>
+    <>
+      <button
+        id={bookId.toString()}
+        onClick={handleClick}
+        className={btnClasses}
+      >
+        {isLoading ? (
+          <Bars
+            height="80"
+            width="80"
+            color="#000"
+            ariaLabel="bars-loading"
+            wrapperStyle={{ justifyContent: "center" }}
+            wrapperClass="cart-buttons-loading"
+            visible={true}
+          />
+        ) : (
+          btnText
+        )}
+      </button>
+      {error ? <p className="error">{error.message}</p> : ""}
+    </>
   ) : (
     ""
   );

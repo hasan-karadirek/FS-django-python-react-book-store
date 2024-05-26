@@ -1,23 +1,11 @@
 import React, { ChangeEvent, useState } from "react";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import Cookies from "js-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Order } from "../components/AddToCartButton";
-import { Customer } from "../pages/Login";
-import "./CSS/RegisterForm.css";
-
-interface RegisterFormData {
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-}
-interface RegisterResponse {
-  customer: Customer;
-  token: string;
-  order: Order;
-}
+import "../CSS/RegisterForm.css";
+import { RegisterResponse } from "../../types/responses";
+import { RegisterFormData } from "../../types/forms";
+import { Circles } from "react-loader-spinner";
 
 const RegisterForm: React.FC = () => {
   const [formData, setFormData] = useState<RegisterFormData>({
@@ -30,6 +18,8 @@ const RegisterForm: React.FC = () => {
 
   const navigate = useNavigate();
   const loc = useLocation();
+
+  const [formError, setFormError] = useState<string | null>(null);
 
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/customer/register/",
@@ -70,11 +60,14 @@ const RegisterForm: React.FC = () => {
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    if (formData.password !== formData.passwordConfirm) {
-      return; // show error passwords dont match
-    }
     e.preventDefault();
-    submitForm();
+    if (formData.password !== formData.passwordConfirm) {
+      setFormError(
+        "Passwords do not match. Please fill your passwords correctly.",
+      ); // show error passwords dont match
+    } else {
+      submitForm();
+    }
   };
 
   const handleChange = (
@@ -94,6 +87,7 @@ const RegisterForm: React.FC = () => {
     <>
       <div className="container register-container">
         <form onSubmit={handleSubmit}>
+          <h3>Register:</h3>
           <div className="mb-3">
             <label htmlFor="first_nameInput" className="form-label">
               First Name
@@ -163,11 +157,24 @@ const RegisterForm: React.FC = () => {
               onChange={handleChange}
               required
             />
+            {formError ? <p className="error">{formError}</p> : ""}
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-          {error ? error.message : ""}
+          {isLoading ? (
+            <Circles
+              height="80"
+              width="80"
+              color="#4fa94d"
+              ariaLabel="circles-loading"
+              wrapperStyle={{ padding: "2rem", justifyContent: "center" }}
+              wrapperClass=""
+              visible={true}
+            />
+          ) : (
+            <button type="submit" className="btn btn-success">
+              Register
+            </button>
+          )}
+          {error ? <p className="error">{error.message}</p> : ""}
         </form>
       </div>
     </>

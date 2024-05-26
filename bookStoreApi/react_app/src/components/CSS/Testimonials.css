@@ -1,5 +1,5 @@
 .testimonials-images img {
-  height: 20vw;
+  height: 21vw;
 }
 .testimonials-images {
   padding-top: 40px;
@@ -54,4 +54,9 @@
 .testimonial-carousel-caption {
   left: 0 !important;
   bottom: 35% !important;
+}
+@media (max-width: 768px) {
+  .testimonials-images img {
+    height: 42vw;
+  }
 }

@@ -1,49 +1,57 @@
 import React, { useEffect, useState } from "react";
-import SearchBar, { SearchFormData } from "../components/SearchBar";
+import SearchBar from "../components/books/SearchBar";
+import { SearchFormData } from "../types/forms";
 import useFetch from "../hooks/useFetch";
-import BookList from "../components/BookList";
+import BookList from "../components/books/BookList";
+import { Book } from "../types/models";
+import { Circles } from "react-loader-spinner";
+import Pagination from "../components/books/Pagination";
+import { useNavigate } from "react-router-dom";
+import { BookListResponse } from "../types/responses";
 
-interface BookImage {
-  book: number;
-  image: string;
-}
-interface Tag {
-  tag: {
-    id: number;
-    name: string;
-  };
-}
-export interface Book {
-  id: number;
-  isbn: string;
-  env_no: number;
-  title: string;
-  author: string;
-  publishing_house: string;
-  language: string;
-  cover: string;
-  year: number;
-  edition: string;
-  category: string;
-  condition_description: string;
-  condition: string;
-  price: string;
-  status: string;
-  tags: Tag[];
-  images: BookImage[];
-}
 const Books: React.FC = () => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const navigate = useNavigate();
+
   const [books, setBooks] = useState<Book[] | null>(null);
-  const [searchFormData, setSearchFormData] = useState<SearchFormData | null>(
-    null,
-  );
+  const [searchFormData, setSearchFormData] = useState<SearchFormData | null>({
+    search: searchParams.get("search"),
+    page: parseInt(searchParams.get("page")),
+    category: searchParams.get("category"),
+    language: searchParams.get("language"),
+  });
+  const [pagination, setPagination] = useState<BookListResponse | null>(null);
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    `/book/?search=${searchFormData?.search ? searchFormData.search : ""}`,
+    `/book/?search=${searchFormData?.search ? searchFormData.search : ""}&page=${searchFormData?.page ? searchFormData.page : 1}&category=${searchFormData?.category ? searchFormData.category : ""}&language=${searchFormData?.language ? searchFormData.language : ""}`,
     (res) => {
-      setBooks(res.data as Book[]);
+      const resData = res.data as BookListResponse;
+      setPagination(resData);
+      setBooks(resData.page);
     },
   );
   useEffect(() => {
+    searchParams.set(
+      "page",
+      searchFormData?.page ? searchFormData?.page?.toString() : "",
+    );
+
+    searchParams.set(
+      "search",
+      searchFormData?.search ? searchFormData.search : "",
+    );
+
+    searchParams.set(
+      "category",
+      searchFormData?.category ? searchFormData.category : "",
+    );
+
+    searchParams.set(
+      "language",
+      searchFormData?.language ? searchFormData.language : "",
+    );
+
+    navigate({ search: searchParams.toString() });
+
     performFetch();
   }, [searchFormData]);
 
@@ -55,15 +63,47 @@ const Books: React.FC = () => {
       }
     };
   };
+
   return error ? (
     <p>{error.message}</p>
-  ) : isLoading ? (
-    <p>loading</p>
   ) : (
     <>
       <div className="gap"></div>
+      <nav className=" mt-3  fs-4 px-5" aria-label="breadcrumb">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <a href="/">Home</a>
+          </li>
+          <li className="breadcrumb-item">
+            <a href="/shop/books">Books</a>
+          </li>
+          <li className="breadcrumb-item active" aria-current="page">
+            {searchFormData.category === "" ? "All" : searchFormData.category}
+          </li>
+        </ol>
+      </nav>
       <SearchBar handleSearchFormSubmit={handleSearchFormSubmit} />
-      {isLoading ? "wait" : <BookList books={books} />}
+      {isLoading ? (
+        <Circles
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="circles-loading"
+          wrapperStyle={{ padding: "2rem", justifyContent: "center" }}
+          wrapperClass=""
+          visible={true}
+        />
+      ) : error ? (
+        <p className="error">{error.message}</p>
+      ) : (
+        <>
+          <BookList books={books} />
+          <Pagination
+            pagination={pagination}
+            setSearchFormData={setSearchFormData}
+          />
+        </>
+      )}
     </>
   );
 };

@@ -17,23 +17,24 @@
   overflow-x: auto;
 }
 .book-info-list {
-  justify-content: center;
   list-style: none;
-  text-align: justify;
   padding-left: 0;
 }
 .book-info-list li {
   font-size: 1.25rem;
 }
-.book-info-list li span {
-  font-size: 1.5rem;
-}
+
 #book-tags {
   text-align: center;
 }
 #book-price {
   font-size: 2rem;
   color: red;
+}
+
+.book-detail-btn {
+  margin-left: 2rem;
+  width: 30vw;
 }
 
 @media (max-width: 1200px) {
@@ -47,17 +48,22 @@
     width: 50vw !important;
   }
 }
-@media (max-width: 992px) {
+@media (max-width: 768px) {
   .book-infos,
   .book-images {
     flex-basis: 100%;
     width: 100% !important;
     justify-content: center;
+    padding-left: 1.25rem;
   }
   .book-image-thumb-container {
     width: 100% !important;
   }
   .book-image {
     width: 100%;
+    margin-bottom: 1rem;
+  }
+  .book-detail-btn {
+    width: 50vw;
   }
 }

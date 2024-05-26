@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import "./CSS/Navbar.css";
-import Logo from "../assets/303178780_487833293365662_2765766073040987699_n.jpg";
-import facebook from "../assets/facebook.png";
-import instagram from "../assets/instagram.png";
-import twitter from "../assets/twitter.png";
+import "../CSS/Navbar.css";
+import Logo from "../../assets/logo.png";
+import facebook from "../../assets/facebook.png";
+import instagram from "../../assets/instagram.png";
+import twitter from "../../assets/twitter.png";
 import NavCart from "./NavCart";
 import NavbarUser from "./NavbarUser";
+import useWindowSize from "../../hooks/useWindowSize";
 
 interface NavbarProps {
   isSticky: boolean;
 }
 const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
+  const { width } = useWindowSize();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleNavbar = () => setIsOpen(!isOpen);
@@ -19,9 +21,15 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
       className={`navbar navbar-expand-lg ${isSticky ? "bg-white sticky-navbar" : "bg-transparent"}`}
     >
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          <img id="logo" src={Logo} alt="" />{" "}
-          <span style={{ fontSize: "2rem" }}>Le Flaneur</span>
+        <a className="navbar-brand" href="/">
+          <img id="logo" src={Logo} alt="logo" />{" "}
+          <span
+            style={{
+              fontSize: width > 778 ? "2rem" : width > 481 ? "1.5rem" : "1rem",
+            }}
+          >
+            Le Flaneur Amsterdam
+          </span>
         </a>
         <button
           className="navbar-toggler navbar-toggler-btn"
@@ -34,27 +42,32 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
         <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`}>
           <ul className="navbar-nav ms-auto me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
+              <a className="nav-link" aria-current="page" href="/">
                 Home
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Posts
+              <a className="nav-link" href="/shop/books">
+                Shop
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Reviews
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/#about-us">
                 About Us
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/#blog-posts">
+                Posts
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/#testimonials">
+                Reviews
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/#contact-section">
                 Contact
               </a>
             </li>
@@ -70,10 +83,19 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
               <img src={twitter} alt="twitter" />
             </a>
           </div>
-          <NavCart />
+          {width >= 992 ? (
+            <NavCart navContainerClass="nav-cart-container" />
+          ) : (
+            ""
+          )}
           <NavbarUser />
         </div>
       </div>
+      {width < 992 ? (
+        <NavCart navContainerClass="nav-cart-container-responsive" />
+      ) : (
+        ""
+      )}
     </nav>
   );
 };

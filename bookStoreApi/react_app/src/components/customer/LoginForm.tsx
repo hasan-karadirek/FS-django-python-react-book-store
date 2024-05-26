@@ -1,25 +1,20 @@
 import React, { ChangeEvent, useState } from "react";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import Cookies from "js-cookie";
-import "../components/CSS/Login.css";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Order } from "../components/AddToCartButton";
-import { Customer } from "../pages/Login";
-export interface LoginFormData {
-  email: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  token: string;
-  customer: Customer;
-  order: Order | null;
-}
+import "../CSS/Login.css";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { LoginFormData } from "../../types/forms";
+import { LoginResponse } from "../../types/responses";
+import { Circles } from "react-loader-spinner";
 
 interface LoginFormProps {
   containerClasses: string;
+  setIsLoginForm: React.Dispatch<React.SetStateAction<boolean | null>>;
 }
-const LoginForm: React.FC<LoginFormProps> = ({ containerClasses }) => {
+const LoginForm: React.FC<LoginFormProps> = ({
+  containerClasses,
+  setIsLoginForm,
+}) => {
   const [formData, setFormData] = useState<LoginFormData>({
     password: "",
     email: "",
@@ -80,10 +75,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ containerClasses }) => {
   return (
     <>
       <div className={containerClasses}>
+        <h3>Login:</h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="emailInput" className="form-label">
-              Full Name
+              Email
             </label>
             <input
               type="email"
@@ -97,7 +93,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ containerClasses }) => {
           </div>
           <div className="mb-3">
             <label htmlFor="full_nameInput" className="form-label">
-              Full Name
+              Password
             </label>
             <input
               type="password"
@@ -109,10 +105,34 @@ const LoginForm: React.FC<LoginFormProps> = ({ containerClasses }) => {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-          {error ? error.message : ""}
+          {isLoading ? (
+            <Circles
+              height="80"
+              width="80"
+              color="#4fa94d"
+              ariaLabel="circles-loading"
+              wrapperStyle={{ padding: "2rem", justifyContent: "center" }}
+              wrapperClass=""
+              visible={true}
+            />
+          ) : (
+            <button type="submit" className="btn btn-success">
+              Login
+            </button>
+          )}
+          {setIsLoginForm ? (
+            <div id="checkout-create-account">
+              No Account? :{" "}
+              <a href="#" onClick={() => setIsLoginForm(false)}>
+                Create Account
+              </a>
+            </div>
+          ) : (
+            <div>
+              No Account? : <Link to="/customer/register">Create Account</Link>
+            </div>
+          )}
+          {error ? <p className="error">{error.message}</p> : ""}
         </form>
       </div>
     </>

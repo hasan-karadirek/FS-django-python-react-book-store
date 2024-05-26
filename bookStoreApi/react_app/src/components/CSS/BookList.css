@@ -29,27 +29,56 @@
   height: 30vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   flex-grow: 1;
 }
 .card-text {
+  font-size: 1.25rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+.book-list-btn {
+  position: absolute;
+  left: 2rem;
+  right: 2rem;
+  bottom: 10px;
+  width: 80%;
+}
 @media (max-width: 1024px) {
   .book-card {
     padding: 10px;
     flex-basis: 33%;
   }
 }
+@media (max-width: 992px) {
+  .search-select {
+    margin-left: 1rem;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .search-form {
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  .book-list-btn {
+    left: 1.5rem;
+  }
+}
 
 @media (max-width: 481px) {
+  .search-select {
+    margin-left: auto;
+  }
   .book-card {
     padding: 5px;
     flex-basis: 50%;
+  }
+}
+@media (max-width: 350px) {
+  .book-card {
+    flex-basis: 100%;
   }
 }

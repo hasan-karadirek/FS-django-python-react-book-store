@@ -4,7 +4,10 @@ body {
 .gap {
   height: 120px;
 }
-
+.error {
+  color: red;
+  padding: 1rem;
+}
 @media (max-width: 992px) {
   .gap {
     display: none;

@@ -1,21 +1,10 @@
-import React, { ChangeEvent, useContext, useState } from "react";
-import useFetch from "../hooks/useFetch";
-import { Order } from "./AddToCartButton";
-import { OrderContext } from "../contexts/OrderContext";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import useFetch from "../../hooks/useFetch";
+import { OrderContext } from "../../contexts/OrderContext";
 import Cookies from "js-cookie";
-interface CheckoutFormData {
-  full_name: string;
-  email: string;
-  street: string;
-  house_no: string;
-  postcode: string;
-  city: string;
-  country: string;
-}
-interface CheckoutResponse {
-  order: Order;
-  redirectUrl: string;
-}
+import { CheckoutResponse } from "../../types/responses";
+import { CheckoutFormData } from "../../types/forms";
+
 const AddressForm: React.FC = () => {
   const { setOrder } = useContext(OrderContext);
 
@@ -29,6 +18,14 @@ const AddressForm: React.FC = () => {
       window.location.href = data.redirectUrl;
     },
   );
+  useEffect(() => {
+    if (error?.name === "expired_token" || error?.name === "invalid_token") {
+      Cookies.remove("token");
+      Cookies.remove("session_id");
+      localStorage.clear();
+      location.reload();
+    }
+  }, [error]);
 
   const [formData, setFormData] = useState<CheckoutFormData>({
     full_name: "",
@@ -185,10 +182,14 @@ const AddressForm: React.FC = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary checkout-submit-btn">
-          Submit
-        </button>
-        {error ? <p>error.message</p> : ""}
+        {isLoading ? (
+          ""
+        ) : (
+          <button type="submit" className="btn btn-success checkout-submit-btn">
+            Checkout
+          </button>
+        )}
+        {error ? <p className="error">{error.message}</p> : ""}
       </form>
     </div>
   );

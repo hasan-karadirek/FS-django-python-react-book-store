@@ -1,10 +1,10 @@
 import React from "react";
-import { Book } from "../pages/Books";
-import "./CSS/BookList.css";
-import slide1 from "../assets/booksImg.jpeg";
+import { Book } from "../../types/models";
+import "../CSS/BookList.css";
+import slide1 from "../../assets/booksImg.jpeg";
 import { Link } from "react-router-dom";
-import AddToCartButton from "./AddToCartButton";
-import RemoveFromCartButton from "./RemoveFromCartButton";
+import AddToCartButton from "../checkout/AddToCartButton";
+import RemoveFromCartButton from "../checkout/RemoveFromCartButton";
 
 interface BookListProps {
   books: Book[] | null;
@@ -33,14 +33,14 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
               <h3 className="card-text">
                 {`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}
               </h3>
-              <p>{book.price}</p>
+              <p> €{book.price}</p>
               <AddToCartButton
-                btnClasses="btn btn-outline-success"
+                btnClasses="btn btn-outline-success book-list-btn"
                 btnText="Add To Cart"
                 bookId={book.id}
               />
               <RemoveFromCartButton
-                btnClasses="btn btn-danger"
+                btnClasses="btn btn-danger book-list-btn"
                 btnText="Remove From Cart"
                 bookId={book.id}
               />

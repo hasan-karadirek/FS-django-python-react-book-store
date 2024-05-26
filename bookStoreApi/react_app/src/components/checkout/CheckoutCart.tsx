@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { OrderContext } from "../contexts/OrderContext";
+import { OrderContext } from "../../contexts/OrderContext";
 import RemoveFromCartButton from "./RemoveFromCartButton";
-import slide1 from "../assets/booksImg.jpeg";
+import slide1 from "../../assets/booksImg.jpeg";
 
 const CheckoutCart: React.FC = () => {
   const { order } = useContext(OrderContext);
@@ -30,6 +30,9 @@ const CheckoutCart: React.FC = () => {
           </div>
         </li>
       ))}
+      <li id="checkout-cart-list-cost">
+        <p>Total : {order?.cost}€</p>
+      </li>
     </ul>
   );
 };

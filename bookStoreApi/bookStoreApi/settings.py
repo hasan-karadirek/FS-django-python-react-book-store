@@ -71,6 +71,8 @@ MIDDLEWARE = [
     "core.custom_error_handler.CustomExceptionMiddleware",
 ]
 
+
+
 ROOT_URLCONF = "bookStoreApi.urls"
 
 TEMPLATES = [
@@ -161,8 +163,20 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ],
-    
+    'EXCEPTION_HANDLER': "core.custom_error_handler.custom_exception_handler"
 }
+
+# settings.py
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'qaapis7@gmail.com'
+EMAIL_HOST_PASSWORD = 'spnykidmhudwsgyc'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 # In Django settings.py
 LOGGING = {
