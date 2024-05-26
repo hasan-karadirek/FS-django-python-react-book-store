@@ -1,4 +1,4 @@
-import { Customer, Order } from "./models";
+import { Book, Customer, Order } from "./models";
 
 export interface RegisterResponse {
   customer: Customer;
@@ -15,4 +15,11 @@ export interface LoginResponse {
 export interface CheckoutResponse {
   order: Order;
   redirectUrl: string;
+}
+export interface BookListResponse {
+  page: Book[];
+  total: number;
+  total_pages: number;
+  current_page: number;
+  page_size: number;
 }

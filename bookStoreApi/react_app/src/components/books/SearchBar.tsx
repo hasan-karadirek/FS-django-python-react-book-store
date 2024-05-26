@@ -8,6 +8,7 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ handleSearchFormSubmit }) => {
   const [searchForm, setSearchForm] = useState<SearchFormData>({
     search: "",
+    page:1
   });
   const searchFormOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value: string = e.target.value;
@@ -22,7 +23,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleSearchFormSubmit }) => {
     e.preventDefault();
 
     handleSearchFormSubmit(searchForm);
-    setSearchForm({ search: "" });
+    setSearchForm({ search: "" ,page:1});
   };
 
   return (

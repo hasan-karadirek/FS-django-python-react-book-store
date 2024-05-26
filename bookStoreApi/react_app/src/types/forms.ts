@@ -1,5 +1,6 @@
 export interface SearchFormData {
   search: string;
+  page:number
 }
 
 export interface RegisterFormData {
