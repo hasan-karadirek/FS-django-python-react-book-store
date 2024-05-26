@@ -69,6 +69,19 @@ const Books: React.FC = () => {
   ) : (
     <>
       <div className="gap"></div>
+      <nav className=" mt-3  fs-4 px-5" aria-label="breadcrumb">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <a href="/">Home</a>
+          </li>
+          <li className="breadcrumb-item">
+            <a href="/shop/books">Books</a>
+          </li>
+          <li className="breadcrumb-item active" aria-current="page">
+            {searchFormData.category === "" ? "All" : searchFormData.category}
+          </li>
+        </ol>
+      </nav>
       <SearchBar handleSearchFormSubmit={handleSearchFormSubmit} />
       {isLoading ? (
         <Circles

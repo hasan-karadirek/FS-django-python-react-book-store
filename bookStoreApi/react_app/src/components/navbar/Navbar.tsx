@@ -21,7 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
       className={`navbar navbar-expand-lg ${isSticky ? "bg-white sticky-navbar" : "bg-transparent"}`}
     >
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           <img id="logo" src={Logo} alt="logo" />{" "}
           <span
             style={{
