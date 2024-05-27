@@ -1,6 +1,7 @@
 .footer {
   color: white;
   background-color: #35393f;
+  width: 100%;
 }
 .footer-right ul {
   list-style: none;
@@ -8,6 +9,11 @@
 }
 .footer-right li {
   display: inline;
+}
+.fixed-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 @media (max-width: 768px) {

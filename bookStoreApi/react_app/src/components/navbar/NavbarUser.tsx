@@ -66,7 +66,10 @@ const NavbarUser: React.FC = () => {
           className="nav-login-dropdown"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          style={{ display: isHover ? "block" : "none" }}
+          style={{
+            display: isHover ? "flex" : "none",
+            flexDirection: "column",
+          }}
         >
           {localStorage.getItem("customer") && Cookies.get("token") ? (
             <>
@@ -78,9 +81,18 @@ const NavbarUser: React.FC = () => {
                   {error.message}
                 </p>
               ) : (
-                <Link style={{ padding: "2rem" }} to="#" onClick={handleLogout}>
-                  Logout
-                </Link>
+                <>
+                  <Link style={{ padding: "1rem" }} to="/customer">
+                    Dashboard
+                  </Link>
+                  <Link
+                    style={{ padding: "1rem" }}
+                    to="#"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Link>
+                </>
               )}
             </>
           ) : (

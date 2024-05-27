@@ -29,6 +29,7 @@ class AddressSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     order_details = OrderDetailSerializer(many=True, read_only=True)
+    address=AddressSerializer()
     
 
     class Meta:

@@ -74,3 +74,13 @@ class LogoutAPIView(APIView):
         response.delete_cookie("session_id")
         response.delete_cookie("token")
         return response
+class CustomerDashboardApiView(APIView):
+    permission_classes={permissions.IsAuthenticated}
+    def get(self,request):
+        orders=Order.objects.filter(customer=request.user).exclude(status__in=["OPEN"])
+        orderSerializer=OrderSerializer(orders,many=True)
+        customerSerializer=UserSerializer(request.user)
+        response={"success":True,"data":{}}
+        response["data"]["orders"]=orderSerializer.data
+        response["data"]["customer"]=customerSerializer.data
+        return Response(response,status=status.HTTP_200_OK)

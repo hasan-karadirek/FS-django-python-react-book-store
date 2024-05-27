@@ -47,11 +47,19 @@ export interface OrderDetail {
   order: number;
   book: Book;
 }
+export interface Address {
+  full_name: string;
+  email: string;
+  street: string;
+  city: string;
+  postcode: string;
+  country: string;
+}
 export interface Order {
   id: number;
   customer: number;
   cost: string;
-  address: string;
+  address: Address;
   status: string;
   order_details: OrderDetail[];
 }
