@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../CSS/Footer.css";
 import Logo from "../../assets/logo.png";
 import useWindowSize from "../../hooks/useWindowSize";
 
 const Footer: React.FC = () => {
   const { width } = useWindowSize();
+  const [isFixed, setIsFixed] = useState<boolean>(
+    document.documentElement.scrollHeight <= window.innerHeight,
+  );
+
+  useEffect(() => {
+    const checkPageHeight = () => {
+      const docHeight = document.documentElement.scrollHeight;
+      const viewportHeight = window.innerHeight;
+      setIsFixed(docHeight <= viewportHeight);
+    };
+
+    window.addEventListener("resize", checkPageHeight);
+
+    const observer = new ResizeObserver(() => {
+      checkPageHeight();
+    });
+    observer.observe(document.documentElement);
+  }, []);
+
   return (
-    <div className="footer">
+    <div className={`footer ${isFixed ? "fixed-footer" : ""}`}>
       <div className={`${width > 420 ? "d-flex" : "block"} py-4`}>
         <div className="footer-left flex-grow-1">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="/">
             <img id="logo" src={Logo} alt="" />
             <span
               style={{

@@ -25,11 +25,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleSearchFormSubmit }) => {
   });
 
   const [categories, setCategories] = useState<Category[] | null>(null);
-  const categoryFetch = useFetch("/book/categories", (res) => {
+  const categoryFetch = useFetch("/book/categories/", (res) => {
     setCategories(res.data as Category[]);
   });
   const [languages, setLanguages] = useState<Language[] | null>(null);
-  const languageFetch = useFetch("/book/languages", (res) => {
+  const languageFetch = useFetch("/book/languages/", (res) => {
     setLanguages(res.data as Language[]);
   });
   useEffect(() => {

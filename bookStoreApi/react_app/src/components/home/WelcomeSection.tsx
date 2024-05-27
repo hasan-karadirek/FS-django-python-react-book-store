@@ -48,7 +48,12 @@ const WelcomeSection: React.FC = () => {
         </div>
         <div className="carousel-inner">
           <div className="carousel-item active" data-bs-interval="8000">
-            <img src={slide1} className="d-block w-100" alt="..." />
+            <img
+              src={slide1}
+              style={{ objectFit: "cover" }}
+              className="d-block w-100"
+              alt="..."
+            />
 
             <div className="carousel-caption  d-md-block">
               <h1>Le Flaneur Amsterdam Second Hand Bookstore</h1>
@@ -56,7 +61,12 @@ const WelcomeSection: React.FC = () => {
             </div>
           </div>
           <div className="carousel-item" data-bs-interval="8000">
-            <img src={slide2} className="d-block w-100" alt="..." />
+            <img
+              src={slide2}
+              style={{ objectFit: "cover" }}
+              className="d-block w-100"
+              alt="..."
+            />
 
             <div className="carousel-caption  d-md-block">
               <h1>Le Flaneur Amsterdam Second Hand Bookstore</h1>
@@ -64,7 +74,12 @@ const WelcomeSection: React.FC = () => {
             </div>
           </div>
           <div className="carousel-item">
-            <img src={slide3} className="d-block w-100" alt="..." />
+            <img
+              src={slide3}
+              style={{ objectFit: "cover" }}
+              className="d-block w-100"
+              alt="..."
+            />
 
             <div className="carousel-caption  d-md-block">
               <h1>Le Flaneur Amsterdam Second Hand Bookstore</h1>

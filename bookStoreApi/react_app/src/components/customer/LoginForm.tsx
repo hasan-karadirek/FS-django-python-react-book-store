@@ -121,16 +121,29 @@ const LoginForm: React.FC<LoginFormProps> = ({
             </button>
           )}
           {setIsLoginForm ? (
-            <div id="checkout-create-account">
-              No Account? :{" "}
-              <a href="#" onClick={() => setIsLoginForm(false)}>
-                Create Account
-              </a>
-            </div>
+            <>
+              <div>
+                Forget Password? :{" "}
+                <Link to="/customer/forgotpassword">Reset Your Password</Link>
+              </div>
+              <div id="checkout-create-account">
+                No Account? :{" "}
+                <a href="#" onClick={() => setIsLoginForm(false)}>
+                  Create Account
+                </a>
+              </div>
+            </>
           ) : (
-            <div>
-              No Account? : <Link to="/customer/register">Create Account</Link>
-            </div>
+            <>
+              <div>
+                Forget Password? :{" "}
+                <Link to="/customer/forgotpassword">Reset Your Password</Link>
+              </div>
+              <div>
+                No Account? :{" "}
+                <Link to="/customer/register">Create Account</Link>
+              </div>
+            </>
           )}
           {error ? <p className="error">{error.message}</p> : ""}
         </form>

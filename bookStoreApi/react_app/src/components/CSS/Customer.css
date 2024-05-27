@@ -1,0 +1,10 @@
+.customer-order-accordion * {
+  max-width: 35vw;
+}
+
+@media (max-width: 481px) {
+  .customer-order-accordion * {
+    max-width: 100%;
+    width: 100%;
+  }
+}

@@ -3,11 +3,9 @@ from .models import Customer
 
 
 class UserSerializer(serializers.ModelSerializer):
-
-
     class Meta:
         model = Customer
-        fields = ("username", "email", "password","first_name", "last_name")
+        fields = ("username", "email", "password", "first_name", "last_name")
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
@@ -16,6 +14,14 @@ class UserSerializer(serializers.ModelSerializer):
             email=validated_data["email"],
             password=validated_data["password"],
             first_name=validated_data["first_name"],
-            last_name=validated_data["last_name"]
+            last_name=validated_data["last_name"],
         )
         return user
+
+
+class ForgotPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField()
