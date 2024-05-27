@@ -64,9 +64,7 @@ const Books: React.FC = () => {
     };
   };
 
-  return error ? (
-    <p>{error.message}</p>
-  ) : (
+  return (
     <>
       <div className="gap"></div>
       <nav className=" mt-3  fs-4 px-5" aria-label="breadcrumb">
@@ -78,7 +76,9 @@ const Books: React.FC = () => {
             <a href="/shop/books">Books</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            {searchFormData.category === "" ? "All" : searchFormData.category}
+            {searchFormData.category === "" || searchFormData.category === null
+              ? "All"
+              : searchFormData.category}
           </li>
         </ol>
       </nav>
