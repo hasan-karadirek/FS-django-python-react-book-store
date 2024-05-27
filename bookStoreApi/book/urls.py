@@ -6,7 +6,7 @@ from .views import (
     GetBookAPIView,
     GetBooksAPIView,
     GetAllCategoriesApiView,
-    GetAllLanguagesApiView
+    GetAllLanguagesApiView,
 )
 
 urlpatterns = [

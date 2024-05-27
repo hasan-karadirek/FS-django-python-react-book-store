@@ -3,4 +3,4 @@ class CustomAPIException(Exception):
         self.message = message
         self.status = status
         self.data = data
-        self.name=name
+        self.name = name

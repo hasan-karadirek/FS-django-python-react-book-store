@@ -1,6 +1,6 @@
 from book.models import Book
 from core.custom_exceptions import CustomAPIException
-from blog.models import Post,Form
+from blog.models import Post, Form
 
 
 class IsBookExist:
@@ -21,15 +21,19 @@ class IsSaleExist:
         except Book.DoesNotExist:
             raise CustomAPIException("Book not found or no longer available", 404)
         return super().dispatch(request, bookPk * args, **kwargs)
-    
+
+
 class IsPostExist:
     def dispatch(self, request, postPk, *args, **kwargs):
         try:
             post = Post.objects.get(pk=postPk)
             request.post = post
         except Post.DoesNotExist:
-            raise CustomAPIException("There is no such a post associated with this PK!", 404)
+            raise CustomAPIException(
+                "There is no such a post associated with this PK!", 404
+            )
         return super().dispatch(request, postPk * args, **kwargs)
+
 
 class IsFormExist:
     def dispatch(self, request, formPk, *args, **kwargs):
@@ -37,5 +41,7 @@ class IsFormExist:
             form = Form.objects.get(pk=formPk)
             request.form = form
         except Form.DoesNotExist:
-            raise CustomAPIException("There is no such a form associated with this PK!", 404)
+            raise CustomAPIException(
+                "There is no such a form associated with this PK!", 404
+            )
         return super().dispatch(request, formPk * args, **kwargs)
