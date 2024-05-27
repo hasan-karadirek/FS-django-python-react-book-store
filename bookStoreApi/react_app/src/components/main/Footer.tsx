@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
     <div className={`footer ${isFixed ? "fixed-footer" : ""}`}>
       <div className={`${width > 420 ? "d-flex" : "block"} py-4`}>
         <div className="footer-left flex-grow-1">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="/">
             <img id="logo" src={Logo} alt="" />
             <span
               style={{

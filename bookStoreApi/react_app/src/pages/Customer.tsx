@@ -63,7 +63,7 @@ const CustomerPage: React.FC = () => {
         <>
           <div
             className="container"
-            style={{ fontSize: "2rem", marginTop: "1rem" }}
+            style={{ fontSize: "1.25rem", marginTop: "1rem" }}
           >{`Welcome ${JSON.parse(localStorage.getItem("customer"))?.first_name}`}</div>
           <div className="accordion container mt-5" id="accordion-orders">
             <h3>Your Previous Orders:</h3>

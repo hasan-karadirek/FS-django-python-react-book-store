@@ -39,7 +39,6 @@ CORS_ALLOW_METHODS = [
     'PUT',
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -174,7 +173,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_HOST_USER = 'qaapis7@gmail.com'
-EMAIL_HOST_PASSWORD = 'spnykidmhudwsgyc'
+EMAIL_HOST_PASSWORD = 'eznjswlxnkqixqtn'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 

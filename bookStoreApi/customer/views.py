@@ -3,7 +3,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework import status,permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ForgotPasswordSerializer, ResetPasswordSerializer
 from core.custom_error_handler import CustomAPIException
 from rest_framework.parsers import  FormParser, JSONParser
 from .models import Customer
@@ -11,6 +11,8 @@ from store.models import Order
 from store.serializers import OrderSerializer
 from django.core.mail import send_mail
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 
 class UserRegistrationAPIView(APIView):
@@ -38,6 +40,7 @@ class UserRegistrationAPIView(APIView):
 
 class LoginAPIView(APIView):
     parser_classes = (FormParser,JSONParser)
+
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
@@ -74,7 +77,44 @@ class LogoutAPIView(APIView):
         response.delete_cookie("session_id")
         response.delete_cookie("token")
         return response
-class CustomerDashboardApiView(APIView):
+
+class ForgotPasswordAPIView(APIView):
+    def post(self, request):
+        serializer=ForgotPasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                customer=Customer.objects.get(email=serializer.validated_data["email"])
+                token,created=Token.objects.get_or_create(user=customer)
+                if not created:
+                    token.delete()
+                    
+                    token=Token.objects.create(user=customer)
+                    
+                    send_mail("Password Reset Link - La Fleneur Amsterdam",f"You can reset your password by following link: http:localhost:8080/customer/resetpassword?token={token.key}",settings.DEFAULT_FROM_EMAIL,[customer.email], fail_silently=False)
+            except Customer.DoesNotExist:
+                raise CustomAPIException("There is no such a user associated with this email.", status=status.HTTP_404_NOT_FOUND)
+            
+        return Response({"success":True},status=status.HTTP_200_OK)
+class ResetPasswordAPIView(APIView):
+    def post(self, request):
+        token_key=request.query_params.get("token",None)
+        if not token_key:
+            raise CustomAPIException("Please provide a valid token",status=status.HTTP_400_BAD_REQUEST)
+        serializer=ResetPasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                token=Token.objects.get(key=token_key)
+                user=token.user
+                new_password=serializer.validated_data["password"]
+                user.set_password(new_password)
+                user.save()
+                token.delete()
+                send_mail("Your password is reseted - La Fleneur Amsterdam",f"You have reseted your password",settings.DEFAULT_FROM_EMAIL,[user.email], fail_silently=False)
+            except Token.DoesNotExist:
+                raise CustomAPIException("Your password reset token is not correct", status=status.HTTP_400_BAD_REQUEST)
+            
+        return Response({"success":True},status=status.HTTP_200_OK)
+class CustomerDashboardAPIView(APIView):
     permission_classes={permissions.IsAuthenticated}
     def get(self,request):
         orders=Order.objects.filter(customer=request.user).exclude(status__in=["OPEN"])

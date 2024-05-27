@@ -19,3 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
             last_name=validated_data["last_name"]
         )
         return user
+class ForgotPasswordSerializer(serializers.Serializer):
+    email=serializers.EmailField()
+class ResetPasswordSerializer(serializers.Serializer):
+    password=serializers.CharField()
