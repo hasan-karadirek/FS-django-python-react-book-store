@@ -21,7 +21,9 @@ const CustomerPage: React.FC = () => {
   const { isLoading, error, performFetch } = useFetch(
     "/customer/dashboard/",
     (res) => {
-      setDashboardInfo(res.data as CustomerDashboardResponse);
+      const dashboardResponse = res.data as CustomerDashboardResponse;
+      setDashboardInfo(dashboardResponse);
+      setActiveOrder(dashboardResponse.orders[0]);
     },
   );
   const navigate = useNavigate();
@@ -65,23 +67,21 @@ const CustomerPage: React.FC = () => {
             className="container"
             style={{ fontSize: "1.25rem", marginTop: "1rem" }}
           >{`Welcome ${JSON.parse(localStorage.getItem("customer"))?.first_name}`}</div>
-          <div className="accordion container mt-5" id="accordion-orders">
+          <div className="accordion container my-5" id="accordion-orders">
             <h3>Your Previous Orders:</h3>
             {dashboardInfo?.orders.map((order) => (
               <div
                 key={order.id}
                 className={"accordion-item"}
-                onClick={() => setActiveOrder(order)}
+                onClick={() => {
+                  setActiveOrder(activeOrder?.id === order.id ? null : order);
+                }}
                 style={{ cursor: "pointer" }}
               >
                 <h2 className="accordion-header">
                   <button
                     className={`accordion-button ${activeOrder?.id === order.id ? "" : "collapsed"}`}
                     type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target={`#collapse-${order.id}`}
-                    aria-expanded="true"
-                    aria-controls={`collapse-${order.id}`}
                   >
                     {`Order = ${order.id} - ${order.address.full_name} - ${order.cost} - ${order.status}`}
                   </button>

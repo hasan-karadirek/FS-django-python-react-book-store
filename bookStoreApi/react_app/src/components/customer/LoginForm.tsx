@@ -122,7 +122,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
           )}
           {setIsLoginForm ? (
             <>
-              <div>
+              <div style={{ textAlign: "center" }}>
                 Forget Password? :{" "}
                 <Link to="/customer/forgotpassword">Reset Your Password</Link>
               </div>

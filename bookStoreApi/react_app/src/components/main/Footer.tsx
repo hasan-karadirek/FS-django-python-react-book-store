@@ -13,15 +13,26 @@ const Footer: React.FC = () => {
     const checkPageHeight = () => {
       const docHeight = document.documentElement.scrollHeight;
       const viewportHeight = window.innerHeight;
-      setIsFixed(docHeight <= viewportHeight);
+      setIsFixed(docHeight < viewportHeight);
     };
 
+    checkPageHeight();
     window.addEventListener("resize", checkPageHeight);
 
-    const observer = new ResizeObserver(() => {
+    const observer = new MutationObserver(() => {
       checkPageHeight();
     });
-    observer.observe(document.documentElement);
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+    });
+
+    return () => {
+      window.removeEventListener("resize", checkPageHeight);
+      observer.disconnect();
+    };
   }, []);
 
   return (

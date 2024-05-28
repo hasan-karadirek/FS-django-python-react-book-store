@@ -7,7 +7,7 @@ from core.mixins import IsSaleExist
 from core.helpers import isTokenExpired
 from core.custom_exceptions import CustomAPIException
 from core.mollie import createMolliePayment
-from django.db import transaction
+from django.db import transaction, DatabaseError
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 
 
@@ -120,11 +120,13 @@ class CheckOutView(APIView):
             if len(deleted_details) > 0:
                 open_order.refresh_from_db()
                 serializer = OrderSerializer(open_order)
+                """TODO: in frontend handle new cart"""
                 raise CustomAPIException(
                     "The book(s) you have added to your cart is not available anymore! {}".format(
                         *deleted_details
                     ),
                     status=404,
+                    name="book-availability",
                     data=serializer.data,
                 )
             try:
@@ -144,12 +146,10 @@ class CheckOutView(APIView):
                         open_order.id,
                         checkoutSerializer.validated_data.get("redirectUrl"),
                     )
-            except:
+            except Exception as e:
                 open_order.refresh_from_db()
                 raise CustomAPIException(
-                    "Checkout can not process, please try again later.",
-                    500,
-                    data=open_order,
+                    "Checkout can not process, please try again later.", 500,
                 )
 
             open_order.refresh_from_db()
@@ -169,13 +169,28 @@ class CheckOutView(APIView):
 
 
 class OrderStatusView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-
     def get(self, request, orderPk, *args, **kwargs):
         try:
             order = Order.objects.get(id=orderPk)
             serializer = OrderSerializer(order)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            if request.user.is_authenticated:
+                if order.customer.id != request.user.id:
+                    raise CustomAPIException(
+                        "You do not have authorization for this order",
+                        status=status.HTTP_401_UNAUTHORIZED,
+                    )
+            else:
+                if request.COOKIES.get(
+                    "session_id"
+                ) == None or order.session_id != request.COOKIES.get("session_id"):
+                    raise CustomAPIException(
+                        "You do not have authorization for this order",
+                        status=status.HTTP_401_UNAUTHORIZED,
+                    )
+
+            return Response(
+                {"data": serializer.data, "success": True}, status=status.HTTP_200_OK
+            )
         except Order.DoesNotExist:
             raise CustomAPIException(
                 "There is no order associated with this id!", status=404
