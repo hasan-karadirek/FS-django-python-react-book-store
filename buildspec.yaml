@@ -6,14 +6,13 @@ artifacts:
     - '**/*'
   encryption_disabled: false 
   name: my-artifact
-  encryption_key: 'arn:aws:kms:us-east-1:875207630257:key/fe4e61d1-d85e-4dae-9b3e-b187b90560ce' # KMS keyARN
 
 
 phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 875207630257.dkr.ecr.eu-north-1.amazonaws.com/bookstore
+      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 875207630257.dkr.ecr.eu-north-1.amazonaws.com/bookstore
 
   build:
     commands:
