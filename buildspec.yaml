@@ -18,7 +18,7 @@ phases:
     commands:
       - echo Building the Docker image...
       - docker pull public.ecr.aws/docker/library/python:3.9
-      - docker build --build-arg SECRET_KEY=$SECRET_KEY --build-arg DB_USER=$DB_USER --build-arg DB_NAME=$DB_NAME --build-arg DB_HOST=$DB_HOST --build-arg DB_PASSWORD=$DB_PASSWORD --build-arg DB_PORT=$DB_PORT -t bookstore .
+      - docker build --build-arg SECRET_KEY=$SECRET_KEY --build-arg DB_USER=$DB_USER --build-arg DB_NAME=$DB_NAME --build-arg DB_HOST=$DB_HOST --build-arg DB_PASSWORD=$DB_PASSWORD --build-arg DB_PORT=$DB_PORT --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --build-arg AWS_STORAGE_BUCKET_NAME=$AWS_STORAGE_BUCKET_NAME --build-arg AWS_S3_REGION_NAME=$AWS_S3_REGION_NAME -t bookstore .
 
   post_build:
     commands:
