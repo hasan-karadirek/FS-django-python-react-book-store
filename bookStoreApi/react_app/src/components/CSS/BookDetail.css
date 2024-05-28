@@ -37,6 +37,10 @@
   width: 30vw;
 }
 
+#book-info-image {
+  margin-bottom: 5rem;
+}
+
 @media (max-width: 1200px) {
   .book-infos {
     margin: 0;
@@ -48,6 +52,7 @@
     width: 50vw !important;
   }
 }
+
 @media (max-width: 768px) {
   .book-infos,
   .book-images {

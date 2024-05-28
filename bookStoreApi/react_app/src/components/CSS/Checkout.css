@@ -4,6 +4,7 @@
 
 .checkout-address-form {
   flex-basis: 45%;
+  margin-bottom: 2rem;
 }
 .checkout-register-container {
   position: absolute;

@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import CustomerPage from "./pages/Customer";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
+import CheckoutReturn from "./pages/CheckoutReturn";
 
 const App: React.FC = () => {
   return (
@@ -17,12 +18,11 @@ const App: React.FC = () => {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
       </Route>
-      <Route path="shop/books" element={<MainLayout />}>
-        <Route index element={<Books />} />
-        <Route path=":id" element={<BookPage />} />
-      </Route>
-      <Route path="shop/checkout" element={<MainLayout />}>
-        <Route index element={<Checkout />} />
+      <Route path="shop" element={<MainLayout />}>
+        <Route path="books" element={<Books />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="checkout-return" element={<CheckoutReturn />} />
+        <Route path="books/:id" element={<BookPage />} />
       </Route>
       <Route path="customer" element={<MainLayout />}>
         <Route index element={<CustomerPage />} />

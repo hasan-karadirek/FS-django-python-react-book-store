@@ -19,9 +19,14 @@ class MollieHookAPIView(APIView):
                     order.status = "PAID"
                     order.save()
                 elif payment.status in ["failed", "canceled", "expired"]:
-                    order.status = "OPEN"
+                    order.status = payment.status.upper()
+                    for detail in order.order_details.all():
+                        detail.book.status = "OPEN"
+                        detail.save()
                     order.save()
                 return Response(status=status.HTTP_200_OK)
             except Order.DoesNotExist:
-                raise CustomAPIException("order id: {}".format(orderId), status=404)
-        raise CustomAPIException("", status=400)
+                raise CustomAPIException(
+                    "order id: {} does not exist!".format(orderId), status=404
+                )
+        raise CustomAPIException("Invalid Data", status=400)

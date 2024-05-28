@@ -31,7 +31,7 @@ class UserRegistrationAPIView(APIView):
                 "You are registered Le Fleneur Amsterdam Book Store's website.",
                 settings.DEFAULT_FROM_EMAIL,
                 [user.email],
-                fail_silently=False,
+                fail_silently=True,
             )
             token, created = Token.objects.get_or_create(user=user)
             order = None
@@ -132,7 +132,7 @@ class ForgotPasswordAPIView(APIView):
                         f"You can reset your password by following link: http:localhost:8080/customer/resetpassword?token={token.key}",
                         settings.DEFAULT_FROM_EMAIL,
                         [customer.email],
-                        fail_silently=False,
+                        fail_silently=True,
                     )
             except Customer.DoesNotExist:
                 raise CustomAPIException(
@@ -164,7 +164,7 @@ class ResetPasswordAPIView(APIView):
                     f"You have reseted your password",
                     settings.DEFAULT_FROM_EMAIL,
                     [user.email],
-                    fail_silently=False,
+                    fail_silently=True,
                 )
             except Token.DoesNotExist:
                 raise CustomAPIException(

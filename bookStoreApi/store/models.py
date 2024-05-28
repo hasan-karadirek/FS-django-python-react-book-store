@@ -40,6 +40,9 @@ class Order(models.Model):
         ("OPEN", "Open"),
         ("PAID", "Paid"),
         ("PENDING", "Pending"),
+        ("CANCELED", "Canceled"),
+        ("EXPIRED", "Expired"),
+        ("FAILED", "Failed"),
     ]
     customer = models.ForeignKey(
         Customer, related_name="orders", on_delete=models.SET_NULL, null=True
@@ -57,7 +60,7 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return f"Order {self.id} by {self.customer.username}"
+        return f"Order {self.id} "
 
 
 class OrderDetail(models.Model):
