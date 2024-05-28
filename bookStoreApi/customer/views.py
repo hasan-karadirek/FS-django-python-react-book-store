@@ -15,8 +15,6 @@ from store.models import Order
 from store.serializers import OrderSerializer
 from django.core.mail import send_mail
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
 
 
 class UserRegistrationAPIView(APIView):
