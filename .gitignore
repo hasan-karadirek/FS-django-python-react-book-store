@@ -163,7 +163,5 @@ cython_debug/
 
 node_modules/
 staticfiles/
-static/
-templates/
 media/
 bs_env/
