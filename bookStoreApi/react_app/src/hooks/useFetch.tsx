@@ -14,6 +14,11 @@ interface FetchResponse {
   name?: string;
 }
 
+export interface CustomError {
+  message: string;
+  name?: string;
+  data?: unknown;
+}
 /**
  * Our useFetch hook should be used for all communication with the server.
  *
@@ -44,7 +49,7 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
     );
   }
 
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<CustomError | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const performFetch = (options?: FetchOptions) => {
@@ -65,12 +70,15 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
 
       const jsonResult: FetchResponse = await res.json();
       if (!res.ok) {
-        const errorResponse = new Error(
-          jsonResult.msg ||
+        const customError: CustomError = {
+          name: jsonResult.name,
+          message:
+            jsonResult.msg ||
             `Fetch for ${url} returned an invalid status (${jsonResult}). Received: ${JSON.stringify(jsonResult)}`,
-        );
-        errorResponse.name = jsonResult.name;
-        setError(errorResponse);
+          data: jsonResult.data,
+        };
+
+        setError(customError);
         setIsLoading(false);
         return;
       }
@@ -78,19 +86,24 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
       if (jsonResult.success === true) {
         onReceived(jsonResult);
       } else {
-        setError(
-          new Error(
+        setError({
+          name: jsonResult.name,
+          message:
             jsonResult.msg ||
-              `The result from our API did not have an error message. Received: ${JSON.stringify(jsonResult)}`,
-          ),
-        );
+            `Fetch for ${url} returned an invalid status (${jsonResult}). Received: ${JSON.stringify(jsonResult)}`,
+          data: jsonResult.data,
+        });
       }
 
       setIsLoading(false);
     };
 
     fetchData().catch((error: Error) => {
-      setError(error);
+      const customError: CustomError = {
+        name: error.name,
+        message: error.message,
+      };
+      setError(customError);
       setIsLoading(false);
     });
   };

@@ -126,6 +126,7 @@ class CheckOutView(APIView):
                         *deleted_details
                     ),
                     status=404,
+                    name="book-availability",
                     data=serializer.data,
                 )
             try:

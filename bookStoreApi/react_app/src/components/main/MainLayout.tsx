@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import "../CSS/Main.css";
 import { OrderProvider } from "../../contexts/OrderContext";
 import Footer from "./Footer";
+import { ErrorProvider } from "../../contexts/ErrorContext";
+import Alert from "./Alert";
 
 const MainLayout: React.FC = () => {
   const [isSticky, setIsSticky] = useState(false);
@@ -23,11 +25,14 @@ const MainLayout: React.FC = () => {
   }, []);
   return (
     <>
-      <OrderProvider>
-        <Navbar isSticky={isSticky} />
-        <Outlet />
-        <Footer />
-      </OrderProvider>
+      <ErrorProvider>
+        <OrderProvider>
+          <Navbar isSticky={isSticky} />
+          <Alert />
+          <Outlet />
+          <Footer />
+        </OrderProvider>
+      </ErrorProvider>
     </>
   );
 };

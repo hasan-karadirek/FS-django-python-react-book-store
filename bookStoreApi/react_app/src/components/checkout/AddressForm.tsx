@@ -4,9 +4,12 @@ import { OrderContext } from "../../contexts/OrderContext";
 import Cookies from "js-cookie";
 import { CheckoutResponse } from "../../types/responses";
 import { CheckoutFormData } from "../../types/forms";
+import { Order } from "../../types/models";
+import { ErrorContext } from "../../contexts/ErrorContext";
 
 const AddressForm: React.FC = () => {
   const { setOrder } = useContext(OrderContext);
+  const { setCustomError } = useContext(ErrorContext);
 
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/store/checkout/",
@@ -24,6 +27,11 @@ const AddressForm: React.FC = () => {
       Cookies.remove("session_id");
       localStorage.clear();
       location.reload();
+    }
+    if (error?.name === "book-availability") {
+      localStorage.setItem("order", JSON.stringify(error.data));
+      setOrder(error.data as Order);
+      setCustomError(error);
     }
   }, [error]);
 
