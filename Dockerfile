@@ -27,6 +27,7 @@ ENV STATIC_ROOT /usr/src/app/staticfiles
 # Set work directory to the subdirectory containing manage.py
 WORKDIR /usr/src/app/bookStoreApi
 
+
 # Install dependencies
 # Make sure to copy the requirements.txt file from the correct location
 COPY ./bookStoreApi/requirements.txt /usr/src/app/bookStoreApi/
@@ -35,6 +36,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the current directory contents into the container at /usr/src/app/bookStoreApi/
 # Adjust the COPY command to copy from the bookStoreApi subdirectory
 COPY ./bookStoreApi/ /usr/src/app/bookStoreApi/
+
+# Debug environment variables
+RUN echo "SECRET_KEY=${SECRET_KEY}" && \
+    echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" && \
+    echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" && \
+    echo "AWS_STORAGE_BUCKET_NAME=${AWS_STORAGE_BUCKET_NAME}" && \
+    echo "AWS_S3_REGION_NAME=${AWS_S3_REGION_NAME}"
+
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
