@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import cartImage from "../../assets/shopping-bag.png";
 import "../CSS/NavCart.css";
 import { OrderContext } from "../../contexts/OrderContext";
-import slide1 from "../../assets/booksImg.jpeg";
+import defaultBookImage from "../../assets/defaultBookImage.webp";
 import RemoveFromCartButton from "../checkout/RemoveFromCartButton";
 import { Link } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const NavCart: React.FC<NavCartProps> = ({ navContainerClass }) => {
   const handleMouseLeave = () => {
     setIsHover(false);
   };
-
+  const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
   return (
     <div className={navContainerClass}>
       <img
@@ -55,8 +55,8 @@ const NavCart: React.FC<NavCartProps> = ({ navContainerClass }) => {
                         className="nav-cart-list-image"
                         src={
                           detail.book.images.length > 0
-                            ? `http://localhost:8000${detail.book.images[0].image}`
-                            : slide1
+                            ? `${BASE_SERVER_URL}${detail.book.images[0].image}`
+                            : defaultBookImage
                         }
                       />
                       <div className="nav-cart-list-body">

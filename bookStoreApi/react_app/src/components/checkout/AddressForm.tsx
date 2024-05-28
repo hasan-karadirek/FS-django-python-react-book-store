@@ -44,10 +44,10 @@ const AddressForm: React.FC = () => {
     city: "",
     country: "",
   });
-
+  const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
   const submitForm = () => {
     const addressForm = {
-      redirectUrl: "http://localhost:8000/shop",
+      redirectUrl: `${BASE_SERVER_URL}/shop/checkout-return`,
       address: formData,
     };
 

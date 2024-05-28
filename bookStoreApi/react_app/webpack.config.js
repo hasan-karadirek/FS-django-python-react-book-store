@@ -15,7 +15,7 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.(png|jp(e*)g|svg|gif)$/,
+          test: /\.(webp|png|jp(e*)g|svg|gif)$/,
           use: ["file-loader"],
         },
         {
@@ -49,7 +49,7 @@ module.exports = (env, argv) => {
       // All variables in our .env should be mentioned here
       new webpack.EnvironmentPlugin({
         // Default is '' because on our  servers we want to have it default to our current URL
-        BASE_SERVER_URL: "",
+        BASE_SERVER_URL: process.env.isProduction ? "" : "http://localhost:8000",
       }),
     ],
     // To tell the dev server that everything should go back to index.html

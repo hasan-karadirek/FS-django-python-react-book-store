@@ -63,8 +63,9 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
     };
 
     const fetchData = async () => {
+      const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
       // We add the /api subsection here to make it a single point of change if our configuration changes
-      const url = `http://localhost:8000/api${route}`;
+      const url = `${BASE_SERVER_URL}/api${route}`;
 
       const res = await fetch(url, { ...baseOptions, ...options, signal });
 

@@ -3,7 +3,7 @@ import { Book } from "../../types/models";
 import { Link } from "react-router-dom";
 import "../CSS/BookDetail.css";
 import AddToCartButton from "../checkout/AddToCartButton";
-import slide1 from "../../assets/booksImg.jpeg";
+import defaultBookImage from "../../assets/defaultBookImage.webp";
 import RemoveFromCartButton from "../checkout/RemoveFromCartButton";
 
 interface BookDetailProps {
@@ -13,6 +13,8 @@ interface BookDetailProps {
 const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
   const [bookImageIndex, setBookImageIndex] = useState(0);
 
+  const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
+
   return (
     <div className="d-flex flex-wrap" id="book-info-image">
       <div className="book-images p-2">
@@ -21,18 +23,27 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
           className="book-image"
           src={
             book.images.length > 0
-              ? `http://localhost:8000${book.images[bookImageIndex]?.image}`
-              : slide1
+              ? `${BASE_SERVER_URL}${book.images[bookImageIndex]?.image}`
+              : defaultBookImage
           }
           alt={book.title}
         />
         <div className="d-flex  w-100 book-image-thumb-container ">
+          {book.images.length === 0 ? (
+            <img
+              onClick={() => setBookImageIndex(0)}
+              className="book-image-thumb"
+              src={defaultBookImage}
+            />
+          ) : (
+            ""
+          )}
           {book.images.map((image, index) => (
             <img
               key={index}
               onClick={() => setBookImageIndex(index)}
               className="book-image-thumb"
-              src={`http://localhost:8000${image.image}`}
+              src={`${BASE_SERVER_URL}${image.image}`}
             />
           ))}
         </div>
