@@ -16,7 +16,7 @@ from book.models import (
 )
 
 # Load the data
-df = pd.read_excel("./example_books.xlsx")
+df = pd.read_excel("./example_books.xlsx", engine='openpyxl')
 
 # Iterate through the DataFrame
 for index, row in df.iterrows():
