@@ -149,18 +149,18 @@ class StaticStorage(S3Boto3Storage):
     location = 'static'
     default_acl = 'public-read'
 
-class MediaStorage(S3Boto3Storage):
+class MediaStorage(S3Boto3Storage): 
     location = 'media'
     file_overwrite = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = StaticStorage
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 
 # Media files settings
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = MediaStorage
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 STATICFILES_DIRS = [
