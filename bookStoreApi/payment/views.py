@@ -24,7 +24,7 @@ class MollieHookAPIView(APIView):
                         "Order COnfirmation - Le Flaneur Amsterdam",
                         "We have recieved your order.",
                         settings.DEFAULT_FROM_EMAIL,
-                        [order.customer.email if order.customer else order.email],
+                        [order.customer.email if order.customer else order.address.email],
                         fail_silently=True,
                     )
                 elif payment.status in ["failed", "canceled", "expired"]:
