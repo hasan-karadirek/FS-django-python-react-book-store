@@ -54,8 +54,7 @@ RUN echo "SECRET_KEY=${SECRET_KEY}" && \
     echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" && \
     echo "AWS_STORAGE_BUCKET_NAME=${AWS_STORAGE_BUCKET_NAME}" && \
     echo "AWS_S3_REGION_NAME=${AWS_S3_REGION_NAME}"
-# Collect static files
-RUN python manage.py collectstatic --noinput
+
 
 
 # Expose the port the app runs on
