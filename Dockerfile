@@ -1,6 +1,18 @@
 # Use an official Python runtime as a parent image
 FROM python:3.9
-
+ARG SECRET_KEY
+ARG AWS_S3_REGION_NAME
+ARG AWS_STORAGE_BUCKET_NAME
+ARG AWS_SECRET_ACCESS_KEY
+ARG ALLOWED_HOSTS
+ARG DB_NAME
+ARG DB_USER
+ARG DB_HOST
+ARG DB_PASSWORD
+ARG DB_PORT
+ARG DEBUG
+ARG MOLLIE_API_KEY
+ARG AWS_ACCESS_KEY_ID
 
 ENV SECRET_KEY=${SECRET_KEY}
 ENV ALLOWED_HOSTS=${ALLOWED_HOSTS}
@@ -27,7 +39,6 @@ ENV STATIC_ROOT /usr/src/app/staticfiles
 # Set work directory to the subdirectory containing manage.py
 WORKDIR /usr/src/app/bookStoreApi
 
-
 # Install dependencies
 # Make sure to copy the requirements.txt file from the correct location
 COPY ./bookStoreApi/requirements.txt /usr/src/app/bookStoreApi/
@@ -43,8 +54,6 @@ RUN echo "SECRET_KEY=${SECRET_KEY}" && \
     echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" && \
     echo "AWS_STORAGE_BUCKET_NAME=${AWS_STORAGE_BUCKET_NAME}" && \
     echo "AWS_S3_REGION_NAME=${AWS_S3_REGION_NAME}"
-
-
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
