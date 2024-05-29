@@ -60,5 +60,5 @@ RUN echo "SECRET_KEY=${SECRET_KEY}" && \
 # Expose the port the app runs on
 EXPOSE 8000
 
-# Run the application
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Run the application with Gunicorn
+CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "myapp.wsgi:application"]
