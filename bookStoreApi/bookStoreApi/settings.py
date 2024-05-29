@@ -162,8 +162,6 @@ AWS_QUERYSTRING_AUTH = False
 
 
 
-# CORS settings for testing
-CORS_ORIGIN_ALLOW_ALL = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
