@@ -140,7 +140,7 @@ AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', default='us-east-1')  # Cha
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 # Static files (CSS, JavaScript, Images)
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
 
 
 # Static files (CSS, JavaScript, Images)
