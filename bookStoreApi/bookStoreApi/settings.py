@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from book.backend_storage import StaticStorage,MediaStorage
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -144,23 +145,16 @@ AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazo
 
 
 
-from storages.backends.s3boto3 import S3Boto3Storage
-class StaticStorage(S3Boto3Storage):
-    location = 'static'
-    default_acl = 'public-read'
 
-class MediaStorage(S3Boto3Storage): 
-    location = 'media'
-    file_overwrite = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATICFILES_STORAGE = StaticStorage
+STATICFILES_STORAGE = 'book.backend_storage.StaticStorage'
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 
 # Media files settings
-DEFAULT_FILE_STORAGE = MediaStorage
+DEFAULT_FILE_STORAGE = 'book.backend_storage.MediaStorage'
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 STATICFILES_DIRS = [
