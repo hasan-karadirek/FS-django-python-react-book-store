@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
-CORS_ALLOWED_ORIGINS = [""
+CORS_ALLOWED_ORIGINS = ["http://bookstoreapp.eu-north-1.elasticbeanstalk.com","http://localhost:8000"
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
