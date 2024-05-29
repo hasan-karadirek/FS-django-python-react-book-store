@@ -45,6 +45,7 @@ const AddressForm: React.FC = () => {
     country: "",
   });
   const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
+  const csrfToken = Cookies.get("csrftoken")
   const submitForm = () => {
     const addressForm = {
       redirectUrl: `${BASE_SERVER_URL}/shop/checkout-return`,
@@ -58,6 +59,7 @@ const AddressForm: React.FC = () => {
         Authorization: Cookies.get("token")
           ? `Token ${Cookies.get("token")}`
           : "",
+          "X-CSRFToken":csrfToken
       },
       body: JSON.stringify(addressForm),
     });

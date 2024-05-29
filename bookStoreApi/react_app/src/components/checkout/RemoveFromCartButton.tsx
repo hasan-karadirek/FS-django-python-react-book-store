@@ -33,6 +33,7 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
       location.reload();
     }
   }, [error]);
+  const csrfToken = Cookies.get("csrftoken")
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!Cookies.get("session_id")) {
@@ -44,6 +45,7 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
         Authorization: Cookies.get("token")
           ? `Token ${Cookies.get("token")}`
           : "",
+          "X-CSRFToken":csrfToken
       },
     });
     return () => {

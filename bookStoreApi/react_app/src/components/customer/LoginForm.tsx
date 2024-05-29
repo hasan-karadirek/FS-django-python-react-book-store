@@ -38,12 +38,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
         : location.reload();
     },
   );
-
+  const csrfToken = Cookies.get("csrftoken")
   const submitForm = () => {
     performFetch({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-CSRFToken":csrfToken
       },
       body: JSON.stringify(formData),
     });
