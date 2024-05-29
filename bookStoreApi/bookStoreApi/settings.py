@@ -160,10 +160,11 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None  
 AWS_QUERYSTRING_AUTH = False 
 
-# settings.py
+SECURE_SSL_REDIRECT = False
+SECURE_PROXY_SSL_HEADER = None
 
-SECURE_SSL_REDIRECT = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# CORS settings for testing
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
