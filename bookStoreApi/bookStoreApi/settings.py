@@ -29,8 +29,7 @@ DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://localhost:8080",
+    "http://bookstoreapp.eu-north-1.elasticbeanstalk.com"
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
