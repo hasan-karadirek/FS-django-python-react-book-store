@@ -28,8 +28,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
-CORS_ALLOWED_ORIGINS = [
-    "http://bookstoreapp.eu-north-1.elasticbeanstalk.com"
+CORS_ALLOWED_ORIGINS = [""
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
@@ -51,7 +50,6 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
-    "storages",
     "store",
     "customer",
     "book",
@@ -133,34 +131,16 @@ USE_I18N = True
 USE_TZ = True
 
 
-
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = 'bookstorestatic'
-AWS_S3_REGION_NAME = 'eu-north-1' 
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
-
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "frontend/static/react"),
 ]
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-AWS_S3_FILE_OVERWRITE = False  
-AWS_DEFAULT_ACL = None  
-AWS_QUERYSTRING_AUTH = False 
-
-
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -188,19 +168,3 @@ EMAIL_HOST_USER = "qaapis7@gmail.com"
 EMAIL_HOST_PASSWORD = "eznjswlxnkqixqtn"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-
-# In Django settings.py
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "scrapy_file": {
-            "level": "DEBUG",  # Adjust the log level as needed.
-            "class": "logging.FileHandler",
-            "filename": "scrapy.log",  # Specify the correct file path.
-        },
-    },
-    "loggers": {
-        "scrapy": {"handlers": ["scrapy_file"], "level": "DEBUG", "propagate": False,},
-    },
-}
