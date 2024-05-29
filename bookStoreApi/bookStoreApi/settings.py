@@ -156,7 +156,7 @@ MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "frontend/static/react"),
 ]
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Default primary key field type
