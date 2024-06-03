@@ -25,7 +25,8 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
           <img id="logo" src={Logo} alt="logo" />{" "}
           <span
             style={{
-              fontSize: width > 778 ? "2rem" : width > 481 ? "1.5rem" : "1rem",
+              fontSize:
+                width > 778 ? "1.75rem" : width > 481 ? "1.5rem" : "1rem",
             }}
           >
             Le Flaneur Amsterdam

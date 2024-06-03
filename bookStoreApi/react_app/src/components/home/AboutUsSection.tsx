@@ -5,7 +5,7 @@ import { Slide } from "react-awesome-reveal";
 
 const AboutUs: React.FC = () => {
   return (
-    <div className="container" id="about-us">
+    <div id="about-us" className="container">
       <div className="d-flex flex-column flex-lg-row">
         <Slide triggerOnce={true}>
           <div className="flex-fill about-us">

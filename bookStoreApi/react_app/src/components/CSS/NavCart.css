@@ -23,7 +23,8 @@
   position: absolute;
 }
 .nav-cart-list-image {
-  height: fit-content;
+  object-fit: cover;
+  height: auto;
   width: 6rem;
 }
 
