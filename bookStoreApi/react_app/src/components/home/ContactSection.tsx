@@ -3,6 +3,7 @@ import useWindowSize from "../../hooks/useWindowSize";
 import useFetch from "../../hooks/useFetch";
 import { ContactFormData } from "../../types/forms";
 import { Circles } from "react-loader-spinner";
+import "../CSS/ContactSection.css"
 
 const ContactSection: React.FC = () => {
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
@@ -177,6 +178,27 @@ You can also use the contact form to send us photos of the books that you want t
               )}
             </form>
           </div>
+          <div className="container">
+        <div className="opening-hours-card card">
+            <div className="opening-hours-header card-header">
+                <h4>Opening Hours</h4>
+            </div>
+            <div className="opening-hours-body card-body" style={{height:"auto"}}>
+            <div className="day-row">
+                    <div>Tuesday</div>
+                    <div>11:00 - 17:00</div>
+                </div>
+                <div className="day-row">
+                    <div>Wednesday / Monday</div>
+                    <div>13:00 - 19:30</div>
+                </div>
+                <div className="day-row">
+                    <div>Sunday</div>
+                    <div>No guarantee after 18:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
         </div>
       </div>
     </>

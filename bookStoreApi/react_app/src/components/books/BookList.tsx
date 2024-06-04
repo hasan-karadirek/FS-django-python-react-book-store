@@ -14,12 +14,13 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
   return (
     <div className="d-flex flex-wrap cards-container">
       {books?.map((book) => (
-        <Link
-          to={`/shop/books/${book.id.toString()}`}
+        <div
+          
           className="book-card"
           key={book.id.toString()}
         >
           <div className="card" id={book.id.toString()}>
+            <Link to={`/shop/books/${book.id.toString()}`}>
             <img
               src={
                 book.images[0]
@@ -28,11 +29,11 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
               }
               className="card-img-top"
               alt={book.title}
-            />
+            /></Link>
             <div className="card-body">
-              <h3 className="card-text">
+            <Link to={`/shop/books/${book.id.toString()}`}><h3 className="card-text">
                 {`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}
-              </h3>
+              </h3></Link>
               <p> €{book.price}</p>
               <AddToCartButton
                 btnClasses="btn btn-outline-success book-list-btn"
@@ -46,7 +47,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
               />
             </div>
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   );

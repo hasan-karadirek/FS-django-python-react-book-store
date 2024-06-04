@@ -1,0 +1,19 @@
+.opening-hours-card {
+    margin-bottom: 1rem;
+}
+.opening-hours-header {
+    background-color: rgb(191, 0, 10);
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+.opening-hours-body {
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+.opening-hours-body .day-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
