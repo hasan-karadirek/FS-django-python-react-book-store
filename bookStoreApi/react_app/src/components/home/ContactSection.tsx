@@ -85,14 +85,10 @@ const ContactSection: React.FC = () => {
             <h2 style={{ paddingLeft: "1rem" }}>Get in Touch</h2>
             <br />
             <p style={{ padding: "1rem" }}>
-              Do not hesitate to donate, trade, or sell your books. If you
-              choose us, please send an e-mail to
-              leflaneuramsterdam@hotmail.com, or fill the contact form,
-              including photos of legible spines or faces (of books) together.
-              Let us know of any major issues like water damage, loose or
-              missing pages, broken spines, and depending on the amount, give us
-              2 to 5 days to run a series of highly complicated evaluation
-              processes.
+            You may wish to join out list to get posted about events and performances… and potential monthly new listings in desired topics of interests?? And HOW?
+Now some update. We have been experimenting on turning the space into a performance room starting with stand-up shows, a small gathering venue for book presentations, talks (Think of juliette here) and readings. Take a mental note, for eventual cooperation and participation. 
+You can also use the contact form to send us photos of the books that you want to donate, trade or sell. 
+
             </p>
             <div>
               <iframe
