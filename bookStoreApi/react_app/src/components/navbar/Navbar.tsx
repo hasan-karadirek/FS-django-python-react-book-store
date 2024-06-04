@@ -75,13 +75,7 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
           </ul>
           <div id="social-container">
             <a href="#">
-              <img src={facebook} alt="facebook" />
-            </a>
-            <a href="#">
               <img src={instagram} alt="instagram" />
-            </a>
-            <a href="#">
-              <img src={twitter} alt="twitter" />
             </a>
           </div>
           {width >= 992 ? (
