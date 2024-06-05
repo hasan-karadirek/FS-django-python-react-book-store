@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 import datetime
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils.text import slugify
 
 # Author Model
 class Author(models.Model):
@@ -103,9 +104,22 @@ class Book(models.Model):
         choices=statusChoices,
         verbose_name="Status of the book",
     )
+    page = models.IntegerField(validators=[MinValueValidator(0),], null=True, default=0)
+    ant = models.IntegerField(default=0, null=True)
+    cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    remain = models.DecimalField(max_digits=10, decimal_places=2)
+    loc = models.CharField(max_length=255, default="no-loc")
+    supplier = models.CharField(max_length=255, default="unknown supplier")
+    slug = models.CharField(max_length=255)
 
     def __str__(self):
         return f"{self.title} - {self.author.name} - {self.year}"
+
+    def save(self, *args, **kwargs):
+        if self.slug == None:
+            self.slug = slugify(f"{self.title} {self.author} {self.year} {self.env_no}")
+        self.remain = self.price - self.cost
+        super.save(self, *args, **kwargs)
 
 
 class BookImage(models.Model):
