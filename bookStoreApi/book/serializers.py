@@ -198,3 +198,11 @@ class BookSerializer(serializers.ModelSerializer):
                 BookTagAssociation.objects.get_or_create(tag=tag, book=instance)
 
         return instance
+
+class UpdateBooksSerializer(serializers.Serializer):
+    file=serializers.FileField()
+
+    def validate_file(self, value):
+        if not value.name.endswith('.xlsx'):
+            raise serializers.ValidationError("Invalid file type. Please upload an xlsx file.")
+        return value

@@ -2,12 +2,15 @@ from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Book, Category, Language
-from .serializers import BookSerializer, CategorySerializer, LanguageSerializer
+from .serializers import BookSerializer, CategorySerializer, LanguageSerializer,UpdateBooksSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from core.custom_exceptions import CustomAPIException
 from core.mixins import IsBookExist
 from core.helpers import pagination
 from django.db.models import Q
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+import openpyxl
 
 
 class AddBookAPIView(APIView):
@@ -108,3 +111,25 @@ class GetAllLanguagesApiView(APIView):
         serializer = LanguageSerializer(languages, many=True)
         response = {"data": serializer.data, "success": True}
         return Response(response, status=status.HTTP_200_OK)
+class UpdateBooksAPIView(APIView):
+    permission_classes = [permissions.IsAdminUser]
+    parser_classes = (MultiPartParser, FormParser)
+    def put(self,request,*args,kwargs):
+        serializer=UpdateBooksSerializer(data=request.data)
+        if serializer.is_valid:
+            file=serializer.validated_data["file"]
+            temp_path = default_storage.save('temp/' + file.name, ContentFile(file.read()))
+            workbook = openpyxl.load_workbook(default_storage.path(temp_path))
+            sheet = workbook.active
+
+            issued_books=[]
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                env_no, status = row
+                book=Book.objects.get(env_no=env_no)
+                if not book:
+                    issued_books.append(env_no)
+                    continue
+                book.status=status
+                book.save()
+            return Response({"success":True, "msg":f"invalid env_no list: {issued_books}"})
+        raise CustomAPIException("Request body is not valid", 400)
