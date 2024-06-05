@@ -11,6 +11,7 @@ const WelcomeSection: React.FC = () => {
     const carousel = new Carousel(mainCarousel, {
       interval: 8000,
       wrap: true,
+      pause: false,
     });
     carousel.cycle();
 
@@ -47,7 +48,7 @@ const WelcomeSection: React.FC = () => {
           ></button>
         </div>
         <div className="carousel-inner">
-          <div className="carousel-item active" data-bs-interval="8000">
+          <div className="carousel-item active">
             <img
               src={slide1}
               style={{ objectFit: "cover" }}
@@ -57,10 +58,10 @@ const WelcomeSection: React.FC = () => {
 
             <div className="carousel-caption  d-md-block">
               <h1>Le Flaneur Amsterdam Second Hand Bookstore</h1>
-              <p>Timeless books in numerous languages.</p>
+              <p>Timeless books in numerous languages</p>
             </div>
           </div>
-          <div className="carousel-item" data-bs-interval="8000">
+          <div className="carousel-item">
             <img
               src={slide2}
               style={{ objectFit: "cover" }}
@@ -70,7 +71,7 @@ const WelcomeSection: React.FC = () => {
 
             <div className="carousel-caption  d-md-block">
               <h1>Le Flaneur Amsterdam Second Hand Bookstore</h1>
-              <p>Timeless books in numerous languages.</p>
+              <p>Timeless books in numerous languages</p>
             </div>
           </div>
           <div className="carousel-item">
@@ -83,7 +84,7 @@ const WelcomeSection: React.FC = () => {
 
             <div className="carousel-caption  d-md-block">
               <h1>Le Flaneur Amsterdam Second Hand Bookstore</h1>
-              <p>Timeless books in numerous languages.</p>
+              <p>Timeless books in numerous languages</p>
             </div>
           </div>
         </div>

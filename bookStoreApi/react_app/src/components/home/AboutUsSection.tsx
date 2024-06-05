@@ -5,7 +5,7 @@ import { Slide } from "react-awesome-reveal";
 
 const AboutUs: React.FC = () => {
   return (
-    <div className="container" id="about-us">
+    <div id="about-us" className="container">
       <div className="d-flex flex-column flex-lg-row">
         <Slide triggerOnce={true}>
           <div className="flex-fill about-us">
@@ -15,10 +15,11 @@ const AboutUs: React.FC = () => {
               Welcome to the most exquisite world of Le Flaneur Amsterdam, a gem
               for book lovers hidden in plain sight bordering the beautiful and
               cozy Jordaan and always attractive and hectic negenstraatjes.
-              Enter this gate of wonder and the... No, no. Really? Le Flaneur is
-              an ordinary, second hand bookstore, and proudly a physical one.
+              Enter this gate of wonder and the... 
             </p>
             <p>
+              No, no. Really? Le Flaneur is
+              an ordinary, second hand bookstore, and proudly a physical one. 
               This is an ordinary bookstore, meaning that, we mostly stock
               ordinary editions and wish to cater for ordinary people. Le
               Flaneur is not a classical antiquarian, or seller of rare books,
