@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { OrderContext } from "../../contexts/OrderContext";
 import RemoveFromCartButton from "./RemoveFromCartButton";
-import slide1 from "../../assets/booksImg.jpeg";
+import defaultBookImage from "../../assets/defaultBookImage.webp";
 
 const CheckoutCart: React.FC = () => {
   const { order } = useContext(OrderContext);
+  const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
   return (
     <ul className="checkout-cart">
       {order?.order_details?.map((detail, index) => (
@@ -13,8 +14,8 @@ const CheckoutCart: React.FC = () => {
             className="nav-cart-list-image"
             src={
               detail.book.images.length > 0
-                ? `http://localhost:8000${detail.book.images[0].image}`
-                : slide1
+                ? `${BASE_SERVER_URL}${detail.book.images[0].image}`
+                : defaultBookImage
             }
           />
           <div className="nav-cart-list-body">

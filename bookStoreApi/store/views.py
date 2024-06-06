@@ -148,6 +148,7 @@ class CheckOutView(APIView):
                     )
             except Exception as e:
                 open_order.refresh_from_db()
+                print(e)
                 raise CustomAPIException(
                     "Checkout can not process, please try again later.", 500,
                 )

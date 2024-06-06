@@ -10,8 +10,8 @@ def createMolliePayment(amount, orderId, redirectUrl):
             "amount": {"currency": "EUR", "value": amount,},
             "description": "Order {}".format(orderId),
             "redirectUrl": redirectUrl,
-            "webhookUrl": "http://bookstore.us-east-1.elasticbeanstalk.com/api/payment/mollie-hook/{}/".format(
-                orderId
+            "webhookUrl": "{}/api/payment/mollie-hook/{}/".format(
+                os.getenv("BASE_SERVER_URL"), orderId
             ),
             "metadata": {"order_id": orderId,},
         }

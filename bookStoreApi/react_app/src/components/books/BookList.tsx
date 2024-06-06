@@ -1,7 +1,7 @@
 import React from "react";
 import { Book } from "../../types/models";
 import "../CSS/BookList.css";
-import slide1 from "../../assets/booksImg.jpeg";
+import defaultBookImage from "../../assets/defaultBookImage.webp";
 import { Link } from "react-router-dom";
 import AddToCartButton from "../checkout/AddToCartButton";
 import RemoveFromCartButton from "../checkout/RemoveFromCartButton";
@@ -9,24 +9,24 @@ import RemoveFromCartButton from "../checkout/RemoveFromCartButton";
 interface BookListProps {
   books: Book[] | null;
 }
-
+const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
 const BookList: React.FC<BookListProps> = ({ books }) => {
   return (
     <div className="d-flex flex-wrap cards-container">
       {books?.map((book) => (
         <div className="book-card" key={book.id.toString()}>
           <div className="card" id={book.id.toString()}>
-            <Link to={`/shop/books/${book.id.toString()}`}>
-              <img
-                src={
-                  book.images[0]
-                    ? `http://localhost:8000${book.images[0].image}`
-                    : slide1
-                }
-                className="card-img-top"
-                alt={book.title}
-              />
-            </Link>
+
+            <img
+              src={
+                book.images[0]
+                  ? `${BASE_SERVER_URL}${book.images[0].image}`
+                  : defaultBookImage
+              }
+              className="card-img-top"
+              alt={book.title}
+            />
+
             <div className="card-body">
               <Link to={`/shop/books/${book.id.toString()}`}>
                 <h3 className="card-text">

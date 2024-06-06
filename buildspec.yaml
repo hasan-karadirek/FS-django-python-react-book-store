@@ -6,23 +6,22 @@ artifacts:
     - '**/*'
   encryption_disabled: false 
   name: my-artifact
-  encryption_key: 'arn:aws:kms:us-east-1:875207630257:key/fe4e61d1-d85e-4dae-9b3e-b187b90560ce' # KMS keyARN
 
 
 phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 875207630257.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 875207630257.dkr.ecr.eu-north-1.amazonaws.com/bookstore
 
   build:
     commands:
       - echo Building the Docker image...
       - docker pull public.ecr.aws/docker/library/python:3.9
-      - docker build --build-arg SECRET_KEY=$SECRET_KEY --build-arg DB_USER=$DB_USER --build-arg DB_NAME=$DB_NAME --build-arg DB_HOST=$DB_HOST --build-arg DB_PASSWORD=$DB_PASSWORD --build-arg DB_PORT=$DB_PORT -t bookstoreecr .
+      - docker build --build-arg SECRET_KEY=$SECRET_KEY --build-arg DB_USER=$DB_USER --build-arg DB_NAME=$DB_NAME --build-arg DB_HOST=$DB_HOST --build-arg DB_PASSWORD=$DB_PASSWORD --build-arg DB_PORT=$DB_PORT --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --build-arg AWS_STORAGE_BUCKET_NAME=$AWS_STORAGE_BUCKET_NAME --build-arg AWS_S3_REGION_NAME=$AWS_S3_REGION_NAME -t bookstore .
 
   post_build:
     commands:
       - echo Pushing the Docker image to Amazon ECR...
-      - docker tag bookstoreecr:latest 875207630257.dkr.ecr.us-east-1.amazonaws.com/bookstoreecr:latest
-      - docker push 875207630257.dkr.ecr.us-east-1.amazonaws.com/bookstoreecr:latest
+      - docker tag bookstore:latest 875207630257.dkr.ecr.eu-north-1.amazonaws.com/bookstore:latest
+      - docker push 875207630257.dkr.ecr.eu-north-1.amazonaws.com/bookstore:latest

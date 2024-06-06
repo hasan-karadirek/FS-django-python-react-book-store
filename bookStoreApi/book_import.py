@@ -17,7 +17,7 @@ from book.models import (
 )
 
 
-df = pd.read_excel("./archive.xlsx")
+df = pd.read_excel("./archive.xlsx", engine='openpyxl')
 
 
 def get_or_none(value):

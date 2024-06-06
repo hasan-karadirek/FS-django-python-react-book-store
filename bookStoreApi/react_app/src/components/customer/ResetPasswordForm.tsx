@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import { Circles } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 interface ResetPasswordFormData {
   password: string;
@@ -25,12 +26,13 @@ const ResetPasswordForm: React.FC = () => {
       }
     },
   );
-
+  const csrfToken = Cookies.get("csrftoken")
   const submitForm = () => {
     performFetch({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-CSRFToken":csrfToken
       },
       body: JSON.stringify(formData),
     });

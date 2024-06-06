@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from book.backend_storage import StaticStorage,MediaStorage
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,9 +29,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://localhost:8080",
+CORS_ALLOWED_ORIGINS = ["http://s3bookstore.eu-north-1.elasticbeanstalk.com","http://localhost:8000"
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
@@ -52,6 +51,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
+    "storages",
     "store",
     "customer",
     "book",
@@ -136,17 +136,36 @@ USE_I18N = True
 
 USE_TZ = True
 
+#AWS s3
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', default='us-east-1')  # Change to your region
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+
+# Static files (CSS, JavaScript, Images)
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
+
+
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = 'book.backend_storage.StaticStorage'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+
+# Media files settings
+DEFAULT_FILE_STORAGE = 'book.backend_storage.MediaStorage'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "frontend/static/react"),
 ]
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -170,23 +189,7 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-EMAIL_HOST_USER = "qaapis7@gmail.com"
-EMAIL_HOST_PASSWORD = "eznjswlxnkqixqtn"
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-
-# In Django settings.py
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "scrapy_file": {
-            "level": "DEBUG",  # Adjust the log level as needed.
-            "class": "logging.FileHandler",
-            "filename": "scrapy.log",  # Specify the correct file path.
-        },
-    },
-    "loggers": {
-        "scrapy": {"handlers": ["scrapy_file"], "level": "DEBUG", "propagate": False,},
-    },
-}
