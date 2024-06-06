@@ -54,7 +54,7 @@ const Footer: React.FC = () => {
         <div className="footer-right flex-grow-1">
           <ul>
             <li className="p-2">KvK:222222222</li>
-            <li className="p-2">Adress: lirinsengracht 260, Amsterdam</li>
+            <li className="p-2">Adress: Pirinsengracht 260, Amsterdam</li>
             <li className="p-2">Tel: 055555555555</li>
           </ul>
         </div>

@@ -13,7 +13,7 @@ interface BookDetailProps {
 const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
   const [bookImageIndex, setBookImageIndex] = useState(0);
 
-  return (
+  return (<>
     <div className="d-flex flex-wrap" id="book-info-image">
       <div className="book-images p-2">
         <img
@@ -95,6 +95,14 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
         </div>
       </div>
     </div>
+    <div className="container book-detail-description">
+      <h5>Description:</h5> 
+      {book.description}
+      <br />
+      <br />
+      <h5>Condition Description:</h5><span>{book.condition_description}</span>
+    </div>
+    </>
   );
 };
 

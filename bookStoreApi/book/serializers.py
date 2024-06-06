@@ -103,6 +103,7 @@ class BookSerializer(serializers.ModelSerializer):
             "tag_names",
             "images",
             "uploaded_images",
+            "description"
         ]
 
     def create(self, validated_data):
