@@ -49,11 +49,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ./bookStoreApi/ /usr/src/app/bookStoreApi/
 
 # Debug environment variables
-RUN echo "SECRET_KEY=${SECRET_KEY}" && \
-    echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" && \
-    echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" && \
-    echo "AWS_STORAGE_BUCKET_NAME=${AWS_STORAGE_BUCKET_NAME}" && \
-    echo "AWS_S3_REGION_NAME=${AWS_S3_REGION_NAME}"
+RUN python manage.py collectstatic --noinput
 
 
 
@@ -61,4 +57,4 @@ RUN echo "SECRET_KEY=${SECRET_KEY}" && \
 EXPOSE 8000
 
 # Run the application with Gunicorn
-CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "bookStoreApi.wsgi:application"]
+CMD ["gunicorn", "--workers", "2", "--bind", "0.0.0.0:8000", "bookStoreApi.wsgi:application"]
