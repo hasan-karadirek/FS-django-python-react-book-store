@@ -44,6 +44,9 @@ WORKDIR /usr/src/app/bookStoreApi
 COPY ./bookStoreApi/requirements.txt /usr/src/app/bookStoreApi/
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install MySQL client
+RUN apt-get update && apt-get install -y default-mysql-client
+
 # Copy the current directory contents into the container at /usr/src/app/bookStoreApi/
 # Adjust the COPY command to copy from the bookStoreApi subdirectory
 COPY ./bookStoreApi/ /usr/src/app/bookStoreApi/
