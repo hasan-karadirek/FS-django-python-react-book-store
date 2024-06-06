@@ -56,4 +56,4 @@ COPY ./bookStoreApi/ /usr/src/app/bookStoreApi/
 EXPOSE 8000
 
 # Run the application with Gunicorn
-CMD ["gunicorn", "--workers", "2", "--bind", "0.0.0.0:8000", "bookStoreApi.wsgi:application"]
+CMD ["gunicorn", "--workers", "1", "--bind", "0.0.0.0:8000", "bookStoreApi.wsgi:application"]
