@@ -46,7 +46,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Install MySQL client
 RUN apt-get update && apt-get install -y default-mysql-client
-
+# Create symbolic link
+RUN mkdir -p /run/mysqld && ln -s /var/lib/mysql/mysql.sock /run/mysqld/mysqld.sock
 # Copy the current directory contents into the container at /usr/src/app/bookStoreApi/
 # Adjust the COPY command to copy from the bookStoreApi subdirectory
 COPY ./bookStoreApi/ /usr/src/app/bookStoreApi/
