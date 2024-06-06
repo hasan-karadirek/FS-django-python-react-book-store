@@ -2,12 +2,23 @@ from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Book, Category, Language
-from .serializers import BookSerializer, CategorySerializer, LanguageSerializer
+from .serializers import (
+    BookSerializer,
+    CategorySerializer,
+    LanguageSerializer,
+    UpdateBooksSerializer,
+)
 from rest_framework.parsers import MultiPartParser, FormParser
 from core.custom_exceptions import CustomAPIException
 from core.mixins import IsBookExist
 from core.helpers import pagination
 from django.db.models import Q
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+import openpyxl
+from io import BytesIO
+from django.http import FileResponse
+from django.utils import timezone
 
 
 class AddBookAPIView(APIView):
@@ -108,3 +119,99 @@ class GetAllLanguagesApiView(APIView):
         serializer = LanguageSerializer(languages, many=True)
         response = {"data": serializer.data, "success": True}
         return Response(response, status=status.HTTP_200_OK)
+
+
+class UpdateBooksAPIView(APIView):
+    permission_classes = [permissions.IsAdminUser]
+    parser_classes = (MultiPartParser, FormParser)
+
+    def put(self, request, *args, **kwargs):
+        serializer = UpdateBooksSerializer(data=request.data)
+        if serializer.is_valid():
+            file = serializer.validated_data["file"]
+            temp_path = default_storage.save(
+                "temp/" + file.name, ContentFile(file.read())
+            )
+            workbook = openpyxl.load_workbook(default_storage.path(temp_path))
+            sheet = workbook.active
+
+            issued_books = []
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                id, status = row
+                book = Book.objects.get(id=id)
+                if not book:
+                    issued_books.append(id)
+                    continue
+                book.status = status
+                book.save()
+            return Response(
+                {"success": True, "msg": f"invalid ID list: {issued_books}"}
+            )
+        raise CustomAPIException("Request body is not valid", 400)
+
+
+class ExportBooksAPIView(APIView):
+    permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request, *args, **kwargs):
+        workbook = openpyxl.Workbook()
+        sheet = workbook.active
+
+        header = [
+            "id",
+            "isbn",
+            "env_no",
+            "title",
+            "author",
+            "language",
+            "cover",
+            "publishing_house",
+            "year",
+            "edition",
+            "category",
+            "condition",
+            "condition_description",
+            "tags",
+            "price",
+            "entry",
+            "status",
+        ]
+        sheet.append(header)
+
+        books = Book.objects.all()
+
+        for book in books:
+            row = [
+                book.id,
+                book.isbn,
+                book.env_no,
+                book.title,
+                book.author.name if book.author else "",
+                book.language.name if book.language else "",
+                book.cover,
+                book.publishing_house.name if book.publishing_house else "",
+                book.year,
+                book.edition,
+                book.category.title if book.category else "",
+                book.condition,
+                book.condition_description,
+                ", ".join([tag.name for tag in book.tags.all()]),
+                book.price,
+                book.entry,
+                book.status,
+            ]
+            sheet.append(row)
+
+        file_stream = BytesIO()
+        workbook.save(file_stream)
+        file_stream.seek(0)
+
+        response = FileResponse(
+            file_stream,
+            content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+        response[
+            "Content-Disposition"
+        ] = f'attachment; filename=books_{timezone.now().strftime("%Y%m%d_%H%M%S")}.xlsx'
+
+        return response

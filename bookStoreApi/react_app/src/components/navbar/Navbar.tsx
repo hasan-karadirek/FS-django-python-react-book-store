@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "../CSS/Navbar.css";
 import Logo from "../../assets/logo.png";
-import facebook from "../../assets/facebook.png";
 import instagram from "../../assets/instagram.png";
-import twitter from "../../assets/twitter.png";
 import NavCart from "./NavCart";
 import NavbarUser from "./NavbarUser";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -25,7 +23,8 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
           <img id="logo" src={Logo} alt="logo" />{" "}
           <span
             style={{
-              fontSize: width > 778 ? "2rem" : width > 481 ? "1.5rem" : "1rem",
+              fontSize:
+                width > 778 ? "1.75rem" : width > 481 ? "1.5rem" : "1rem",
             }}
           >
             Le Flaneur Amsterdam
@@ -74,13 +73,7 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
           </ul>
           <div id="social-container">
             <a href="#">
-              <img src={facebook} alt="facebook" />
-            </a>
-            <a href="#">
               <img src={instagram} alt="instagram" />
-            </a>
-            <a href="#">
-              <img src={twitter} alt="twitter" />
             </a>
           </div>
           {width >= 992 ? (

@@ -122,16 +122,15 @@ class ForgotPasswordAPIView(APIView):
                 token, created = Token.objects.get_or_create(user=customer)
                 if not created:
                     token.delete()
-
                     token = Token.objects.create(user=customer)
 
-                    send_mail(
-                        "Password Reset Link - La Fleneur Amsterdam",
-                        f"You can reset your password by following link: http:localhost:8080/customer/resetpassword?token={token.key}",
-                        settings.DEFAULT_FROM_EMAIL,
-                        [customer.email],
-                        fail_silently=True,
-                    )
+                send_mail(
+                    "Password Reset Link - La Fleneur Amsterdam",
+                    f"You can reset your password by following link: http:localhost:8080/customer/resetpassword?token={token.key}",
+                    settings.DEFAULT_FROM_EMAIL,
+                    [customer.email],
+                    fail_silently=True,
+                )
             except Customer.DoesNotExist:
                 raise CustomAPIException(
                     "There is no such a user associated with this email.",
