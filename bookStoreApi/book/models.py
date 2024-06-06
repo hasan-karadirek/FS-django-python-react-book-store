@@ -62,7 +62,7 @@ class Book(models.Model):
     ]
     isbn = models.CharField(max_length=20, null=True)
     env_no = models.IntegerField(unique=True)
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=500)
     author = models.ForeignKey(
         Author, related_name="books", on_delete=models.SET_NULL, null=True
     )
@@ -74,6 +74,7 @@ class Book(models.Model):
         max_length=50,
         choices=coverChoices,
         verbose_name="Cover type of the book",
+        null=True,
     )
     publishing_house = models.ForeignKey(
         PublishingHouse, related_name="books", on_delete=models.SET_NULL, null=True
@@ -82,13 +83,15 @@ class Book(models.Model):
         validators=[
             MinValueValidator(1700),
             MaxValueValidator(datetime.date.today().year),
-        ]
+        ],
+        null=True,
     )
     edition = models.CharField(max_length=255)
     category = models.ForeignKey(
         Category, related_name="books", on_delete=models.SET_NULL, null=True
     )
-    condition_description = models.CharField(max_length=255)
+    description = models.CharField(max_length=5000, null=True, default="No description")
+    condition_description = models.CharField(max_length=1500, null=True)
     condition = models.CharField(
         default="New",
         max_length=50,
@@ -107,19 +110,21 @@ class Book(models.Model):
     page = models.IntegerField(validators=[MinValueValidator(0),], null=True, default=0)
     ant = models.IntegerField(default=0, null=True)
     cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    remain = models.DecimalField(max_digits=10, decimal_places=2)
+    remain = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     loc = models.CharField(max_length=255, default="no-loc")
     supplier = models.CharField(max_length=255, default="unknown supplier")
-    slug = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return f"{self.title} - {self.author.name} - {self.year}"
 
     def save(self, *args, **kwargs):
         if self.slug == None:
-            self.slug = slugify(f"{self.title} {self.author} {self.year} {self.env_no}")
+            self.slug = slugify(
+                f"{self.title} {self.author} {self.year} {self.env_no}"[0:255]
+            )
         self.remain = self.price - self.cost
-        super.save(self, *args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 class BookImage(models.Model):

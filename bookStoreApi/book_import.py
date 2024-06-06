@@ -1,6 +1,7 @@
 import os
 import django
 import pandas as pd
+from django.db import transaction
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bookStoreApi.settings")
 django.setup()
@@ -15,42 +16,78 @@ from book.models import (
     BookTagAssociation,
 )
 
-# Load the data
-df = pd.read_excel("./core/example_books.xlsx")
 
-# Iterate through the DataFrame
-for index, row in df.iterrows():
-    # Create or retrieve the author
-    author, created = Author.objects.get_or_create(name=row["AUTEUR"])
+df = pd.read_excel("./archive.xlsx")
 
-    # Similarly for PublishingHouse, Language, and Category
-    publishing_house, _ = PublishingHouse.objects.get_or_create(name=row["UITGEVER"])
-    language, _ = Language.objects.get_or_create(name=row["TAAL"])
-    category, _ = Category.objects.get_or_create(title=row["CATALOGUS"])
 
-    # Now create the Book instance
-    book = Book.objects.create(
-        isbn=row["ISBN bol+winkeltjes"],
-        env_no=row["NO."],
-        title=row["TITEL"],
-        author=author,
-        language=language,
-        cover=row["KAFT"],
-        publishing_house=publishing_house,
-        year=row["JAAR"],
-        edition=row["DRUK"],
-        category=category,
-        condition="NEW",
-        condition_description=row["CONDITIE"],
-        price=row["PRIJS"],
-        entry=pd.to_datetime(row["ENTRY"]),
-        status="OPEN",  # or another status based on your business logic
-    )
+def get_or_none(value):
+    return None if pd.isna(value) else value
 
-    # If there are tags, handle them similarly
-    tags = str(row["TREFWOORDEN"]).split(",")  # Assuming tags are comma-separated
-    for tag_name in tags:
-        tag, _ = Tag.objects.get_or_create(name=tag_name.strip())
-        BookTagAssociation.objects.create(book=book, tag=tag)
 
-print("Data imported successfully!")
+i = 0
+id = 0
+try:
+    with transaction.atomic():
+
+        for index, row in df.iterrows():
+            i = index
+            id = row["NO."]
+            author = None
+            if get_or_none(row["AUTEUR"]):
+                author, _ = Author.objects.get_or_create(name=row["AUTEUR"])
+            publishing_house = None
+            if get_or_none(row["UITGEVER"]):
+                publishing_house, _ = PublishingHouse.objects.get_or_create(
+                    name=row["UITGEVER"]
+                )
+            language = None
+            if get_or_none(row["CATALOGUS"]):
+                language, _ = Language.objects.get_or_create(name=row["TAAL"])
+            category = None
+            if get_or_none(row["CATALOGUS"]):
+                category, _ = Category.objects.get_or_create(title=row["CATALOGUS"])
+            condition = (
+                "NEW"
+                if get_or_none(row["BOL CONDITION"]) == "Nieuw"
+                else "LIKE_NEW"
+                if get_or_none(row["BOL CONDITION"]) == "Als Nieuw"
+                else "GOOD"
+                if get_or_none(row["BOL CONDITION"]) == "Goed"
+                else "REASONABLE"
+            )
+
+            book = Book.objects.create(
+                isbn=get_or_none(row["ISBN bol+winkeltjes"]),
+                env_no=row["NO."],
+                title=row["TITEL"],
+                author=get_or_none(author),
+                language=language,
+                cover=get_or_none(row["KAFT"]),
+                publishing_house=publishing_house,
+                year=get_or_none(row["JAAR"])
+                if isinstance(get_or_none(row["JAAR"]), int)
+                else None,
+                edition=get_or_none(row["DRUK"]),
+                category=category,
+                condition=condition,
+                condition_description=get_or_none(row["CONDITIE"]),
+                price=row["PRIJS"],
+                entry=pd.to_datetime(row["ENTRY"]),
+                status="OPEN",
+                page=row["BLDZ."],
+                ant=row["ANT"],
+                cost=row["KOST"],
+                loc=row["LOC"],
+                supplier=row["BRON"],
+            )
+
+            tags = str(row["TREFWOORDEN"]).split(",")
+            for tag_name in tags:
+                tag, _ = Tag.objects.get_or_create(name=tag_name.strip())
+                BookTagAssociation.objects.get_or_create(book=book, tag=tag)
+
+    print("Data imported successfully!")
+except Exception as e:
+    print(f"An error occurred: {e} - {i} - {df.iloc[i].to_dict()}")
+    print(f"{df.iloc[i].to_dict()}")
+    print(f"{df.iloc[i-1].to_dict()}")
