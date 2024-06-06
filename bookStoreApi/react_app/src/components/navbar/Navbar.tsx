@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "../CSS/Navbar.css";
 import Logo from "../../assets/logo.png";
-import facebook from "../../assets/facebook.png";
 import instagram from "../../assets/instagram.png";
-import twitter from "../../assets/twitter.png";
 import NavCart from "./NavCart";
 import NavbarUser from "./NavbarUser";
 import useWindowSize from "../../hooks/useWindowSize";

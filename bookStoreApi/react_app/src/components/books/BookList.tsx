@@ -14,26 +14,25 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
   return (
     <div className="d-flex flex-wrap cards-container">
       {books?.map((book) => (
-        <div
-          
-          className="book-card"
-          key={book.id.toString()}
-        >
+        <div className="book-card" key={book.id.toString()}>
           <div className="card" id={book.id.toString()}>
             <Link to={`/shop/books/${book.id.toString()}`}>
-            <img
-              src={
-                book.images[0]
-                  ? `http://localhost:8000${book.images[0].image}`
-                  : slide1
-              }
-              className="card-img-top"
-              alt={book.title}
-            /></Link>
+              <img
+                src={
+                  book.images[0]
+                    ? `http://localhost:8000${book.images[0].image}`
+                    : slide1
+                }
+                className="card-img-top"
+                alt={book.title}
+              />
+            </Link>
             <div className="card-body">
-            <Link to={`/shop/books/${book.id.toString()}`}><h3 className="card-text">
-                {`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}
-              </h3></Link>
+              <Link to={`/shop/books/${book.id.toString()}`}>
+                <h3 className="card-text">
+                  {`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}
+                </h3>
+              </Link>
               <p> €{book.price}</p>
               <AddToCartButton
                 btnClasses="btn btn-outline-success book-list-btn"

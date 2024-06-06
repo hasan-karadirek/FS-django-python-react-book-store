@@ -3,7 +3,7 @@ import useWindowSize from "../../hooks/useWindowSize";
 import useFetch from "../../hooks/useFetch";
 import { ContactFormData } from "../../types/forms";
 import { Circles } from "react-loader-spinner";
-import "../CSS/ContactSection.css"
+import "../CSS/ContactSection.css";
 
 const ContactSection: React.FC = () => {
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
@@ -86,10 +86,15 @@ const ContactSection: React.FC = () => {
             <h2 style={{ paddingLeft: "1rem" }}>Get in Touch</h2>
             <br />
             <p style={{ padding: "1rem" }}>
-            You may wish to join out list to get posted about events and performances… and potential monthly new listings in desired topics of interests?? And HOW?
-Now some update. We have been experimenting on turning the space into a performance room starting with stand-up shows, a small gathering venue for book presentations, talks (Think of juliette here) and readings. Take a mental note, for eventual cooperation and participation. 
-You can also use the contact form to send us photos of the books that you want to donate, trade or sell. 
-
+              You may wish to join out list to get posted about events and
+              performances… and potential monthly new listings in desired topics
+              of interests?? And HOW? Now some update. We have been
+              experimenting on turning the space into a performance room
+              starting with stand-up shows, a small gathering venue for book
+              presentations, talks (Think of juliette here) and readings. Take a
+              mental note, for eventual cooperation and participation. You can
+              also use the contact form to send us photos of the books that you
+              want to donate, trade or sell.
             </p>
             <div>
               <iframe
@@ -179,26 +184,29 @@ You can also use the contact form to send us photos of the books that you want t
             </form>
           </div>
           <div className="container">
-        <div className="opening-hours-card card">
-            <div className="opening-hours-header card-header">
+            <div className="opening-hours-card card">
+              <div className="opening-hours-header card-header">
                 <h4>Opening Hours</h4>
-            </div>
-            <div className="opening-hours-body card-body" style={{height:"auto"}}>
-            <div className="day-row">
-                    <div>Tuesday</div>
-                    <div>11:00 - 17:00</div>
+              </div>
+              <div
+                className="opening-hours-body card-body"
+                style={{ height: "auto" }}
+              >
+                <div className="day-row">
+                  <div>Tuesday</div>
+                  <div>11:00 - 17:00</div>
                 </div>
                 <div className="day-row">
-                    <div>Wednesday / Monday</div>
-                    <div>13:00 - 19:30</div>
+                  <div>Wednesday / Monday</div>
+                  <div>13:00 - 19:30</div>
                 </div>
                 <div className="day-row">
-                    <div>Sunday</div>
-                    <div>No guarantee after 18:00</div>
+                  <div>Sunday</div>
+                  <div>No guarantee after 18:00</div>
                 </div>
+              </div>
             </div>
-        </div>
-    </div>
+          </div>
         </div>
       </div>
     </>
