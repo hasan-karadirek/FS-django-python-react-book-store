@@ -27,6 +27,7 @@ export interface Book {
   tags: Tag[];
   images: BookImage[];
   description:string;
+  page:number;
 }
 
 export interface Customer {

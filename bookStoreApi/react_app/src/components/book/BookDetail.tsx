@@ -83,6 +83,9 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
             <li className="p-2">
               ISBN: <span>{book.isbn}</span>
             </li>
+            <li className="p-2">
+              Page: <span>{book.page}</span>
+            </li>
           </div>
         </ul>
         <div id="book-tags">
