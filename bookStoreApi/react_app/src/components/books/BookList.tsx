@@ -16,7 +16,6 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
       {books?.map((book) => (
         <div className="book-card" key={book.id.toString()}>
           <div className="card" id={book.id.toString()}>
-
             <img
               src={
                 book.images[0]

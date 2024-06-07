@@ -26,9 +26,10 @@ const AddressForm: React.FC = () => {
       Cookies.remove("token");
       Cookies.remove("session_id");
       localStorage.clear();
+      setCustomError(error);
       location.reload();
     }
-    if (error?.name === "book-availability") {
+    if (error?.name === "unavailable_books") {
       localStorage.setItem("order", JSON.stringify(error.data));
       setOrder(error.data as Order);
       setCustomError(error);
@@ -45,7 +46,7 @@ const AddressForm: React.FC = () => {
     country: "",
   });
   const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
-  const csrfToken = Cookies.get("csrftoken")
+  const csrfToken = Cookies.get("csrftoken");
   const submitForm = () => {
     const addressForm = {
       redirectUrl: `${BASE_SERVER_URL}/shop/checkout-return`,
@@ -59,7 +60,7 @@ const AddressForm: React.FC = () => {
         Authorization: Cookies.get("token")
           ? `Token ${Cookies.get("token")}`
           : "",
-          "X-CSRFToken":csrfToken
+        "X-CSRFToken": csrfToken,
       },
       body: JSON.stringify(addressForm),
     });
