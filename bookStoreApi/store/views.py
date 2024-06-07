@@ -151,7 +151,7 @@ class OrderStatusView(APIView):
             if request.user.is_authenticated:
                 if order.customer.id != request.user.id:
                     raise CustomAPIException(
-                        "You do not have authorization for this order",
+                        "You do not have authorization for this order- code-1",
                         status=status.HTTP_401_UNAUTHORIZED,
                     )
             else:
@@ -159,7 +159,7 @@ class OrderStatusView(APIView):
                     "session_id"
                 ) == None or order.session_id != request.COOKIES.get("session_id"):
                     raise CustomAPIException(
-                        "You do not have authorization for this order",
+                        "You do not have authorization for this order code-2",
                         status=status.HTTP_401_UNAUTHORIZED,
                     )
 
