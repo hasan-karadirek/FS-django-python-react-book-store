@@ -9,6 +9,7 @@ from core.custom_exceptions import CustomAPIException
 from core.mollie import createMolliePayment
 from django.db import transaction, DatabaseError
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
+from book.models import Book
 
 
 class AddToCartView(IsSaleExist, APIView):
@@ -24,9 +25,9 @@ class AddToCartView(IsSaleExist, APIView):
         return Response(response, status=status.HTTP_201_CREATED)
 
 
-class RemoveFromCartView(IsSaleExist, APIView):
-    def put(self, request, *args, **kwargs):
-        print("remove")
+class RemoveFromCartView(APIView):
+    def put(self, request, bookPk, *args, **kwargs):
+        
         open_order, open_order_created = find_active_order(request)
 
         if open_order_created:
@@ -37,12 +38,13 @@ class RemoveFromCartView(IsSaleExist, APIView):
                 status=400,
             )
         try:
+            book=Book.objects.get(id=bookPk)
             orderDetail = OrderDetail.objects.get(
-                order=open_order, book=request.book
+                order=open_order, book=book
             )
             orderDetail.delete()
             open_order.refresh_from_db()
-        except OrderDetail.DoesNotExist:
+        except OrderDetail.DoesNotExist or Book.DoesNotExist:
             orderSerializer = OrderSerializer(open_order)
             raise CustomAPIException(
                 "Book is already not in your cart.",
