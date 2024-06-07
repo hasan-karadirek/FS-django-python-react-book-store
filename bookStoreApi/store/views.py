@@ -26,6 +26,7 @@ class AddToCartView(IsSaleExist, APIView):
 
 class RemoveFromCartView(IsSaleExist, APIView):
     def put(self, request, *args, **kwargs):
+        print("remove")
         open_order, open_order_created = find_active_order(request)
 
         if open_order_created:
