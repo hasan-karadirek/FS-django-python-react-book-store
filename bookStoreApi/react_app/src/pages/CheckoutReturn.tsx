@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { Order } from "../types/models";
-import slide1 from "../assets/booksImg.jpeg";
 import { Circles } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import defaultBookImage from "../assets/defaultBookImage.webp";
+
 const CheckoutReturn: React.FC = () => {
   const navigate = useNavigate();
   const orderInProgress = JSON.parse(
@@ -27,13 +29,19 @@ const CheckoutReturn: React.FC = () => {
     let intervalId;
     if (orderInProgress) {
       intervalId = setInterval(() => {
-        performFetch();
+        performFetch({headers:{
+          Authorization: Cookies.get("token")
+          ? `Token ${Cookies.get("token")}`
+          : ""
+        }});
       }, 5000);
     }
     if (order?.status !== "PENDING") {
       clearInterval(intervalId);
     }
   }, []);
+
+  const BASE_SERVER_URL=process.env.BASE_SERVER_URL
   return (
     <>
       <div className="gap"></div>
@@ -60,8 +68,8 @@ const CheckoutReturn: React.FC = () => {
                     className="nav-cart-list-image"
                     src={
                       detail.book.images.length > 0
-                        ? `http://localhost:8000${detail.book.images[0].image}`
-                        : slide1
+                        ? `${BASE_SERVER_URL}${detail.book.images[0].image}`
+                        : defaultBookImage
                     }
                     alt={detail.book.title}
                   />
