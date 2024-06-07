@@ -21,6 +21,7 @@ class IsSaleExist:
             book = Book.objects.get(pk=bookPk, status="OPEN")
             request.book = book
         except Book.DoesNotExist:
+            print("isSale")
             open_order, open_order_created = find_active_order(request)
             serializer = OrderSerializer(open_order)
             raise CustomAPIException(
