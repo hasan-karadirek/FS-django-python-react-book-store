@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import OrderDetail, Order, Address
 from core.mixins import IsSaleExist
-from core.helpers import isTokenExpired
+from core.helpers import isTokenExpired, find_active_order
 from core.custom_exceptions import CustomAPIException
 from core.mollie import createMolliePayment
 from django.db import transaction, DatabaseError
@@ -172,24 +172,3 @@ class OrderStatusView(APIView):
             )
 
 
-def find_active_order(request):
-    if str(request.user) == "AnonymousUser":
-        if request.COOKIES.get("session_id") == None:
-            raise CustomAPIException(
-                "Please provide session_id in cookies.", status=400
-            )
-        open_order, open_order_created = Order.objects.get_or_create(
-            session_id=request.COOKIES.get("session_id"), status="OPEN"
-        )
-    else:
-        isTokenExpired(request)
-        order_qs = Order.objects.filter(customer=request.user, status="OPEN").order_by(
-            "-id"
-        )
-        if order_qs.exists():
-            open_order = order_qs.first()
-            open_order_created = False
-        else:
-            open_order = Order.objects.create(customer=request.user, status="OPEN")
-            open_order_created = True
-    return open_order, open_order_created
