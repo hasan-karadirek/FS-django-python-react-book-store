@@ -26,7 +26,7 @@ const AddressForm: React.FC = () => {
       Cookies.remove("token");
       Cookies.remove("session_id");
       localStorage.clear();
-      setCustomError(error)
+      setCustomError(error);
       location.reload();
     }
     if (error?.name === "unavailable_books") {
@@ -46,7 +46,7 @@ const AddressForm: React.FC = () => {
     country: "",
   });
   const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
-  const csrfToken = Cookies.get("csrftoken")
+  const csrfToken = Cookies.get("csrftoken");
   const submitForm = () => {
     const addressForm = {
       redirectUrl: `${BASE_SERVER_URL}/shop/checkout-return`,
@@ -60,7 +60,7 @@ const AddressForm: React.FC = () => {
         Authorization: Cookies.get("token")
           ? `Token ${Cookies.get("token")}`
           : "",
-          "X-CSRFToken":csrfToken
+        "X-CSRFToken": csrfToken,
       },
       body: JSON.stringify(addressForm),
     });

@@ -13,25 +13,7 @@ from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 
 class AddToCartView(IsSaleExist, APIView):
     def post(self, request, *args, **kwargs):
-        if str(request.user) == "AnonymousUser":
-            if request.COOKIES.get("session_id") == None:
-                raise CustomAPIException(
-                    "Please provide session_id in cookies.", status=400
-                )
-            open_order, open_order_created = Order.objects.get_or_create(
-                session_id=request.COOKIES.get("session_id"), status="OPEN"
-            )
-        else:
-            isTokenExpired(request)
-            order_qs = Order.objects.filter(
-                customer=request.user, status="OPEN"
-            ).order_by("-id")
-            if order_qs.exists():
-                open_order = order_qs.first()
-                open_order_created = False
-            else:
-                open_order = Order.objects.create(customer=request.user, status="OPEN")
-                open_order_created = True
+        open_order, open_order_created = find_active_order(request)
         orderDetail, created = OrderDetail.objects.get_or_create(
             order=open_order or open_order_created, book=request.book
         )
@@ -44,28 +26,15 @@ class AddToCartView(IsSaleExist, APIView):
 
 class RemoveFromCartView(IsSaleExist, APIView):
     def put(self, request, *args, **kwargs):
-        if str(request.user) == "AnonymousUser":
-            if request.COOKIES.get("session_id") == None:
-                raise CustomAPIException(
-                    "Please provide session_id in cookies.", status=400
-                )
-            open_order, open_order_created = Order.objects.get_or_create(
-                session_id=request.COOKIES.get("session_id"), status="OPEN"
-            )
-        else:
-            isTokenExpired(request)
-            order_qs = Order.objects.filter(
-                customer=request.user, status="OPEN"
-            ).order_by("-id")
-            if order_qs.exists():
-                open_order = order_qs.first()
-                open_order_created = False
-            else:
-                open_order = Order.objects.create(customer=request.user, status="OPEN")
-                open_order_created = True
+        open_order, open_order_created = find_active_order(request)
 
         if open_order_created:
-            raise CustomAPIException("Book is already not in your cart.", status=400)
+            orderSerializer = OrderSerializer(open_order)
+            raise CustomAPIException(
+                "Book is already not in your cart.",
+                data=orderSerializer.data,
+                status=400,
+            )
         try:
             orderDetail = OrderDetail.objects.get(
                 order=open_order or open_order_created, book=request.book
@@ -73,7 +42,12 @@ class RemoveFromCartView(IsSaleExist, APIView):
             orderDetail.delete()
             open_order.refresh_from_db()
         except OrderDetail.DoesNotExist:
-            raise CustomAPIException("Book is already not in your cart.", status=400)
+            orderSerializer = OrderSerializer(open_order)
+            raise CustomAPIException(
+                "Book is already not in your cart.",
+                data=orderSerializer.data,
+                status=400,
+            )
         serializer = OrderSerializer(open_order)
         response = {"success": True, "data": serializer.data}
         return Response(response, status=status.HTTP_201_CREATED)
@@ -196,3 +170,26 @@ class OrderStatusView(APIView):
             raise CustomAPIException(
                 "There is no order associated with this id!", status=404
             )
+
+
+def find_active_order(request):
+    if str(request.user) == "AnonymousUser":
+        if request.COOKIES.get("session_id") == None:
+            raise CustomAPIException(
+                "Please provide session_id in cookies.", status=400
+            )
+        open_order, open_order_created = Order.objects.get_or_create(
+            session_id=request.COOKIES.get("session_id"), status="OPEN"
+        )
+    else:
+        isTokenExpired(request)
+        order_qs = Order.objects.filter(customer=request.user, status="OPEN").order_by(
+            "-id"
+        )
+        if order_qs.exists():
+            open_order = order_qs.first()
+            open_order_created = False
+        else:
+            open_order = Order.objects.create(customer=request.user, status="OPEN")
+            open_order_created = True
+    return open_order, open_order_created

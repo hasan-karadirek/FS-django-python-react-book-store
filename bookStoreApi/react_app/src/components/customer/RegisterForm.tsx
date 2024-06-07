@@ -36,7 +36,7 @@ const RegisterForm: React.FC = () => {
         : location.reload();
     },
   );
-  const csrfToken = Cookies.get("csrftoken")
+  const csrfToken = Cookies.get("csrftoken");
   const submitForm = () => {
     const registerData = {
       email: formData.email,
@@ -49,7 +49,7 @@ const RegisterForm: React.FC = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-CSRFToken":csrfToken
+        "X-CSRFToken": csrfToken,
       },
       body: JSON.stringify(registerData),
     });
