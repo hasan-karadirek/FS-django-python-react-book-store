@@ -1,7 +1,7 @@
 from book.models import Book
 from core.custom_exceptions import CustomAPIException
 from blog.models import Post, Form
-from store.views import find_active_order
+from core.helpers import find_active_order
 from store.serializers import OrderSerializer
 
 
