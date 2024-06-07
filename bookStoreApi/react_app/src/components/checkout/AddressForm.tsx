@@ -26,9 +26,10 @@ const AddressForm: React.FC = () => {
       Cookies.remove("token");
       Cookies.remove("session_id");
       localStorage.clear();
+      setCustomError(error)
       location.reload();
     }
-    if (error?.name === "book-availability") {
+    if (error?.name === "unavailable_books") {
       localStorage.setItem("order", JSON.stringify(error.data));
       setOrder(error.data as Order);
       setCustomError(error);
