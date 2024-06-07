@@ -46,6 +46,7 @@ def find_active_order(request):
             open_order = Order.objects.create(customer=request.user, status="OPEN")
             open_order_created = True
     else:
+        print("else girdi")
         if request.COOKIES.get("session_id") == None:
             raise CustomAPIException(
                 "Please provide session_id in cookies.", status=400
