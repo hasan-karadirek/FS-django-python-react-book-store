@@ -22,7 +22,7 @@ def pagination(instances, size, page_number):
 
 
 def isTokenExpired(request):
-    if str(request.user) != "AnonymousUser":
+    if request.user.is_authenticated:
         try:
             token = Token.objects.get(user=request.user.id)
             if timezone.now() - token.created > timedelta(hours=24):
@@ -34,15 +34,7 @@ def isTokenExpired(request):
             raise CustomAPIException("Invalid Token.", 401, name="invalid_token")
 
 def find_active_order(request):
-    if str(request.user) == "AnonymousUser":
-        if request.COOKIES.get("session_id") == None:
-            raise CustomAPIException(
-                "Please provide session_id in cookies.", status=400
-            )
-        open_order, open_order_created = Order.objects.get_or_create(
-            session_id=request.COOKIES.get("session_id"), status="OPEN"
-        )
-    else:
+    if request.user.is_authenticated:
         isTokenExpired(request)
         order_qs = Order.objects.filter(customer=request.user, status="OPEN").order_by(
             "-id"
@@ -53,5 +45,14 @@ def find_active_order(request):
         else:
             open_order = Order.objects.create(customer=request.user, status="OPEN")
             open_order_created = True
+    else:
+        if request.COOKIES.get("session_id") == None:
+            raise CustomAPIException(
+                "Please provide session_id in cookies.", status=400
+            )
+        open_order, open_order_created = Order.objects.get_or_create(
+            session_id=request.COOKIES.get("session_id"), status="OPEN"
+        )
+        
     return open_order, open_order_created
 

@@ -37,7 +37,7 @@ class RemoveFromCartView(IsSaleExist, APIView):
             )
         try:
             orderDetail = OrderDetail.objects.get(
-                order=open_order or open_order_created, book=request.book
+                order=open_order, book=request.book
             )
             orderDetail.delete()
             open_order.refresh_from_db()
