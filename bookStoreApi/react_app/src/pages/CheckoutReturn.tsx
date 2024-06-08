@@ -20,12 +20,6 @@ const CheckoutReturn: React.FC = () => {
     (res) => {
       setOrder(res.data as Order);
       if (order.status !== "PENDING") {
-        if (order.customer){
-
-          setTimeout(() => {
-            navigate("/customer");
-          }, 2000);
-        }
         clearInterval(intervalId);
       }
     },
@@ -45,7 +39,7 @@ const CheckoutReturn: React.FC = () => {
     if (order?.status !== "PENDING") {
       clearInterval(iId);
     }
-  }, []);
+  }, [order?.status]);
 
   const BASE_SERVER_URL=process.env.BASE_SERVER_URL
   return (
