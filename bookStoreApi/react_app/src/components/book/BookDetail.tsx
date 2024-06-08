@@ -103,7 +103,11 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
           <div id="book-tags">
             Tags:{" "}
             {book.tags.map((t) => (
-              <Link key={t.tag.id} className="p-2" to={`/tags/${t.tag.name}`}>
+              <Link
+                key={t.tag.id}
+                className="p-2"
+                to={`/shop/books/${t.tag.name}`}
+              >
                 {t.tag.name}
               </Link>
             ))}

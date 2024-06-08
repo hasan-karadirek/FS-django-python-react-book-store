@@ -19,10 +19,11 @@ const Books: React.FC = () => {
     page: parseInt(searchParams.get("page")),
     category: searchParams.get("category"),
     language: searchParams.get("language"),
+    tag: searchParams.get("tag"),
   });
   const [pagination, setPagination] = useState<BookListResponse | null>(null);
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    `/book/?search=${searchFormData?.search ? searchFormData.search : ""}&page=${searchFormData?.page ? searchFormData.page : 1}&category=${searchFormData?.category ? searchFormData.category : ""}&language=${searchFormData?.language ? searchFormData.language : ""}`,
+    `/book/?search=${searchFormData?.search ? searchFormData.search : ""}&page=${searchFormData?.page ? searchFormData.page : 1}&category=${searchFormData?.category ? searchFormData.category : ""}&language=${searchFormData?.language ? searchFormData.language : ""}&tag=${searchFormData?.tag ? searchFormData.tag : ""}`,
     (res) => {
       const resData = res.data as BookListResponse;
       setPagination(resData);
