@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { OrderContext } from "../../contexts/OrderContext";
 import RemoveFromCartButton from "./RemoveFromCartButton";
 import defaultBookImage from "../../assets/defaultBookImage.webp";
+import postnlLogo from "../../assets/postnl.png";
 
 const CheckoutCart: React.FC = () => {
   const { order } = useContext(OrderContext);
@@ -21,7 +22,7 @@ const CheckoutCart: React.FC = () => {
           <div className="nav-cart-list-body">
             <h4 className="cart-item-title">{`${detail.book.title} - ${detail.book.author} - ${detail.book.year} - ${detail.book.publishing_house}`}</h4>
             <div className="d-flex">
-              <p id="nav-cart-item-price">{detail.book.price}</p>
+              <p id="nav-cart-item-price">{detail.book.price}€</p>
               <RemoveFromCartButton
                 btnClasses="btn btn-danger nav-cart-remove-btn"
                 btnText="Remove"
@@ -32,7 +33,22 @@ const CheckoutCart: React.FC = () => {
         </li>
       ))}
       <li id="checkout-cart-list-cost">
-        <p>Total : {order?.cost}€</p>
+        <p>Subtotal : {order?.cost}€</p>
+      </li>
+      <li className="d-flex">
+        <img src={postnlLogo} style={{ width: "90px" }} alt="post-method" />
+        <h4>
+          PostNL Standard Deliver for{" "}
+          {order.order_details.length == 1 ? "Single Book" : "Multiple Books"}
+        </h4>
+        <p>
+          Delivery Cost :{" "}
+          {JSON.parse(order.post_cost) == 0 ? "Free Delivery" : order.post_cost}
+          €
+        </p>
+      </li>
+      <li id="checkout-cart-list-cost">
+        <p> Total: {JSON.parse(order?.cost) + JSON.parse(order?.post_cost)}€</p>
       </li>
     </ul>
   );

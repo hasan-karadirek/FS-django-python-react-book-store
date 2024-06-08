@@ -78,7 +78,7 @@ const CheckoutReturn: React.FC = () => {
                       {`${detail.book.title} - ${detail.book.author} - ${detail.book.year} - ${detail.book.publishing_house}`}
                     </h6>
                     <div className="d-flex">
-                      <p id="nav-cart-item-price">{detail.book.price}</p>
+                      <p id="nav-cart-item-price">{detail.book.price}€</p>
                     </div>
                   </div>
                 </li>
@@ -86,6 +86,21 @@ const CheckoutReturn: React.FC = () => {
             ) : (
               <li>No items in the cart</li>
             )}
+
+            <li id="nav-cart-list-post-cost">
+              <p>
+                Delivery Cost :{" "}
+                {JSON.parse(order?.post_cost) == 0
+                  ? "Free Delivery"
+                  : `${order?.post_cost}€`}
+              </p>
+            </li>
+            <li id="nav-cart-list-cost">
+              <p>
+                Total : {JSON.parse(order?.cost) + JSON.parse(order?.post_cost)}
+                €
+              </p>
+            </li>
           </ul>
           <div className="p-3">
             <h4 style={{ color: "black" }}>Order Address</h4>

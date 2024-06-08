@@ -65,4 +65,5 @@ export interface Order {
   address: Address;
   status: string;
   order_details: OrderDetail[];
+  post_cost: string;
 }

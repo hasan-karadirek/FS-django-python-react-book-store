@@ -62,7 +62,7 @@ const NavCart: React.FC<NavCartProps> = ({ navContainerClass }) => {
                       <div className="nav-cart-list-body">
                         <h4 className="cart-item-title">{`${detail.book.title} - ${detail.book.author} - ${detail.book.year} - ${detail.book.publishing_house}`}</h4>
                         <div className="d-flex">
-                          <p id="nav-cart-item-price">{detail.book.price}</p>
+                          <p id="nav-cart-item-price">{detail.book.price}€</p>
                           <RemoveFromCartButton
                             btnClasses="btn btn-danger nav-cart-remove-btn"
                             btnText="Remove"
@@ -73,8 +73,20 @@ const NavCart: React.FC<NavCartProps> = ({ navContainerClass }) => {
                     </li>
                   ))
                 : ""}
+
+              <li id="nav-cart-list-post-cost">
+                <p>
+                  Delivery Cost :{" "}
+                  {JSON.parse(order?.post_cost) == 0
+                    ? "Free Delivery"
+                    : `${order?.post_cost}€`}
+                </p>
+              </li>
               <li id="nav-cart-list-cost">
-                <p>Total : {order?.cost}€</p>
+                <p>
+                  Total :{" "}
+                  {JSON.parse(order?.cost) + JSON.parse(order?.post_cost)}€
+                </p>
               </li>
               <li id="nav-cart-list-checkout-btn">
                 <Link to="/shop/checkout">

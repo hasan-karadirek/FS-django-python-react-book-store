@@ -45,6 +45,12 @@
   list-style: none;
   padding-top: 1rem;
 }
+#nav-cart-list-post-cost {
+  font-size: medium;
+  text-align: right;
+  padding-right: 1rem;
+  list-style: none;
+}
 #nav-cart-list-checkout-btn {
   list-style: none;
   text-align: right;
