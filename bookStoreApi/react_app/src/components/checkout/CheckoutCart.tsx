@@ -39,11 +39,11 @@ const CheckoutCart: React.FC = () => {
         <img src={postnlLogo} style={{ width: "90px" }} alt="post-method" />
         <h4>
           PostNL Standard Deliver for{" "}
-          {order.order_details.length == 1 ? "Single Book" : "Multiple Books"}
+          {order?.order_details.length == 1 ? "Single Book" : "Multiple Books"}
         </h4>
         <p>
           Delivery Cost :{" "}
-          {JSON.parse(order.post_cost) == 0 ? "Free Delivery" : order.post_cost}
+          {JSON.parse(order?.post_cost) == 0 ? "Free Delivery" : order?.post_cost}
           €
         </p>
       </li>
