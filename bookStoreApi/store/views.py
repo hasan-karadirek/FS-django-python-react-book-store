@@ -10,7 +10,7 @@ from core.mollie import createMolliePayment
 from django.db import transaction, DatabaseError
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from book.models import Book
-
+from decimal import Decimal,ROUND_HALF_UP
 
 class AddToCartView(IsSaleExist, APIView):
     def post(self, request, *args, **kwargs):
@@ -119,8 +119,10 @@ class CheckOutView(APIView):
                         **checkoutSerializer.validated_data["address"]
                     )
                     open_order.save()
+                    total_cost=float(open_order.cost)+open_order.post_cost
+                    print(Decimal(total_cost).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP))
                     payment = createMolliePayment(
-                        str(open_order.cost),
+                        str(Decimal(total_cost).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)),
                         open_order.id,
                         checkoutSerializer.validated_data.get("redirectUrl"),
                     )
