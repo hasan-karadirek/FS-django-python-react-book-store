@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { Order } from "../types/models";
 import { Circles } from "react-loader-spinner";
@@ -9,6 +9,7 @@ import defaultBookImage from "../assets/defaultBookImage.webp";
 const CheckoutReturn: React.FC = () => {
   const navigate = useNavigate();
   const [intervalId,setIntervalId]=useState(null)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const orderInProgress = JSON.parse(
     localStorage.getItem("orderInProgress"),
   )?.order;
@@ -19,25 +20,25 @@ const CheckoutReturn: React.FC = () => {
     `/store/order-status/${orderInProgress.id}/`,
     (res) => {
       setOrder(res.data as Order);
-      if (order.status !== "PENDING") {
-        clearInterval(intervalId);
-      }
     },
   );
   useEffect(() => {
-    let iId;
     if (orderInProgress) {
-      iId = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         performFetch({headers:{
           Authorization: Cookies.get("token")
           ? `Token ${Cookies.get("token")}`
           : ""
         }});
-      }, 5000);
-      setIntervalId(iId)
+      }, 5000); 
     }
-    if (order?.status !== "PENDING") {
-      clearInterval(iId);
+    
+  }, []);
+
+  useEffect(() => {
+    if (order?.status !== "PENDING" && intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
   }, [order?.status]);
 
