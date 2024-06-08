@@ -22,7 +22,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleSearchFormSubmit }) => {
     page: 1,
     category: "",
     language: "",
+
     tag: "",
+
   });
 
   const [categories, setCategories] = useState<Category[] | null>(null);
