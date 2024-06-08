@@ -8,6 +8,7 @@ import defaultBookImage from "../assets/defaultBookImage.webp";
 
 const CheckoutReturn: React.FC = () => {
   const navigate = useNavigate();
+  const [intervalId,setIntervalId]=useState(null)
   const orderInProgress = JSON.parse(
     localStorage.getItem("orderInProgress"),
   )?.order;
@@ -19,25 +20,30 @@ const CheckoutReturn: React.FC = () => {
     (res) => {
       setOrder(res.data as Order);
       if (order.status !== "PENDING") {
-        setTimeout(() => {
-          navigate(order.customer ? "/customer" : "/shop/books");
-        }, 10000);
+        if (order.customer){
+
+          setTimeout(() => {
+            navigate("/customer");
+          }, 2000);
+        }
+        clearInterval(intervalId);
       }
     },
   );
   useEffect(() => {
-    let intervalId;
+    let iId;
     if (orderInProgress) {
-      intervalId = setInterval(() => {
+      iId = setInterval(() => {
         performFetch({headers:{
           Authorization: Cookies.get("token")
           ? `Token ${Cookies.get("token")}`
           : ""
         }});
       }, 5000);
+      setIntervalId(iId)
     }
     if (order?.status !== "PENDING") {
-      clearInterval(intervalId);
+      clearInterval(iId);
     }
   }, []);
 
@@ -104,7 +110,7 @@ const CheckoutReturn: React.FC = () => {
                     ? "blue"
                     : order?.status === "PENDING"
                       ? "yellow"
-                      : "red",
+                      : "green",
               }}
             >
               Status: {order?.status}{" "}

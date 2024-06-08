@@ -74,6 +74,8 @@ class CheckOutView(APIView):
                 if order_qs.exists():
                     open_order = order_qs.first()
                     open_order_created = False
+
+                    order_qs.exclude(id=open_order.id).delete()
                 else:
                     open_order = Order.objects.create(
                         customer=request.user, status="OPEN"
@@ -102,7 +104,7 @@ class CheckOutView(APIView):
                         *deleted_details
                     ),
                     status=404,
-                    name="book-availability",
+                    name="unavailable-books",
                     data=serializer.data,
                 )
             try:

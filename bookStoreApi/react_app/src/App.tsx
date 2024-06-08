@@ -22,7 +22,7 @@ const App: React.FC = () => {
         <Route path="books" element={<Books />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="checkout-return" element={<CheckoutReturn />} />
-        <Route path="books/:id" element={<BookPage />} />
+        <Route path="books/:slug" element={<BookPage />} />
       </Route>
       <Route path="customer" element={<MainLayout />}>
         <Route index element={<CustomerPage />} />
