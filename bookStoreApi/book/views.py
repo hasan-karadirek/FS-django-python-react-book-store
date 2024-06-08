@@ -60,7 +60,7 @@ class DeleteBookAPIView(IsBookExist, APIView):
 
 
 class GetBookAPIView(IsBookExist, APIView):
-    def get(self, request, pk, *args, **kwargs):
+    def get(self, request, slug, *args, **kwargs):
 
         serializer = BookSerializer(request.book)
         response = {"data": serializer.data, "success": True}

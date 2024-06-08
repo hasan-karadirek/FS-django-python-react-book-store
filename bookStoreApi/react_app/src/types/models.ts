@@ -28,6 +28,7 @@ export interface Book {
   images: BookImage[];
   description: string;
   page: number;
+  slug:string;
 }
 
 export interface Customer {

@@ -27,7 +27,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
             />
 
             <div className="card-body">
-              <Link to={`/shop/books/${book.id.toString()}`}>
+              <Link to={`/shop/books/${book.slug}`}>
                 <h3 className="card-text">
                   {`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}
                 </h3>
