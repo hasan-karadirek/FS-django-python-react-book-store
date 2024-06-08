@@ -2,13 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { Order } from "../types/models";
 import { Circles } from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import defaultBookImage from "../assets/defaultBookImage.webp";
 
 const CheckoutReturn: React.FC = () => {
-  const navigate = useNavigate();
-  const [intervalId,setIntervalId]=useState(null)
+  // eslint-disable-next-line no-undef
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const orderInProgress = JSON.parse(
     localStorage.getItem("orderInProgress"),
@@ -25,14 +23,15 @@ const CheckoutReturn: React.FC = () => {
   useEffect(() => {
     if (orderInProgress) {
       intervalRef.current = setInterval(() => {
-        performFetch({headers:{
-          Authorization: Cookies.get("token")
-          ? `Token ${Cookies.get("token")}`
-          : ""
-        }});
-      }, 5000); 
+        performFetch({
+          headers: {
+            Authorization: Cookies.get("token")
+              ? `Token ${Cookies.get("token")}`
+              : "",
+          },
+        });
+      }, 5000);
     }
-    
   }, []);
 
   useEffect(() => {
@@ -42,7 +41,7 @@ const CheckoutReturn: React.FC = () => {
     }
   }, [order?.status]);
 
-  const BASE_SERVER_URL=process.env.BASE_SERVER_URL
+  const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
   return (
     <>
       <div className="gap"></div>

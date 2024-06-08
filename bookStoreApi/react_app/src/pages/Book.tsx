@@ -9,9 +9,12 @@ import { Circles } from "react-loader-spinner";
 const BookPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [book, setBook] = useState<Book | null>(null);
-  const { isLoading, error, performFetch } = useFetch(`/book/${slug}/`, (res) => {
-    setBook(res.data as Book);
-  });
+  const { isLoading, error, performFetch } = useFetch(
+    `/book/${slug}/`,
+    (res) => {
+      setBook(res.data as Book);
+    },
+  );
   useEffect(() => {
     performFetch();
   }, []);
