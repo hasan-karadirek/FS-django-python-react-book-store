@@ -73,13 +73,17 @@ class GetBooksAPIView(APIView):
         # Subquery to check for open sales for a book
         category_query = request.query_params.get("category", None)
         language_query = request.query_params.get("language", None)
-        filter_criteria = {"status": "OPEN"}
+        tag_query = request.query_params.get("tag", None)
 
+        filter_criteria = {"status": "OPEN"}
+        if tag_query:
+            filter_criteria["tag__name"]=tag_query
         if category_query:
             filter_criteria["category__title"] = category_query
         if language_query:
             filter_criteria["language__name"] = language_query
         books = Book.objects.filter(**filter_criteria)
+        
         search_query = request.query_params.get("search", None)
         if search_query:
             books = books.filter(
