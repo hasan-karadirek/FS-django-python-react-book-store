@@ -17,36 +17,36 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
 
   return (
     <>
-     <div className="d-flex flex-wrap" id="book-info-image">
-      <div className="book-images p-2">
-        <img
-          id="book-image-active"
-          className="book-image"
-          src={
-            book.images.length > 0
-              ? `${BASE_SERVER_URL}${book.images[bookImageIndex]?.image}`
-              : defaultBookImage
-          }
-          alt={book.title}
-        />
-        <div className="d-flex  w-100 book-image-thumb-container ">
-          {book.images.length === 0 ? (
-            <img
-              onClick={() => setBookImageIndex(0)}
-              className="book-image-thumb"
-              src={defaultBookImage}
-            />
-          ) : (
-            ""
-          )}
-          {book.images.map((image, index) => (
-            <img
-              key={index}
-              onClick={() => setBookImageIndex(index)}
-              className="book-image-thumb"
-              src={`${BASE_SERVER_URL}${image.image}`}
-            />
-          ))}
+      <div className="d-flex flex-wrap" id="book-info-image">
+        <div className="book-images p-2">
+          <img
+            id="book-image-active"
+            className="book-image"
+            src={
+              book.images.length > 0
+                ? `${BASE_SERVER_URL}${book.images[bookImageIndex]?.image}`
+                : defaultBookImage
+            }
+            alt={book.title}
+          />
+          <div className="d-flex  w-100 book-image-thumb-container ">
+            {book.images.length === 0 ? (
+              <img
+                onClick={() => setBookImageIndex(0)}
+                className="book-image-thumb"
+                src={defaultBookImage}
+              />
+            ) : (
+              ""
+            )}
+            {book.images.map((image, index) => (
+              <img
+                key={index}
+                onClick={() => setBookImageIndex(index)}
+                className="book-image-thumb"
+                src={`${BASE_SERVER_URL}${image.image}`}
+              />
+            ))}
           </div>
         </div>
         <div className="book-infos">

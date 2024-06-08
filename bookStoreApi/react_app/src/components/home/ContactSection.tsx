@@ -6,7 +6,6 @@ import { Circles } from "react-loader-spinner";
 import Cookies from "js-cookie";
 import "../CSS/ContactSection.css";
 
-
 const ContactSection: React.FC = () => {
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/blog/create-form/",
@@ -33,13 +32,13 @@ const ContactSection: React.FC = () => {
         form.append(`uploaded_images[${index}]`, file, file.name),
       );
     }
-    const csrfToken = Cookies.get("csrftoken")
+    const csrfToken = Cookies.get("csrftoken");
     performFetch({
       method: "POST",
       body: form,
-      headers:{
-        "X-CSRFToken":csrfToken
-      }
+      headers: {
+        "X-CSRFToken": csrfToken,
+      },
     });
     return () => {
       if (!isLoading) {

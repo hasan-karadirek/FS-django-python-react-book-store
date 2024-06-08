@@ -44,16 +44,15 @@ WORKDIR /usr/src/app/bookStoreApi
 COPY ./bookStoreApi/requirements.txt /usr/src/app/bookStoreApi/
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install MySQL client
+RUN apt-get update && apt-get install -y default-mysql-client
+# Create symbolic link
+RUN mkdir -p /run/mysqld && ln -s /var/lib/mysql/mysql.sock /run/mysqld/mysqld.sock
 # Copy the current directory contents into the container at /usr/src/app/bookStoreApi/
 # Adjust the COPY command to copy from the bookStoreApi subdirectory
 COPY ./bookStoreApi/ /usr/src/app/bookStoreApi/
 
-# Debug environment variables
-RUN echo "SECRET_KEY=${SECRET_KEY}" && \
-    echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" && \
-    echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" && \
-    echo "AWS_STORAGE_BUCKET_NAME=${AWS_STORAGE_BUCKET_NAME}" && \
-    echo "AWS_S3_REGION_NAME=${AWS_S3_REGION_NAME}"
+
 
 
 
@@ -61,4 +60,4 @@ RUN echo "SECRET_KEY=${SECRET_KEY}" && \
 EXPOSE 8000
 
 # Run the application with Gunicorn
-CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "bookStoreApi.wsgi:application"]
+CMD ["gunicorn", "--workers", "1", "--bind", "0.0.0.0:8081", "bookStoreApi.wsgi:application"]

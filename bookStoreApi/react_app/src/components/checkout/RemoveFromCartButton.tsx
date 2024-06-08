@@ -4,6 +4,7 @@ import { Order } from "../../types/models";
 import { OrderContext } from "../../contexts/OrderContext";
 import Cookies from "js-cookie";
 import { Bars } from "react-loader-spinner";
+import { ErrorContext } from "../../contexts/ErrorContext";
 
 interface RemoveFromCartButtonProps {
   bookId: number;
@@ -17,6 +18,8 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
   btnText,
 }) => {
   const { order, setOrder } = useContext(OrderContext);
+  const { setCustomError } = useContext(ErrorContext);
+
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     `/store/remove-from-cart/${bookId}/`,
     (response) => {
@@ -30,10 +33,16 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
       Cookies.remove("token");
       Cookies.remove("session_id");
       localStorage.clear();
+      setCustomError(error);
       location.reload();
     }
+    if (error?.name === "unavailable_books") {
+      localStorage.setItem("order", JSON.stringify(error.data));
+      setOrder(error.data as Order);
+      setCustomError(error);
+    }
   }, [error]);
-  const csrfToken = Cookies.get("csrftoken")
+  const csrfToken = Cookies.get("csrftoken");
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!Cookies.get("session_id")) {
@@ -45,7 +54,7 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
         Authorization: Cookies.get("token")
           ? `Token ${Cookies.get("token")}`
           : "",
-          "X-CSRFToken":csrfToken
+        "X-CSRFToken": csrfToken,
       },
     });
     return () => {
