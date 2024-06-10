@@ -34,4 +34,6 @@ export interface CheckoutFormData {
   postcode: string;
   city: string;
   country: string;
+  privacy: boolean;
+  sale: boolean;
 }
