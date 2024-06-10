@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../CSS/Footer.css";
 import Logo from "../../assets/logo.png";
 import useWindowSize from "../../hooks/useWindowSize";
+import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   const { width } = useWindowSize();
@@ -37,10 +38,13 @@ const Footer: React.FC = () => {
 
   return (
     <div className={`footer ${isFixed ? "fixed-footer" : ""}`}>
-      <div className={`${width > 420 ? "d-flex" : "block"} py-4`}>
-        <div className="footer-left flex-grow-1">
+      <div
+        className={`${width > 420 ? "d-flex" : "block"} pt-4  container`}
+        style={{ justifyContent: "space-between" }}
+      >
+        <div className="footer-logo">
           <a className="navbar-brand" href="/">
-            <img id="logo" src={Logo} alt="" />
+            <img id="logo" src={Logo} alt="logo" />
             <span
               style={{
                 fontSize:
@@ -51,11 +55,26 @@ const Footer: React.FC = () => {
             </span>
           </a>
         </div>
-        <div className="footer-right flex-grow-1">
+        <div className="footer-block-2">
+          <h5>Infos:</h5>
           <ul>
-            <li className="p-2">KvK:- </li>
-            <li className="p-2">Adress: Pirinsengracht 260, 1016 HG Amsterdam</li>
-            <li className="p-2">Tel: - </li>
+            <li className="">KvK:- </li>
+            <li className="">Adress: Pirinsengracht 260, 1016 HG Amsterdam</li>
+            <li className="">Tel: - </li>
+          </ul>
+        </div>
+        <div className="footer-block-3">
+          <h5>Legals:</h5>
+          <ul>
+            <li>
+              <Link to="/privacy-policy">Privacy Policy</Link>
+            </li>
+            <li>
+              <Link to="/sales-agreement">Sales Agreement</Link>
+            </li>
+            <li>
+              <Link to="/cookie-policy">Cookie Policy</Link>
+            </li>
           </ul>
         </div>
       </div>

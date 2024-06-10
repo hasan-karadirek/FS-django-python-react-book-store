@@ -6,11 +6,12 @@ import { CheckoutResponse } from "../../types/responses";
 import { CheckoutFormData } from "../../types/forms";
 import { Order } from "../../types/models";
 import { ErrorContext } from "../../contexts/ErrorContext";
+import { Link } from "react-router-dom";
 
 const AddressForm: React.FC = () => {
   const { setOrder } = useContext(OrderContext);
   const { setCustomError } = useContext(ErrorContext);
-
+  const [legalError, setLegalError] = useState<string | null>(null);
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/store/checkout/",
     (res) => {
@@ -44,6 +45,8 @@ const AddressForm: React.FC = () => {
     postcode: "",
     city: "",
     country: "",
+    privacy: false,
+    sale: false,
   });
   const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
   const csrfToken = Cookies.get("csrftoken");
@@ -76,6 +79,12 @@ const AddressForm: React.FC = () => {
     if (!Cookies.get("session_id")) {
       Cookies.set("session_id", Date.now().toString());
     }
+    if (formData.privacy === false || formData.sale === false) {
+      setLegalError(
+        "Please confirm that you have read privacy policy and sales agreement to continue checkout.",
+      );
+      return;
+    }
     submitForm();
   };
 
@@ -83,9 +92,11 @@ const AddressForm: React.FC = () => {
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const target = event.target;
-    const value = target.value;
     const name = target.name;
-
+    const value =
+      target.type === "checkbox"
+        ? (target as HTMLInputElement).checked
+        : target.value;
     setFormData({
       ...formData,
       [name]: value,
@@ -192,6 +203,37 @@ const AddressForm: React.FC = () => {
             onChange={handleChange}
             required
           />
+        </div>
+        <div className="mb-3">
+          <div className="form-check">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="privacyCheckbox"
+              name="privacy"
+              checked={formData.privacy}
+              onChange={handleChange}
+            />
+            <label className="form-check-label" htmlFor="privacyCheckbox">
+              I read {<Link to="/privacy-policy">Privacy Policy</Link>}
+            </label>
+          </div>
+        </div>
+        <div className="mb-3">
+          <div className="form-check">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="saleCheckbox"
+              name="sale"
+              checked={formData.sale}
+              onChange={handleChange}
+            />
+            <label className="form-check-label" htmlFor="saleCheckbox">
+              I read {<Link to="/sales-agreement">Sales Agreement</Link>}
+            </label>
+          </div>
+          <p className="error">{legalError}</p>
         </div>
         {isLoading ? (
           ""
