@@ -1,5 +1,5 @@
 from .serializers import OrderSerializer, CheckoutSerializer
-from rest_framework import status, permissions
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import OrderDetail, Order, Address
@@ -7,7 +7,7 @@ from core.mixins import IsSaleExist
 from core.helpers import isTokenExpired, find_active_order
 from core.custom_exceptions import CustomAPIException
 from core.mollie import createMolliePayment
-from django.db import transaction, DatabaseError
+from django.db import transaction
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from book.models import Book
 from decimal import Decimal,ROUND_HALF_UP
@@ -120,7 +120,7 @@ class CheckOutView(APIView):
                     )
                     open_order.save()
                     total_cost=float(open_order.cost)+open_order.post_cost
-                    print(Decimal(total_cost).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP))
+                    
                     payment = createMolliePayment(
                         str(Decimal(total_cost).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)),
                         open_order.id,
@@ -128,9 +128,9 @@ class CheckOutView(APIView):
                     )
             except Exception as e:
                 open_order.refresh_from_db()
-                print(e)
+               
                 raise CustomAPIException(
-                    "Checkout can not process, please try again later.", 500,
+                    f"Checkout can not process, please try again later. {e}", 500,
                 )
 
             open_order.refresh_from_db()
