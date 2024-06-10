@@ -11,12 +11,18 @@ import CustomerPage from "./pages/Customer";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import CheckoutReturn from "./pages/CheckoutReturn";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import SalesAgreement from "./pages/SalesAgreement";
+import CookiePolicy from "./pages/CookiePolicy";
 
 const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
+        <Route path="privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="sales-agreement" element={<SalesAgreement />} />
+        <Route path="cookie-policy" element={<CookiePolicy />} />
       </Route>
       <Route path="shop" element={<MainLayout />}>
         <Route path="books" element={<Books />} />

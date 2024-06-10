@@ -43,7 +43,9 @@ const CheckoutCart: React.FC = () => {
         </h4>
         <p>
           Delivery Cost :{" "}
-          {JSON.parse(order?.post_cost) == 0 ? "Free Delivery" : order?.post_cost}
+          {JSON.parse(order?.post_cost) == 0
+            ? "Free Delivery"
+            : order?.post_cost}
           €
         </p>
       </li>

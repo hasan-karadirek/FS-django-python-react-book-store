@@ -3,24 +3,26 @@
   background-color: #35393f;
   width: 100%;
 }
-.footer-right ul {
+.footer-block-2 ul {
   list-style: none;
-  margin-top: 2rem;
+  padding-left: 0;
 }
-.footer-right li {
-  display: inline;
+.footer-block-2 li {
+  display: list-item;
 }
 .fixed-footer {
   position: absolute;
   bottom: 0;
   width: 100%;
 }
-
+.footer-block-3 {
+  display: block;
+}
 @media (max-width: 768px) {
-  .footer-right li {
+  .footer-block-2 li {
     display: list-item;
   }
-  .footer-right ul {
+  .footer-block-2 ul {
     margin-top: 0;
   }
 }
