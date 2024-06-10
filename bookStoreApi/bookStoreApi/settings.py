@@ -30,7 +30,7 @@ DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:8080"] if os.getenv("ENV")=="development" else ["https://www.leflaneuramsterdam.com","http://localhost:8000","https://leflaneuramsterdam.com"]
+CORS_ALLOWED_ORIGINS = ["https://www.leflaneuramsterdam.com","http://localhost:8000","https://leflaneuramsterdam.com"]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
     "DELETE",
