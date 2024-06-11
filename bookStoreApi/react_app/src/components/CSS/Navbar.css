@@ -51,10 +51,10 @@
 
 @media (max-width: 992px) {
   .navbar-nav {
-    --bs-nav-link-color: black;
+    --bs-nav-link-color: white;
   }
   .navbar-brand {
-    color: black;
+    color: white;
   }
   .bg-transparent {
     position: relative;
