@@ -7,11 +7,14 @@ import BookDetail from "../components/book/BookDetail";
 import { Circles } from "react-loader-spinner";
 
 const BookPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const [book, setBook] = useState<Book | null>(null);
-  const { isLoading, error, performFetch } = useFetch(`/book/${id}/`, (res) => {
-    setBook(res.data as Book);
-  });
+  const { isLoading, error, performFetch } = useFetch(
+    `/book/${slug}/`,
+    (res) => {
+      setBook(res.data as Book);
+    },
+  );
   useEffect(() => {
     performFetch();
   }, []);

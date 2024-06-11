@@ -1,5 +1,5 @@
 from .serializers import OrderSerializer, CheckoutSerializer
-from rest_framework import status, permissions
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import OrderDetail, Order, Address
@@ -7,9 +7,10 @@ from core.mixins import IsSaleExist
 from core.helpers import isTokenExpired, find_active_order
 from core.custom_exceptions import CustomAPIException
 from core.mollie import createMolliePayment
-from django.db import transaction, DatabaseError
+from django.db import transaction
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
-
+from book.models import Book
+from decimal import Decimal,ROUND_HALF_UP
 
 class AddToCartView(IsSaleExist, APIView):
     def post(self, request, *args, **kwargs):
@@ -24,9 +25,8 @@ class AddToCartView(IsSaleExist, APIView):
         return Response(response, status=status.HTTP_201_CREATED)
 
 
-class RemoveFromCartView(IsSaleExist, APIView):
-    def put(self, request, *args, **kwargs):
-        print("remove")
+class RemoveFromCartView(APIView):
+    def put(self, request, bookPk, *args, **kwargs):
         open_order, open_order_created = find_active_order(request)
 
         if open_order_created:
@@ -37,12 +37,13 @@ class RemoveFromCartView(IsSaleExist, APIView):
                 status=400,
             )
         try:
+            book=Book.objects.get(id=bookPk)
             orderDetail = OrderDetail.objects.get(
-                order=open_order, book=request.book
+                order=open_order, book=book
             )
             orderDetail.delete()
             open_order.refresh_from_db()
-        except OrderDetail.DoesNotExist:
+        except OrderDetail.DoesNotExist or Book.DoesNotExist:
             orderSerializer = OrderSerializer(open_order)
             raise CustomAPIException(
                 "Book is already not in your cart.",
@@ -73,6 +74,8 @@ class CheckOutView(APIView):
                 if order_qs.exists():
                     open_order = order_qs.first()
                     open_order_created = False
+
+                    order_qs.exclude(id=open_order.id).delete()
                 else:
                     open_order = Order.objects.create(
                         customer=request.user, status="OPEN"
@@ -101,7 +104,7 @@ class CheckOutView(APIView):
                         *deleted_details
                     ),
                     status=404,
-                    name="book-availability",
+                    name="unavailable-books",
                     data=serializer.data,
                 )
             try:
@@ -116,16 +119,18 @@ class CheckOutView(APIView):
                         **checkoutSerializer.validated_data["address"]
                     )
                     open_order.save()
+                    total_cost=float(open_order.cost)+open_order.post_cost
+                    
                     payment = createMolliePayment(
-                        str(open_order.cost),
+                        str(Decimal(total_cost).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)),
                         open_order.id,
                         checkoutSerializer.validated_data.get("redirectUrl"),
                     )
             except Exception as e:
                 open_order.refresh_from_db()
-                print(e)
+               
                 raise CustomAPIException(
-                    "Checkout can not process, please try again later.", 500,
+                    f"Checkout can not process, please try again later. {e}", 500,
                 )
 
             open_order.refresh_from_db()

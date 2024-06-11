@@ -49,7 +49,9 @@ module.exports = (env, argv) => {
       // All variables in our .env should be mentioned here
       new webpack.EnvironmentPlugin({
         // Default is '' because on our  servers we want to have it default to our current URL
-        BASE_SERVER_URL:  "https://leflaneuramsterdam.com",
+
+        BASE_SERVER_URL:  argv.mode==="development" ? "http://localhost:8000" : "https://leflaneuramsterdam.com"   ,
+
       }),
     ],
     // To tell the dev server that everything should go back to index.html

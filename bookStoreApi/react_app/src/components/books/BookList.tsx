@@ -16,18 +16,19 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
       {books?.map((book) => (
         <div className="book-card" key={book.id.toString()}>
           <div className="card" id={book.id.toString()}>
-            <img
-              src={
-                book.images[0]
-                  ? `${BASE_SERVER_URL}${book.images[0].image}`
-                  : defaultBookImage
-              }
-              className="card-img-top"
-              alt={book.title}
-            />
-
+            <Link to={`/shop/books/${book.slug}`}>
+              <img
+                src={
+                  book.images[0]
+                    ? `${BASE_SERVER_URL}${book.images[0].image}`
+                    : defaultBookImage
+                }
+                className="card-img-top"
+                alt={book.title}
+              />
+            </Link>
             <div className="card-body">
-              <Link to={`/shop/books/${book.id.toString()}`}>
+              <Link to={`/shop/books/${book.slug}`}>
                 <h3 className="card-text">
                   {`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}
                 </h3>

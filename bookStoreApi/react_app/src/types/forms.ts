@@ -3,6 +3,7 @@ export interface SearchFormData {
   page: number;
   category: string;
   language: string;
+  tag: string;
 }
 
 export interface RegisterFormData {
@@ -33,4 +34,6 @@ export interface CheckoutFormData {
   postcode: string;
   city: string;
   country: string;
+  privacy: boolean;
+  sale: boolean;
 }

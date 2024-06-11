@@ -1,33 +1,26 @@
 from book.models import Book
 from core.custom_exceptions import CustomAPIException
 from blog.models import Post, Form
-from core.helpers import find_active_order
-from store.serializers import OrderSerializer
 
 
 class IsBookExist:
-    def dispatch(self, request, bookPk, *args, **kwargs):
+    def dispatch(self, request, slug, *args, **kwargs):
         try:
-            book = Book.objects.get(pk=bookPk)
+            book = Book.objects.get(slug=slug)
             request.book = book
         except Book.DoesNotExist:
             raise CustomAPIException("Book not found", 404)
-        return super().dispatch(request, bookPk * args, **kwargs)
+        return super().dispatch(request, slug, *args, **kwargs)
 
 
 class IsSaleExist:
     def dispatch(self, request, bookPk, *args, **kwargs):
-        print("isSale")
         try:
             book = Book.objects.get(pk=bookPk, status="OPEN")
             request.book = book
         except Book.DoesNotExist:
-           
-            open_order, open_order_created = find_active_order(request)
-            serializer = OrderSerializer(open_order)
             raise CustomAPIException(
                 "Book not found or no longer available",
-                data=serializer.data,
                 status=404,
                 name="unavailable_books",
             )

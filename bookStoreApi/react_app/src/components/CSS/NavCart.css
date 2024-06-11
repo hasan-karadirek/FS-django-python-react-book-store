@@ -16,11 +16,40 @@
 .nav-cart-list {
   color: white;
   background-color: #35393fdb;
-  position: absolute;
   top: 4.5rem;
   right: 1rem;
   border-radius: 1rem;
   position: absolute;
+  max-height: 80vh;
+  overflow: auto;
+}
+.nav-cart-list::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+.nav-cart-list::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+  border-radius: 10px;
+}
+
+.nav-cart-list::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 10px;
+  border: 3px solid #f1f1f1; /* Adds a border around the thumb */
+}
+
+.nav-cart-list::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar thumb on hover */
+}
+
+/* Firefox */
+.nav-cart-list {
+  scrollbar-width: thin; /* Scrollbar width */
+  scrollbar-color: #888 #f1f1f1; /* Thumb and track color */
+}
+
+.nav-cart-list {
+  scroll-behavior: smooth; /* Smooth scrolling */
 }
 .nav-cart-list-image {
   object-fit: cover;
@@ -44,6 +73,12 @@
   padding-right: 1rem;
   list-style: none;
   padding-top: 1rem;
+}
+#nav-cart-list-post-cost {
+  font-size: medium;
+  text-align: right;
+  padding-right: 1rem;
+  list-style: none;
 }
 #nav-cart-list-checkout-btn {
   list-style: none;

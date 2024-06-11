@@ -28,6 +28,7 @@ export interface Book {
   images: BookImage[];
   description: string;
   page: number;
+  slug: string;
 }
 
 export interface Customer {
@@ -64,4 +65,5 @@ export interface Order {
   address: Address;
   status: string;
   order_details: OrderDetail[];
+  post_cost: string;
 }

@@ -35,7 +35,6 @@ def isTokenExpired(request):
 
 def find_active_order(request):
     if request.user.is_authenticated:
-        print("auth girdi")
         isTokenExpired(request)
         order_qs = Order.objects.filter(customer=request.user, status="OPEN").order_by(
             "-id"
@@ -47,7 +46,6 @@ def find_active_order(request):
             open_order = Order.objects.create(customer=request.user, status="OPEN")
             open_order_created = True
     else:
-        print("else girdi")
         if request.COOKIES.get("session_id") == None:
             raise CustomAPIException(
                 "Please provide session_id in cookies.", status=400

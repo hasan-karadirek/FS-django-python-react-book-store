@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { Order } from "../types/models";
 import { Circles } from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import defaultBookImage from "../assets/defaultBookImage.webp";
 
 const CheckoutReturn: React.FC = () => {
-  const navigate = useNavigate();
+  // eslint-disable-next-line no-undef
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const orderInProgress = JSON.parse(
     localStorage.getItem("orderInProgress"),
   )?.order;
@@ -18,30 +18,30 @@ const CheckoutReturn: React.FC = () => {
     `/store/order-status/${orderInProgress.id}/`,
     (res) => {
       setOrder(res.data as Order);
-      if (order.status !== "PENDING") {
-        setTimeout(() => {
-          navigate(order.customer ? "/customer" : "/shop/books");
-        }, 10000);
-      }
     },
   );
   useEffect(() => {
-    let intervalId;
     if (orderInProgress) {
-      intervalId = setInterval(() => {
-        performFetch({headers:{
-          Authorization: Cookies.get("token")
-          ? `Token ${Cookies.get("token")}`
-          : ""
-        }});
+      intervalRef.current = setInterval(() => {
+        performFetch({
+          headers: {
+            Authorization: Cookies.get("token")
+              ? `Token ${Cookies.get("token")}`
+              : "",
+          },
+        });
       }, 5000);
-    }
-    if (order?.status !== "PENDING") {
-      clearInterval(intervalId);
     }
   }, []);
 
-  const BASE_SERVER_URL=process.env.BASE_SERVER_URL
+  useEffect(() => {
+    if (order?.status !== "PENDING" && intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, [order?.status]);
+
+  const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
   return (
     <>
       <div className="gap"></div>
@@ -78,7 +78,7 @@ const CheckoutReturn: React.FC = () => {
                       {`${detail.book.title} - ${detail.book.author} - ${detail.book.year} - ${detail.book.publishing_house}`}
                     </h6>
                     <div className="d-flex">
-                      <p id="nav-cart-item-price">{detail.book.price}</p>
+                      <p id="nav-cart-item-price">{detail.book.price}€</p>
                     </div>
                   </div>
                 </li>
@@ -86,6 +86,21 @@ const CheckoutReturn: React.FC = () => {
             ) : (
               <li>No items in the cart</li>
             )}
+
+            <li id="nav-cart-list-post-cost">
+              <p>
+                Delivery Cost :{" "}
+                {JSON.parse(order?.post_cost) == 0
+                  ? "Free Delivery"
+                  : `${order?.post_cost}€`}
+              </p>
+            </li>
+            <li id="nav-cart-list-cost">
+              <p>
+                Total : {JSON.parse(order?.cost) + JSON.parse(order?.post_cost)}
+                €
+              </p>
+            </li>
           </ul>
           <div className="p-3">
             <h4 style={{ color: "black" }}>Order Address</h4>
@@ -104,7 +119,7 @@ const CheckoutReturn: React.FC = () => {
                     ? "blue"
                     : order?.status === "PENDING"
                       ? "yellow"
-                      : "red",
+                      : "green",
               }}
             >
               Status: {order?.status}{" "}
