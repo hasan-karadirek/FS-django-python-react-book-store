@@ -25,8 +25,9 @@ const PrivacyPolicy: React.FC = () => {
           <br />
           Amsterdam, The Netherlands
           <br />
-          Email: -<br />
-          Phone: -
+          Email: leflaneuramsterdam@gmail.com
+          <br />
+          Phone: +31680042091
         </p>
 
         <h2>2. Information We Collect</h2>
@@ -194,8 +195,9 @@ const PrivacyPolicy: React.FC = () => {
           <br />
           Amsterdam, The Netherlands
           <br />
-          Email: -<br />
-          Phone: -
+          Email: leflaneuramsterdam@gmail.com
+          <br />
+          Phone: +31680042091
         </p>
       </div>
     </>

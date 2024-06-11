@@ -5,11 +5,19 @@ import instagram from "../../assets/instagram.png";
 import NavCart from "./NavCart";
 import NavbarUser from "./NavbarUser";
 import useWindowSize from "../../hooks/useWindowSize";
+import CookiePopUp from "../main/CookiePopUp";
+import { useLocation } from "react-router-dom";
 
 interface NavbarProps {
   isSticky: boolean;
 }
 const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
+  const loc = useLocation();
+  const cookieP = localStorage.getItem("cookiePolicy");
+  const [cookiePolicy, setCookiePolicy] = useState<boolean>(
+    cookieP ? JSON.parse(cookieP) : false,
+  );
+
   const { width } = useWindowSize();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -18,6 +26,13 @@ const Navbar: React.FC<NavbarProps> = ({ isSticky }) => {
     <nav
       className={`navbar navbar-expand-lg ${isSticky ? "bg-white sticky-navbar" : "bg-transparent"}`}
     >
+      {cookiePolicy ||
+      loc.pathname.split("/")[loc.pathname.split("/").length - 1] ===
+        "cookie-policy" ? (
+        ""
+      ) : (
+        <CookiePopUp setCookiePolicy={setCookiePolicy} />
+      )}
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           <img id="logo" src={Logo} alt="logo" />{" "}

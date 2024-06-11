@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Footer: React.FC = () => {
   const { width } = useWindowSize();
   const [isFixed, setIsFixed] = useState<boolean>(
-    document.documentElement.scrollHeight <= window.innerHeight,
+    document.documentElement.scrollHeight < window.innerHeight,
   );
 
   useEffect(() => {
@@ -58,9 +58,9 @@ const Footer: React.FC = () => {
         <div className="footer-block-2">
           <h5>Infos:</h5>
           <ul>
-            <li className="">KvK:- </li>
+            <li className="">KvK: 87287250 </li>
             <li className="">Adress: Pirinsengracht 260, 1016 HG Amsterdam</li>
-            <li className="">Tel: - </li>
+            <li className="">Tel: +31680042091 </li>
           </ul>
         </div>
         <div className="footer-block-3">
