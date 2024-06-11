@@ -179,10 +179,18 @@ class ExportBooksAPIView(APIView):
             "price",
             "entry",
             "status",
+           "page",
+           "ant",
+           "cost",
+           "remain",
+           "loc",
+           "supplier",
         ]
         sheet.append(header)
 
         books = Book.objects.all()
+        
+
 
         for book in books:
             row = [
@@ -203,6 +211,12 @@ class ExportBooksAPIView(APIView):
                 book.price,
                 book.entry,
                 book.status,
+                book.page,
+                book.ant,
+                book.cost,
+                book.remain,
+                book.loc,
+                book.supplier,
             ]
             sheet.append(row)
 
