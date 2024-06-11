@@ -19,7 +19,8 @@ const SalesAgreement: React.FC = () => {
           <br />
           Amsterdam, The Netherlands
           <br />
-          Email: leflaneuramsterdam@gmail.com<br />
+          Email: leflaneuramsterdam@gmail.com
+          <br />
           Phone: +31680042091
         </p>
 
@@ -214,7 +215,8 @@ const SalesAgreement: React.FC = () => {
           <br />
           Amsterdam, The Netherlands
           <br />
-          Email: leflaneuramsterdam@gmail.com<br />
+          Email: leflaneuramsterdam@gmail.com
+          <br />
           Phone: +31680042091
         </p>
       </div>
