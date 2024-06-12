@@ -94,8 +94,8 @@ class GetBooksAPIView(APIView):
                     | Q(publishing_house__name__icontains=search_query)
                     | Q(tags__name__icontains=search_query)
                 )
-            ).distinct().order_by("-id")
-
+            ).distinct()
+        books=books.order_by("-id")
         page_number = request.query_params.get("page", 1)
         paginated_data = pagination(books, 20, page_number)
         page = paginated_data["page"]
