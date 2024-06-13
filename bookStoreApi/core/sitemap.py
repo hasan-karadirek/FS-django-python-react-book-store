@@ -11,6 +11,8 @@ class StaticViewSitemap(Sitemap):
 
     def location(self, item):
         return reverse(item)
+    def get_urls(self, page=1, site=None, protocol='https', **kwargs):
+        return super().get_urls(page=page, site=site, protocol=protocol, **kwargs)
 
 class BookListSitemap(Sitemap):
     priority = 0.8
@@ -21,8 +23,8 @@ class BookListSitemap(Sitemap):
 
     def location(self, item):
         return f'/shop/books?page=1&search=&category={item["category__title"]}&language={item["language__name"]}'
-    def get_urls(self, site=None, protocol='https'):
-        return super().get_urls(site=site, protocol=protocol)
+    def get_urls(self, page=1, site=None, protocol='https', **kwargs):
+        return super().get_urls(page=page, site=site, protocol=protocol, **kwargs)
 
 class BookSitemap(Sitemap):
     priority = 0.8
@@ -33,5 +35,5 @@ class BookSitemap(Sitemap):
 
     def location(self, item):
         return f'/shop/books/{item["slug"]}'
-    def get_urls(self, site=None, protocol='https'):
-        return super().get_urls(site=site, protocol=protocol)
+    def get_urls(self, page=1, site=None, protocol='https', **kwargs):
+        return super().get_urls(page=page, site=site, protocol=protocol, **kwargs)
