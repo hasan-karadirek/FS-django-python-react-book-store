@@ -42,6 +42,12 @@ CORS_ALLOW_METHODS = [
     "PUT",
 ]
 
+# Ensure SECURE_SSL_REDIRECT is set to True in production
+SECURE_SSL_REDIRECT = True
+
+# Optionally set SECURE_PROXY_SSL_HEADER if behind a proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Application definition
 
 INSTALLED_APPS = [
