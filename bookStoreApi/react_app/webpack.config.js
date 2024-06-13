@@ -51,6 +51,7 @@ module.exports = (env, argv) => {
         // Default is '' because on our  servers we want to have it default to our current URL
 
         BASE_SERVER_URL:  argv.mode==="development" ? "http://localhost:8000" : "https://leflaneuramsterdam.com"   ,
+        BASE_SERVER_SUB_URL:  argv.mode==="development" ? "http://localhost:8000" : "https://www.leflaneuramsterdam.com"   ,
 
       }),
     ],

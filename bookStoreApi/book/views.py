@@ -95,7 +95,7 @@ class GetBooksAPIView(APIView):
                     | Q(tags__name__icontains=search_query)
                 )
             ).distinct()
-
+        books=books.order_by("-id")
         page_number = request.query_params.get("page", 1)
         paginated_data = pagination(books, 20, page_number)
         page = paginated_data["page"]
@@ -179,10 +179,18 @@ class ExportBooksAPIView(APIView):
             "price",
             "entry",
             "status",
+           "page",
+           "ant",
+           "cost",
+           "remain",
+           "loc",
+           "supplier",
         ]
         sheet.append(header)
 
         books = Book.objects.all()
+        
+
 
         for book in books:
             row = [
@@ -203,6 +211,12 @@ class ExportBooksAPIView(APIView):
                 book.price,
                 book.entry,
                 book.status,
+                book.page,
+                book.ant,
+                book.cost,
+                book.remain,
+                book.loc,
+                book.supplier,
             ]
             sheet.append(row)
 

@@ -4,6 +4,7 @@ import { Order } from "../types/models";
 import { Circles } from "react-loader-spinner";
 import Cookies from "js-cookie";
 import defaultBookImage from "../assets/defaultBookImage.webp";
+import { Link } from "react-router-dom";
 
 const CheckoutReturn: React.FC = () => {
   // eslint-disable-next-line no-undef
@@ -74,9 +75,9 @@ const CheckoutReturn: React.FC = () => {
                     alt={detail.book.title}
                   />
                   <div className="nav-cart-list-body">
-                    <h6 className="cart-item-title">
+                  <Link to={`/shop/books/${detail.book.slug}`} ><h6 className="cart-item-title">
                       {`${detail.book.title} - ${detail.book.author} - ${detail.book.year} - ${detail.book.publishing_house}`}
-                    </h6>
+                    </h6></Link>
                     <div className="d-flex">
                       <p id="nav-cart-item-price">{detail.book.price}€</p>
                     </div>

@@ -106,7 +106,7 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
               <Link
                 key={t.tag.id}
                 className="p-2"
-                to={`/shop/books/${t.tag.name}`}
+                to={`/shop/books/?search=${t.tag.name}`}
               >
                 {t.tag.name}
               </Link>

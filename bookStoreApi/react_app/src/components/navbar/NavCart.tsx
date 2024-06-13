@@ -60,7 +60,7 @@ const NavCart: React.FC<NavCartProps> = ({ navContainerClass }) => {
                         }
                       />
                       <div className="nav-cart-list-body">
-                        <h4 className="cart-item-title">{`${detail.book.title} - ${detail.book.author} - ${detail.book.year} - ${detail.book.publishing_house}`}</h4>
+                        <Link to={`/shop/books/${detail.book.slug}`} style={{color:"white"}}><h4 className="cart-item-title">{`${detail.book.title} - ${detail.book.author} - ${detail.book.year} - ${detail.book.publishing_house}`}</h4></Link>
                         <div className="d-flex">
                           <p id="nav-cart-item-price">{detail.book.price}€</p>
                           <RemoveFromCartButton

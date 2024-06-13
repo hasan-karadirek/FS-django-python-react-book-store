@@ -3,6 +3,7 @@ import { OrderContext } from "../../contexts/OrderContext";
 import RemoveFromCartButton from "./RemoveFromCartButton";
 import defaultBookImage from "../../assets/defaultBookImage.webp";
 import postnlLogo from "../../assets/postnl.png";
+import { Link } from "react-router-dom";
 
 const CheckoutCart: React.FC = () => {
   const { order } = useContext(OrderContext);
@@ -20,7 +21,7 @@ const CheckoutCart: React.FC = () => {
             }
           />
           <div className="nav-cart-list-body">
-            <h4 className="cart-item-title">{`${detail.book.title} - ${detail.book.author} - ${detail.book.year} - ${detail.book.publishing_house}`}</h4>
+          <Link to={`/shop/books/${detail.book.slug}`} ><h4 className="cart-item-title">{`${detail.book.title} - ${detail.book.author} - ${detail.book.year} - ${detail.book.publishing_house}`}</h4></Link>
             <div className="d-flex">
               <p id="nav-cart-item-price">{detail.book.price}€</p>
               <RemoveFromCartButton

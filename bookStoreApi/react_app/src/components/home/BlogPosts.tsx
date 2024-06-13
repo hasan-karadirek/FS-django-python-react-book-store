@@ -66,7 +66,7 @@ const PostDisplay: React.FC = () => {
                     onLoad={() =>
                       setImageHeight(imageRef.current?.clientHeight || 0)
                     }
-                    src={`${BASE_SERVER_URL}${activePost?.image}`}
+                    src={`${activePost?.image}`}
                     className="blog-post-img"
                     alt={`Active post: ${activePost?.title}`}
                   />
