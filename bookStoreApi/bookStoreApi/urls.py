@@ -30,7 +30,7 @@ sitemaps = {
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('robots.txt', RobotsTxtView.as_view(), name='robots_txt'),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps, "protocol":"https"}, name='sitemap'),
     path("api/store/", include("store.urls")),
     path("api/customer/", include("customer.urls")),
     path("api/blog/", include("blog.urls")),
