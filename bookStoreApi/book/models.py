@@ -116,7 +116,7 @@ class Book(models.Model):
     slug = models.CharField(max_length=255, null=True)
 
     def __str__(self):
-        return f"{self.title if self.title else ""} - {self.author.name if self.author else ""} - {self.year if self.year else ""}"
+        return f"{self.title if self.title else ''} - {self.author.name if self.author else ''} - {self.year if self.year else ''}"
 
     def save(self, *args, **kwargs):
         if self.slug == None:
