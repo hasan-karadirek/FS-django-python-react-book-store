@@ -35,10 +35,16 @@ const MainLayout: React.FC = () => {
     <>
       <ErrorProvider>
         <OrderProvider>
+          <header>
           <Navbar isSticky={isSticky} />
           <Alert />
+          </header>
+          <main>
           <Outlet />
+          </main>
+          <footer>
           <Footer />
+          </footer>
         </OrderProvider>
       </ErrorProvider>
     </>
