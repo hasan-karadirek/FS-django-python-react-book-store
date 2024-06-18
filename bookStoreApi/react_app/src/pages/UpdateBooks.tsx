@@ -24,7 +24,7 @@ const UpdateBooks: React.FC = () => {
 
     const csrfToken = Cookies.get("csrftoken");
     performFetch({
-      method: "POST",
+      method: "PUT",
       body: form,
       headers: {
         "X-CSRFToken": csrfToken,
