@@ -53,7 +53,7 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
           <h1>
             {`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}
           </h1>
-          <span id="book-price">{book.price}$</span>
+          <span id="book-price">€{book.price}</span>
           <AddToCartButton
             bookId={book.id}
             btnClasses="btn btn-outline-success book-detail-btn"
