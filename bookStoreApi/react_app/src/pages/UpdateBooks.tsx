@@ -46,13 +46,13 @@ const UpdateBooks: React.FC = () => {
   };
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
-    const value = (target as HTMLInputElement).files;
-    const name = target.name;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    const files = target.files;
+    if (files && files.length > 0) {
+      setFormData({
+        ...formData,
+        file: files[0],
+      });
+    }
   };
   return verifyAdminFetch.error ? (
     <div className="error"> {verifyAdminFetch.error.message}</div>
