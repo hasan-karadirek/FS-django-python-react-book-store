@@ -9,6 +9,6 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderDetailInline]
 
 # Register your models here.
-admin.site.register(Order,OrderDetailInline)
+admin.site.register(Order,OrderAdmin)
 admin.site.register(OrderDetail)
 admin.site.register(Address)
