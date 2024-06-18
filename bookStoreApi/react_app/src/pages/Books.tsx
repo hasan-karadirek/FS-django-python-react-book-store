@@ -8,7 +8,7 @@ import { Circles } from "react-loader-spinner";
 import Pagination from "../components/books/Pagination";
 import { useNavigate } from "react-router-dom";
 import { BookListResponse } from "../types/responses";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import Logo from "../assets/logo.png";
 
 const Books: React.FC = () => {
@@ -69,12 +69,18 @@ const Books: React.FC = () => {
 
   return (
     <>
-    <Helmet>
-    <title>{`Le Flaneur Second Hand Book Store - Books in ${searchFormData.category ? searchFormData.category : "All"} Category(s) and in ${searchFormData.language ? searchFormData.language : "All"} Language(s)`}</title>
-      <meta property="og:title" content={`Le Flaneur Second Hand Book Store - Books in ${searchFormData.category} Category(s) and in ${searchFormData.language} Language(s)`} />
-      <meta property="og:description" content={`Le Flaneur Second Hand Book Store - Books in ${searchFormData.category} Category(s) and in ${searchFormData.language} Language(s)`} />
-      <meta property="og:image" content={Logo} />
-    </Helmet>
+      <Helmet>
+        <title>{`Le Flaneur Second Hand Book Store - Books in ${searchFormData.category ? searchFormData.category : "All"} Category(s) and in ${searchFormData.language ? searchFormData.language : "All"} Language(s)`}</title>
+        <meta
+          property="og:title"
+          content={`Le Flaneur Second Hand Book Store - Books in ${searchFormData.category} Category(s) and in ${searchFormData.language} Language(s)`}
+        />
+        <meta
+          property="og:description"
+          content={`Le Flaneur Second Hand Book Store - Books in ${searchFormData.category} Category(s) and in ${searchFormData.language} Language(s)`}
+        />
+        <meta property="og:image" content={Logo} />
+      </Helmet>
       <div className="gap"></div>
       <nav className=" mt-3  fs-4 px-5" aria-label="breadcrumb">
         <ol className="breadcrumb">

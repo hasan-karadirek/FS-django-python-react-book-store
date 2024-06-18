@@ -37,7 +37,6 @@ const PostDisplay: React.FC = () => {
       setImageHeight(imageRef.current.clientHeight);
     }
   }, [activePost]);
-  const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
   return error ? (
     <p>{error.message}</p>
   ) : (

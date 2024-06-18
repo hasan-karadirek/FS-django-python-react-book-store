@@ -10,7 +10,8 @@ from core.mollie import createMolliePayment
 from django.db import transaction
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from book.models import Book
-from decimal import Decimal,ROUND_HALF_UP
+from decimal import Decimal, ROUND_HALF_UP
+
 
 class AddToCartView(IsSaleExist, APIView):
     def post(self, request, *args, **kwargs):
@@ -37,10 +38,8 @@ class RemoveFromCartView(APIView):
                 status=400,
             )
         try:
-            book=Book.objects.get(id=bookPk)
-            orderDetail = OrderDetail.objects.get(
-                order=open_order, book=book
-            )
+            book = Book.objects.get(id=bookPk)
+            orderDetail = OrderDetail.objects.get(order=open_order, book=book)
             orderDetail.delete()
             open_order.refresh_from_db()
         except OrderDetail.DoesNotExist or Book.DoesNotExist:
@@ -119,16 +118,20 @@ class CheckOutView(APIView):
                         **checkoutSerializer.validated_data["address"]
                     )
                     open_order.save()
-                    total_cost=float(open_order.cost)+open_order.post_cost
-                    
+                    total_cost = float(open_order.cost) + open_order.post_cost
+
                     payment = createMolliePayment(
-                        str(Decimal(total_cost).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)),
+                        str(
+                            Decimal(total_cost).quantize(
+                                Decimal("0.00"), rounding=ROUND_HALF_UP
+                            )
+                        ),
                         open_order.id,
                         checkoutSerializer.validated_data.get("redirectUrl"),
                     )
             except Exception as e:
                 open_order.refresh_from_db()
-               
+
                 raise CustomAPIException(
                     f"Checkout can not process, please try again later. {e}", 500,
                 )
@@ -178,9 +181,8 @@ class OrderStatusView(APIView):
             )
 
 
-
-
 from django.views.generic import TemplateView
+
 
 class RobotsTxtView(TemplateView):
     template_name = "robots.txt"

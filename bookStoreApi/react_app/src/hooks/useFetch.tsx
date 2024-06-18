@@ -65,9 +65,9 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
     const fetchData = async () => {
       const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
       const BASE_SERVER_SUB_URL = process.env.BASE_SERVER_SUB_URL;
-      const isSubdomain= window.location.hostname.startsWith("www")
+      const isSubdomain = window.location.hostname.startsWith("www");
       // We add the /api subsection here to make it a single point of change if our configuration changes
-      const url = `${isSubdomain ? BASE_SERVER_SUB_URL:BASE_SERVER_URL}/api${route}`;
+      const url = `${isSubdomain ? BASE_SERVER_SUB_URL : BASE_SERVER_URL}/api${route}`;
 
       const res = await fetch(url, { ...baseOptions, ...options, signal });
 

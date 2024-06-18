@@ -31,8 +31,20 @@ DEBUG = os.getenv("DEBUG")
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:8080"] if os.getenv("ENV")=="development" else ["https://www.leflaneuramsterdam.com","http://localhost:8000","https://leflaneuramsterdam.com"]
-CSRF_TRUSTED_ORIGINS = ["https://www.leflaneuramsterdam.com", "https://leflaneuramsterdam.com", "http://localhost:8000"]
+CORS_ALLOWED_ORIGINS = (
+    ["http://localhost:8080"]
+    if os.getenv("ENV") == "development"
+    else [
+        "https://www.leflaneuramsterdam.com",
+        "http://localhost:8000",
+        "https://leflaneuramsterdam.com",
+    ]
+)
+CSRF_TRUSTED_ORIGINS = [
+    "https://www.leflaneuramsterdam.com",
+    "https://leflaneuramsterdam.com",
+    "http://localhost:8000",
+]
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
@@ -46,7 +58,7 @@ CORS_ALLOW_METHODS = [
 SECURE_SSL_REDIRECT = True
 
 # Optionally set SECURE_PROXY_SSL_HEADER if behind a proxy
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition
 
@@ -115,7 +127,9 @@ DATABASES = {
         "HOST": os.getenv("DB_HOST"),
         "PORT": os.getenv("DB_PORT"),
         "OPTIONS": {
-            'unix_socket': "" if os.getenv("ENV")=="development" else '/var/lib/mysql/mysql.sock',
+            "unix_socket": ""
+            if os.getenv("ENV") == "development"
+            else "/var/lib/mysql/mysql.sock",
             "charset": "utf8mb4",
             "init_command": "SET sql_mode='STRICT_TRANS_TABLES', innodb_strict_mode=1",
         },

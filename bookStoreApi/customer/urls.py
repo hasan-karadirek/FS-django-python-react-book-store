@@ -6,6 +6,7 @@ from .views import (
     CustomerDashboardAPIView,
     ForgotPasswordAPIView,
     ResetPasswordAPIView,
+    VerifyAdminAPIView,
 )
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     path("dashboard/", CustomerDashboardAPIView.as_view(), name="dashboard"),
     path("forgotpassword/", ForgotPasswordAPIView.as_view(), name="forgot-password"),
     path("resetpassword/", ResetPasswordAPIView.as_view(), name="reset-password"),
+    path("verify-admin/", VerifyAdminAPIView.as_view(), name="verify-admin"),
 ]

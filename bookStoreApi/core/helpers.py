@@ -33,6 +33,7 @@ def isTokenExpired(request):
         except Token.DoesNotExist:
             raise CustomAPIException("Invalid Token.", 401, name="invalid_token")
 
+
 def find_active_order(request):
     if request.user.is_authenticated:
         isTokenExpired(request)
@@ -53,6 +54,5 @@ def find_active_order(request):
         open_order, open_order_created = Order.objects.get_or_create(
             session_id=request.COOKIES.get("session_id"), status="OPEN"
         )
-        
-    return open_order, open_order_created
 
+    return open_order, open_order_created

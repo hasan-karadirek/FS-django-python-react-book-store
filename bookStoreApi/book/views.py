@@ -77,13 +77,13 @@ class GetBooksAPIView(APIView):
 
         filter_criteria = {"status": "OPEN"}
         if tag_query:
-            filter_criteria["tag__name"]=tag_query
+            filter_criteria["tag__name"] = tag_query
         if category_query:
             filter_criteria["category__title"] = category_query
         if language_query:
             filter_criteria["language__name"] = language_query
         books = Book.objects.filter(**filter_criteria)
-        
+
         search_query = request.query_params.get("search", None)
         if search_query:
             books = books.filter(
@@ -95,7 +95,7 @@ class GetBooksAPIView(APIView):
                     | Q(tags__name__icontains=search_query)
                 )
             ).distinct()
-        books=books.order_by("-id")
+        books = books.order_by("-id")
         page_number = request.query_params.get("page", 1)
         paginated_data = pagination(books, 20, page_number)
         page = paginated_data["page"]
@@ -179,18 +179,16 @@ class ExportBooksAPIView(APIView):
             "price",
             "entry",
             "status",
-           "page",
-           "ant",
-           "cost",
-           "remain",
-           "loc",
-           "supplier",
+            "page",
+            "ant",
+            "cost",
+            "remain",
+            "loc",
+            "supplier",
         ]
         sheet.append(header)
 
         books = Book.objects.all()
-        
-
 
         for book in books:
             row = [

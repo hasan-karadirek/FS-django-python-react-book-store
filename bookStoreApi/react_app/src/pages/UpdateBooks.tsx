@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 interface UpdateBooksFormData {
   file: File | null;
@@ -10,8 +10,14 @@ const UpdateBooks: React.FC = () => {
     "/update-books/",
     (res) => {
       return res;
-    }
+    },
   );
+  const verifyAdminFetch = useFetch("/customer/verify-admin/", (res) => {
+    return res;
+  });
+  useEffect(() => {
+    verifyAdminFetch.performFetch();
+  }, []);
   const submitForm = () => {
     const form = new FormData();
     form.append("file", formData.file, formData.file.name);
@@ -48,7 +54,9 @@ const UpdateBooks: React.FC = () => {
       [name]: value,
     });
   };
-  return (
+  return verifyAdminFetch.error ? (
+    <div className="error"> {verifyAdminFetch.error.message}</div>
+  ) : (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
         <label htmlFor="bookImagesInput" className="form-label">
@@ -65,6 +73,9 @@ const UpdateBooks: React.FC = () => {
       <button type="submit" className="btn btn-success">
         Submit
       </button>
+      {error ? <div className="error">{error.message}</div> : ""}
     </form>
   );
 };
+
+export default UpdateBooks;

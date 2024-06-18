@@ -75,9 +75,11 @@ const CheckoutReturn: React.FC = () => {
                     alt={detail.book.title}
                   />
                   <div className="nav-cart-list-body">
-                  <Link to={`/shop/books/${detail.book.slug}`} ><h6 className="cart-item-title">
-                      {`${detail.book.title} - ${detail.book.author} - ${detail.book.year} - ${detail.book.publishing_house}`}
-                    </h6></Link>
+                    <Link to={`/shop/books/${detail.book.slug}`}>
+                      <h6 className="cart-item-title">
+                        {`${detail.book.title} - ${detail.book.author} - ${detail.book.year} - ${detail.book.publishing_house}`}
+                      </h6>
+                    </Link>
                     <div className="d-flex">
                       <p id="nav-cart-item-price">{detail.book.price}€</p>
                     </div>
