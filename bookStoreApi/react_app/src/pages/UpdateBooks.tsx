@@ -7,7 +7,7 @@ interface UpdateBooksFormData {
 const UpdateBooks: React.FC = () => {
   const [formData, setFormData] = useState<UpdateBooksFormData>({ file: null });
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    "/update-books/",
+    "/book/update-books/",
     (res) => {
       return res;
     },
@@ -59,14 +59,14 @@ const UpdateBooks: React.FC = () => {
   ) : (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label htmlFor="bookImagesInput" className="form-label">
+        <label htmlFor="fileInput" className="form-label">
           Book Images (optional)
         </label>
         <input
           type="file"
           className="form-control"
-          id="bookImagesInput"
-          name="images"
+          id="fileInput"
+          name="file"
           onChange={handleChange}
         />
       </div>
