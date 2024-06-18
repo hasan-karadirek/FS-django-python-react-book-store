@@ -19,7 +19,7 @@ class BookTagInline(admin.TabularInline):
 
 class BookAdmin(admin.ModelAdmin):
     search_fields = ["title", "author__name", "category__title"]
-    inlines = [BookImageInline,BookImageInline]  
+    inlines = [BookImageInline,BookTagInline]  
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(BookTagAssociation)
