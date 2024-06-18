@@ -40,9 +40,7 @@ const App: React.FC = () => {
         <Route path="resetpassword" element={<ResetPassword />} />
       </Route>
       <Route path="update-books" element={<UpdateBooks />} />
-      <Route path="*" element={<MainLayout />}>
-        <Route index element={<NotFound />} />
-      </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
