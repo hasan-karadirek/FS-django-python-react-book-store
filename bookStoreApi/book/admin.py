@@ -10,10 +10,13 @@ from .models import (
     Tag,
 )
 
+class BookImageInline(admin.TabularInline):
+    model = BookImage
+    extra = 1
 
 class BookAdmin(admin.ModelAdmin):
     search_fields = ["title", "author__name", "category__title"]
-
+    inlines = [BookImageInline]  
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(BookTagAssociation)
