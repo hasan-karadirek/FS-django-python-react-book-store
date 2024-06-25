@@ -8,7 +8,7 @@ const CookiePolicy: React.FC = () => {
         <h1>Cookie Policy</h1>
 
         <p>
-          Le Flâneur Amsterdam (&apos;we&apos;, &apos;our&apos;, &apos;us&apos;)
+          Le Flaneur Amsterdam (&apos;we&apos;, &apos;our&apos;, &apos;us&apos;)
           uses cookies on leflaneuramsterdam.com (the &apos;Website&apos;). By
           using the Website, you consent to the use of cookies as described in
           this policy.

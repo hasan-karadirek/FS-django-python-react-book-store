@@ -19,9 +19,9 @@ const PrivacyPolicy: React.FC = () => {
 
         <h2>1. Data Controller</h2>
         <p>
-          Le Flâneur Amsterdam
+          Le Flaneur Amsterdam
           <br />
-          Pirinsengracht 260, 1016 HG
+          Prinsengracht 260, 1016 HG
           <br />
           Amsterdam, The Netherlands
           <br />
@@ -189,9 +189,9 @@ const PrivacyPolicy: React.FC = () => {
           data practices, please contact us at:
         </p>
         <p>
-          Le Flâneur Amsterdam
+          Le Flaneur Amsterdam
           <br />
-          Pirinsengracht 260, 1016 HG
+          Prinsengracht 260, 1016 HG
           <br />
           Amsterdam, The Netherlands
           <br />

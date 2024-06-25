@@ -13,9 +13,9 @@ const SalesAgreement: React.FC = () => {
         </p>
 
         <p>
-          <strong>Le Flâneur Amsterdam</strong>
+          <strong>Le Flaneur Amsterdam</strong>
           <br />
-          Pirinsengracht 260, 1016 HG
+          Prinsengracht 260, 1016 HG
           <br />
           Amsterdam, The Netherlands
           <br />
@@ -121,38 +121,65 @@ const SalesAgreement: React.FC = () => {
             dispatched.
           </li>
           <li>
-            <strong>Risk of Loss:</strong> The risk of loss or damage to the
-            Products passes to the Buyer upon delivery to the specified address.
+            <strong>Risk of Loss:</strong> Always consider the unquantifiable
+            costs of this whole process, which by nature cannot be considered in
+            economic calculations. Whenever possible opt for a local solution.
+          </li>
+          <li>
+            <strong>Risk of Externalities:</strong> Always consider the
+            unquantifiable costs of this whole process, which by nature cannot
+            be considered in economic calculations. Whenever possible opt for a
+            local solution.
           </li>
         </ul>
 
         <h2>6. Returns and Refunds</h2>
+        <p>
+          It is legally mandatory to acknowledge the right of withdrawal without
+          reason for 14 days after the purchase.{" "}
+        </p>
         <ul>
           <li>
-            <strong>Returns:</strong> The Buyer may return Products within 14
-            days of receipt if the Products are in the same condition as
-            received. The Buyer must contact the Seller to initiate a return and
-            obtain return instructions.
+            <strong>Returns:</strong> It is legally mandatory to acknowledge the
+            right of withdrawal without reason for 14 days after the purchase.
           </li>
           <li>
-            <strong>Refunds:</strong> Upon receipt and inspection of the
-            returned Products, the Seller will process a refund to the original
-            payment method within 14 days. Shipping costs are non-refundable
-            unless the return is due to an error by the Seller.
+            <strong>Refunds:</strong> It is legally mandatory to acknowledge the
+            right of withdrawal without reason for 14 days after the purchase.
           </li>
         </ul>
+        <p>
+          We, on the other hand, believe in goodwill and presume people has the
+          potential to act responsibly and reasonably, and find the whole idea
+          of returns rather sinister if not outright foolish. If you think what
+          you received visibly fails to match its descripted condition, you keep
+          the book and get your money back. In other cases, you keep the book,
+          we keep the money.
+        </p>
 
         <h2>7. Warranties</h2>
         <ul>
           <li>
-            <strong>Product Condition:</strong> The Seller warrants that the
-            Products sold are as described on the Website. Given the nature of
-            second-hand books, minor wear and tear are to be expected.
+            <strong>Product Condition:</strong> We, on the other hand, believe
+            in goodwill and presume people has the potential to act responsibly
+            and reasonably, and find the whole idea of returns rather sinister
+            if not outright foolish. If you think what you received visibly
+            fails to match its descripted condition, you keep the book and get
+            your money back. In other cases, you keep the book, we keep the
+            money.
           </li>
           <li>
-            <strong>No Further Warranties:</strong> Except as expressly stated
-            in this Agreement, the Seller makes no further warranties, express
-            or implied, regarding the Products.
+            <strong>Description information:</strong> Several books miss actual
+            photos. This implies the time gap between launch of the website and
+            beginning of online sales, so feel free to ask for photos when in
+            real doubt.Otherwise depictions will suffice for an informed
+            impression. Visible flaws are mentioned in detail, still it is best
+            to keep in mind the age of books when considering the overall looks.
+            Almost no wear: 10, very light wear: 9, Light wear: 7-8. Then there
+            is mild, good enough and fair. If there is no depiction, which is
+            the case with some of the earliest additions, please ask before
+            ordering. Page numbers indicate numbered pages, 0 refers to
+            unpaginated books.
           </li>
         </ul>
 
@@ -209,9 +236,9 @@ const SalesAgreement: React.FC = () => {
         </p>
 
         <p>
-          <strong>Le Flâneur Amsterdam</strong>
+          <strong>Le Flaneur Amsterdam</strong>
           <br />
-          Pirinsengracht 260, 1016 HG
+          Prinsengracht 260, 1016 HG
           <br />
           Amsterdam, The Netherlands
           <br />
