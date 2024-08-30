@@ -24,7 +24,7 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
             className="book-image"
             src={
               book.images.length > 0
-                ? `${BASE_SERVER_URL}${book.images[bookImageIndex]?.image}`
+                ? `${book.images[bookImageIndex]?.image}`
                 : defaultBookImage
             }
             alt={book.title}
