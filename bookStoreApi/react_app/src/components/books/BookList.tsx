@@ -20,7 +20,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
               <img
                 src={
                   book.images[0]
-                    ? `${BASE_SERVER_URL}${book.images[0].image}`
+                    ? `${book.images[0].image}`
                     : defaultBookImage
                 }
                 className="card-img-top"

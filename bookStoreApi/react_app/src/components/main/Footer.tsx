@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
           <h5>Infos:</h5>
           <ul>
             <li className="">KvK: 87287250 </li>
-            <li className="">Adress: Pirinsengracht 260, 1016 HG Amsterdam</li>
+            <li className="">Adress: Prinsengracht 260, 1016 HG Amsterdam</li>
             <li className="">Tel: +31680042091 </li>
           </ul>
         </div>

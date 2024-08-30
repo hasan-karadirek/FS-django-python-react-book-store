@@ -14,6 +14,8 @@ import CheckoutReturn from "./pages/CheckoutReturn";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import SalesAgreement from "./pages/SalesAgreement";
 import CookiePolicy from "./pages/CookiePolicy";
+import UpdateBooks from "./pages/UpdateBooks";
+import NotFound from "./components/main/NotFound";
 
 const App: React.FC = () => {
   return (
@@ -37,6 +39,8 @@ const App: React.FC = () => {
         <Route path="forgotpassword" element={<ForgotPassword />} />
         <Route path="resetpassword" element={<ResetPassword />} />
       </Route>
+      <Route path="update-books" element={<UpdateBooks />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

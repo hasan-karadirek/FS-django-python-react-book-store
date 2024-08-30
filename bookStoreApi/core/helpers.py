@@ -25,13 +25,14 @@ def isTokenExpired(request):
     if request.user.is_authenticated:
         try:
             token = Token.objects.get(user=request.user.id)
-            if timezone.now() - token.created > timedelta(hours=24):
+            if timezone.now() - token.created > timedelta(hours=720):
                 token.delete()
                 raise CustomAPIException(
                     "Token has expired. Please login again.", 401, name="expired_token"
                 )
         except Token.DoesNotExist:
             raise CustomAPIException("Invalid Token.", 401, name="invalid_token")
+
 
 def find_active_order(request):
     if request.user.is_authenticated:
@@ -53,6 +54,5 @@ def find_active_order(request):
         open_order, open_order_created = Order.objects.get_or_create(
             session_id=request.COOKIES.get("session_id"), status="OPEN"
         )
-        
-    return open_order, open_order_created
 
+    return open_order, open_order_created

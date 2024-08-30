@@ -17,12 +17,21 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include, re_path
-from django.conf.urls.static import static
-from django.conf import settings
 from frontend.views import index
+from core.sitemap import StaticViewSitemap, BookSitemap, BookListSitemap
+from django.contrib.sitemaps.views import sitemap
+from store.views import RobotsTxtView
+
+sitemaps = {
+    "static": StaticViewSitemap,
+    "books": BookSitemap,
+    "bookLists": BookListSitemap,
+}
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("robots.txt", RobotsTxtView.as_view(), name="robots_txt"),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path("api/store/", include("store.urls")),
     path("api/customer/", include("customer.urls")),
     path("api/blog/", include("blog.urls")),

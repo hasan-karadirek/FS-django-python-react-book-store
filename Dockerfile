@@ -60,4 +60,4 @@ COPY ./bookStoreApi/ /usr/src/app/bookStoreApi/
 EXPOSE 8000
 
 # Run the application with Gunicorn
-CMD ["gunicorn", "--workers", "1", "--bind", "0.0.0.0:8081", "bookStoreApi.wsgi:application"]
+CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8081","--timeout", "600", "bookStoreApi.wsgi:application"]

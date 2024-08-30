@@ -2,9 +2,10 @@ from django.db import models
 from book.models import Book
 from customer.models import Customer
 from django.db import transaction
-from django.db.models import F,Sum
+from django.db.models import F, Sum
 from core.custom_exceptions import CustomAPIException
 from decimal import Decimal
+
 
 class Address(models.Model):
     full_name = models.CharField(max_length=50, null=True)
@@ -48,7 +49,7 @@ class Order(models.Model):
         Customer, related_name="orders", on_delete=models.SET_NULL, null=True
     )
     session_id = models.CharField(max_length=255)
-    cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    cost = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal("0.00"))
     address = models.ForeignKey(
         Address, related_name="orders", on_delete=models.SET_NULL, null=True
     )
@@ -58,24 +59,30 @@ class Order(models.Model):
         verbose_name="Status of the order",
         default="OPEN",
     )
-    post_cost=models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    post_cost = models.DecimalField(
+        max_digits=10, decimal_places=2, default=Decimal("0.00")
+    )
 
     def __str__(self):
         return f"Order {self.id} "
-    
-    def save(self,*args,**kwargs):
+
+    def save(self, *args, **kwargs):
         if self.pk:
-            cost=self.order_details.aggregate(total_cost=Sum('book__price'))['total_cost'] or 0.00
+            cost = (
+                self.order_details.aggregate(total_cost=Sum("book__price"))[
+                    "total_cost"
+                ]
+                or 0.00
+            )
 
             order_details_count = self.order_details.count()
-            if order_details_count==1:
-                self.post_cost=3.50
-            elif order_details_count>1  and cost<50.00:
-                self.post_cost=6.00
-            elif cost>=50.00:
-                self.post_cost=0.00
+            if order_details_count == 1:
+                self.post_cost = 3.50
+            elif order_details_count > 1 and cost < 50.00:
+                self.post_cost = 6.00
+            elif cost >= 50.00:
+                self.post_cost = 0.00
         super().save(*args, **kwargs)
-        
 
 
 class OrderDetail(models.Model):
@@ -101,7 +108,6 @@ class OrderDetail(models.Model):
 
                 self.order.refresh_from_db()
 
-                
         except (Book.DoesNotExist, Order.DoesNotExist):
             raise CustomAPIException("database orderDetail save error", 500)
 
@@ -113,6 +119,6 @@ class OrderDetail(models.Model):
                 # ? Use F() expression to avoid race conditions
                 self.order.cost = F("cost") - book.price
                 self.order.save()
-                
+
         except (Book.DoesNotExist, Order.DoesNotExist):
             raise CustomAPIException("database orderDetail delete error", 500)

@@ -24,7 +24,7 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
             className="book-image"
             src={
               book.images.length > 0
-                ? `${BASE_SERVER_URL}${book.images[bookImageIndex]?.image}`
+                ? `${book.images[bookImageIndex]?.image}`
                 : defaultBookImage
             }
             alt={book.title}
@@ -53,7 +53,7 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
           <h1>
             {`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}
           </h1>
-          <span id="book-price">{book.price}$</span>
+          <span id="book-price">€{book.price}</span>
           <AddToCartButton
             bookId={book.id}
             btnClasses="btn btn-outline-success book-detail-btn"
@@ -106,7 +106,7 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
               <Link
                 key={t.tag.id}
                 className="p-2"
-                to={`/shop/books/${t.tag.name}`}
+                to={`/shop/books/?search=${t.tag.name}`}
               >
                 {t.tag.name}
               </Link>

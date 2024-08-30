@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import { Book } from "../types/models";
-
+import { Helmet } from "react-helmet";
 import BookDetail from "../components/book/BookDetail";
 import { Circles } from "react-loader-spinner";
+import defaultBookImage from "../assets/defaultBookImage.webp";
 
 const BookPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -20,6 +21,21 @@ const BookPage: React.FC = () => {
   }, []);
   return (
     <>
+      <Helmet>
+        <title>{`${book?.title} - ${book?.author} - ${book?.publishing_house}`}</title>
+        <meta
+          property="og:title"
+          content={`${book?.title} - ${book?.author} - ${book?.publishing_house}`}
+        />
+        <meta
+          property="og:description"
+          content={`${book?.title} - ${book?.author} - ${book?.publishing_house}`}
+        />
+        <meta
+          property="og:image"
+          content={book?.images[0] ? book?.images[0].image : defaultBookImage}
+        />
+      </Helmet>
       <div className="gap"></div>
       <nav className=" mt-3  fs-4 px-5" aria-label="breadcrumb">
         <ol className="breadcrumb">

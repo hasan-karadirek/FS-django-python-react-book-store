@@ -6,7 +6,7 @@ from django.utils.text import slugify
 
 # Author Model
 class Author(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name
@@ -14,21 +14,21 @@ class Author(models.Model):
 
 # Publishing House Model
 class PublishingHouse(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class Language(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name
@@ -116,7 +116,7 @@ class Book(models.Model):
     slug = models.CharField(max_length=255, null=True)
 
     def __str__(self):
-        return f"{self.title} - {self.author.name} - {self.year}"
+        return f"{self.title if self.title else ''} - {self.author.name if self.author else ''} - {self.year if self.year else ''}"
 
     def save(self, *args, **kwargs):
         if self.slug == None:

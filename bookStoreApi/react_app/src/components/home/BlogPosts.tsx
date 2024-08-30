@@ -37,7 +37,6 @@ const PostDisplay: React.FC = () => {
       setImageHeight(imageRef.current.clientHeight);
     }
   }, [activePost]);
-  const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
   return error ? (
     <p>{error.message}</p>
   ) : (
@@ -66,7 +65,7 @@ const PostDisplay: React.FC = () => {
                     onLoad={() =>
                       setImageHeight(imageRef.current?.clientHeight || 0)
                     }
-                    src={`${BASE_SERVER_URL}${activePost?.image}`}
+                    src={`${activePost?.image}`}
                     className="blog-post-img"
                     alt={`Active post: ${activePost?.title}`}
                   />

@@ -13,12 +13,11 @@ from core.custom_exceptions import CustomAPIException
 from core.mixins import IsBookExist
 from core.helpers import pagination
 from django.db.models import Q
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 import openpyxl
 from io import BytesIO
 from django.http import FileResponse
 from django.utils import timezone
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 class AddBookAPIView(APIView):
@@ -77,13 +76,13 @@ class GetBooksAPIView(APIView):
 
         filter_criteria = {"status": "OPEN"}
         if tag_query:
-            filter_criteria["tag__name"]=tag_query
+            filter_criteria["tag__name"] = tag_query
         if category_query:
             filter_criteria["category__title"] = category_query
         if language_query:
             filter_criteria["language__name"] = language_query
         books = Book.objects.filter(**filter_criteria)
-        
+
         search_query = request.query_params.get("search", None)
         if search_query:
             books = books.filter(
@@ -95,7 +94,7 @@ class GetBooksAPIView(APIView):
                     | Q(tags__name__icontains=search_query)
                 )
             ).distinct()
-
+        books = books.order_by("-id")
         page_number = request.query_params.get("page", 1)
         paginated_data = pagination(books, 20, page_number)
         page = paginated_data["page"]
@@ -133,24 +132,25 @@ class UpdateBooksAPIView(APIView):
         serializer = UpdateBooksSerializer(data=request.data)
         if serializer.is_valid():
             file = serializer.validated_data["file"]
-            temp_path = default_storage.save(
-                "temp/" + file.name, ContentFile(file.read())
-            )
-            workbook = openpyxl.load_workbook(default_storage.path(temp_path))
-            sheet = workbook.active
 
-            issued_books = []
-            for row in sheet.iter_rows(min_row=2, values_only=True):
-                id, status = row
-                book = Book.objects.get(id=id)
-                if not book:
-                    issued_books.append(id)
-                    continue
-                book.status = status
-                book.save()
-            return Response(
-                {"success": True, "msg": f"invalid ID list: {issued_books}"}
-            )
+            if isinstance(file, InMemoryUploadedFile):
+                workbook = openpyxl.load_workbook(file)
+                sheet = workbook.active
+
+                issued_books = []
+                for row in sheet.iter_rows(min_row=2, values_only=True):
+                    id, status = row
+                    try:
+                        book = Book.objects.get(id=id)
+                        book.status = status
+                        book.save()
+                    except Book.DoesNotExist:
+                        issued_books.append(id)
+
+                return Response(
+                    {"success": True, "msg": f"invalid ID list: {issued_books}"}
+                )
+        
         raise CustomAPIException("Request body is not valid", 400)
 
 
@@ -179,6 +179,12 @@ class ExportBooksAPIView(APIView):
             "price",
             "entry",
             "status",
+            "page",
+            "ant",
+            "cost",
+            "remain",
+            "loc",
+            "supplier",
         ]
         sheet.append(header)
 
@@ -203,6 +209,12 @@ class ExportBooksAPIView(APIView):
                 book.price,
                 book.entry,
                 book.status,
+                book.page,
+                book.ant,
+                book.cost,
+                book.remain,
+                book.loc,
+                book.supplier,
             ]
             sheet.append(row)
 

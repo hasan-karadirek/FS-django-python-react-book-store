@@ -185,3 +185,10 @@ class CustomerDashboardAPIView(APIView):
         response["data"]["orders"] = orderSerializer.data
         response["data"]["customer"] = customerSerializer.data
         return Response(response, status=status.HTTP_200_OK)
+
+
+class VerifyAdminAPIView(APIView):
+    permission_classes = {permissions.IsAdminUser}
+
+    def get(self, request, *args, **kwargs):
+        return Response({"success": True}, status=status.HTTP_200_OK)
