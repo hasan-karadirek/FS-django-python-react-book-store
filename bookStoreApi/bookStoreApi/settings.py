@@ -36,14 +36,12 @@ CORS_ALLOWED_ORIGINS = (
     if os.getenv("ENV") == "development"
     else [
         "https://www.leflaneuramsterdam.com",
-        "http://localhost:8000",
         "https://leflaneuramsterdam.com",
     ]
 )
 CSRF_TRUSTED_ORIGINS = [
     "https://www.leflaneuramsterdam.com",
     "https://leflaneuramsterdam.com",
-    "http://localhost:8000",
 ]
 
 CORS_ALLOW_CREDENTIALS = True

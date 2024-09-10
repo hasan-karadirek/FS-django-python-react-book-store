@@ -14,7 +14,7 @@ urlpatterns = [
     path("login/", LoginAPIView.as_view(), name="login"),
     path("logout/", LogoutAPIView.as_view(), name="logout"),
     path("dashboard/", CustomerDashboardAPIView.as_view(), name="dashboard"),
-    path("forgotpassword/", ForgotPasswordAPIView.as_view(), name="forgot-password"),
-    path("resetpassword/", ResetPasswordAPIView.as_view(), name="reset-password"),
+    path("forgotpassword/", ForgotPasswordAPIView.as_view(), name="forgotpassword"),
+    path("resetpassword/", ResetPasswordAPIView.as_view(), name="resetpassword"),
     path("verify-admin/", VerifyAdminAPIView.as_view(), name="verify-admin"),
 ]

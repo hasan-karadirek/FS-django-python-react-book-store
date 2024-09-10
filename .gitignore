@@ -165,3 +165,4 @@ node_modules/
 staticfiles/
 media/
 bs_env/
+bs_venv/
