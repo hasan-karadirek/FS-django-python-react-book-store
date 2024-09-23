@@ -53,10 +53,10 @@ CORS_ALLOW_METHODS = [
 ]
 
 # Ensure SECURE_SSL_REDIRECT is set to True in production
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 # Optionally set SECURE_PROXY_SSL_HEADER if behind a proxy
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition
 

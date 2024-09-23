@@ -22,7 +22,7 @@ class PostSerializer(serializers.ModelSerializer):
             or "image" not in validated_data
         ):
             raise CustomAPIException(
-                "Title, content and image are required field for creating a post!", 404
+                "Title, content and image are required field for creating a post!", 400
             )
         image = validated_data.pop("image")
         title = validated_data.pop("title")
