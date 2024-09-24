@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 interface CookiePopUpProps {
   setCookiePolicy: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -33,6 +33,17 @@ const CookiePopUp: React.FC<CookiePopUpProps> = ({ setCookiePolicy }) => {
             </p>
           </div>
           <div className="modal-footer">
+          <button
+              onClick={() => {
+                localStorage.setItem("cookiePolicy", "false");
+                setCookiePolicy(false);
+                window.location.href="https://google.com"
+              }}
+              type="button"
+              className="btn btn-danger"
+            >
+              Reject Cookies
+            </button>
             <button
               onClick={() => {
                 localStorage.setItem("cookiePolicy", "true");
