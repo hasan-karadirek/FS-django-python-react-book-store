@@ -39,9 +39,7 @@ const Testimonials: React.FC = () => {
           )}
         </div>
         <br />
-        <h4 id="testimonials-title">
-          We are excited about our customer reviews
-        </h4>
+        
 
         <div
           id="carousel-testimonials"
