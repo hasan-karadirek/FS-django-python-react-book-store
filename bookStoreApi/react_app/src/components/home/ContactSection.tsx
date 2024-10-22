@@ -194,7 +194,7 @@ const ContactSection: React.FC = () => {
                 </div>
                 <div className="day-row">
                   <div>Wednesday / Monday</div>
-                  <div>13:00 - 19:30</div>
+                  <div>11:00 - 19:30</div>
                 </div>
                 <div className="day-row">
                   <div>Sunday</div>
