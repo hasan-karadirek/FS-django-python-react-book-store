@@ -20,42 +20,42 @@ from django.utils import timezone
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
-class AddBookAPIView(APIView):
-    parser_classes = (MultiPartParser, FormParser)  # To handle file uploads
-    permission_classes = [permissions.IsAdminUser]
+# class AddBookAPIView(APIView):
+#     parser_classes = (MultiPartParser, FormParser)  # To handle file uploads
+#     permission_classes = [permissions.IsAdminUser]
 
-    def post(self, request, *args, **kwargs):
-        serializer = BookSerializer(data=request.data)
+#     def post(self, request, *args, **kwargs):
+#         serializer = BookSerializer(data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            raise CustomAPIException(str(serializer.errors), status=400)
-
-
-class UpdateBookAPIView(IsBookExist, APIView):
-    parser_classes = (MultiPartParser, FormParser)
-    permission_classes = [permissions.IsAdminUser]
-
-    def put(self, request, pk, *args, **kwargs):
-
-        serializer = BookSerializer(request.book, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            raise CustomAPIException(str(serializer.errors), status=400)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         else:
+#             raise CustomAPIException(str(serializer.errors), status=400)
 
 
-class DeleteBookAPIView(IsBookExist, APIView):
-    permission_classes = [permissions.IsAdminUser]
+# class UpdateBookAPIView(IsBookExist, APIView):
+#     parser_classes = (MultiPartParser, FormParser)
+#     permission_classes = [permissions.IsAdminUser]
 
-    def delete(self, request, pk, *args, **kwargs):
+#     def put(self, request, pk, *args, **kwargs):
 
-        request.book.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#         serializer = BookSerializer(request.book, data=request.data)
+
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+#         else:
+#             raise CustomAPIException(str(serializer.errors), status=400)
+
+
+# class DeleteBookAPIView(IsBookExist, APIView):
+#     permission_classes = [permissions.IsAdminUser]
+
+#     def delete(self, request, pk, *args, **kwargs):
+
+#         request.book.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class GetBookAPIView(IsBookExist, APIView):

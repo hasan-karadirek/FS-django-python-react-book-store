@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (
-    AddBookAPIView,
-    UpdateBookAPIView,
-    DeleteBookAPIView,
+    # AddBookAPIView,
+    # UpdateBookAPIView,
+    # DeleteBookAPIView,
     GetBookAPIView,
     GetBooksAPIView,
     GetAllCategoriesApiView,
@@ -12,9 +12,9 @@ from .views import (
 )
 
 urlpatterns = [
-    path("add-book/", AddBookAPIView.as_view(), name="add-book"),
-    path("update-book/<int:bookPk>/", UpdateBookAPIView.as_view(), name="update-book"),
-    path("delete-book/<int:bookPk>/", DeleteBookAPIView.as_view(), name="delete-book"),
+    # path("add-book/", AddBookAPIView.as_view(), name="add-book"),
+    # path("update-book/<int:bookPk>/", UpdateBookAPIView.as_view(), name="update-book"),
+    # path("delete-book/<int:bookPk>/", DeleteBookAPIView.as_view(), name="delete-book"),
     path("categories/", GetAllCategoriesApiView.as_view(), name="get-categories"),
     path("languages/", GetAllLanguagesApiView.as_view(), name="get-languages"),
     path("export-books/", ExportBooksAPIView.as_view(), name="export-books"),

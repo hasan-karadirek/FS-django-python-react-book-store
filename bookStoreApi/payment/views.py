@@ -21,7 +21,7 @@ class MollieHookAPIView(APIView):
                     order.status = "PAID"
                     order.save()
                     send_mail(
-                        "Order COnfirmation - Le Flaneur Amsterdam",
+                        "Order Confirmation - Le Flaneur Amsterdam",
                         "We have recieved your order.",
                         settings.DEFAULT_FROM_EMAIL,
                         [
