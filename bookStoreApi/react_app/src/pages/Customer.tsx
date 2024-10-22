@@ -100,7 +100,7 @@ const CustomerPage: React.FC = () => {
                       {order.order_details.map((detail, index) => (
                         <li key={index}>
                           <Link
-                            to={`shop/books/${detail.book.id}`}
+                            to={`/shop/books/${detail.book.slug}`}
                           >{`${detail.book.title} - ${detail.book.author} - ${detail.book.year}`}</Link>
                           {` - ${detail.book.price}$`}
                         </li>
