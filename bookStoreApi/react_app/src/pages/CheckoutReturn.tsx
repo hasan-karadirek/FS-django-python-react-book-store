@@ -98,12 +98,6 @@ const CheckoutReturn: React.FC = () => {
                   : `${order?.post_cost}€`}
               </p>
             </li>
-            <li id="nav-cart-list-cost">
-              <p>
-                Total : {JSON.parse(order?.cost) + JSON.parse(order?.post_cost)}
-                €
-              </p>
-            </li>
           </ul>
           <div className="p-3">
             <h4 style={{ color: "black" }}>Order Address</h4>
@@ -114,7 +108,10 @@ const CheckoutReturn: React.FC = () => {
             <p>
               {order?.address.city} - {order?.address.country}
             </p>
-            <p>Total: {order?.cost} € </p>
+            <p>
+                Total : {JSON.parse(order?.cost) + JSON.parse(order?.post_cost)}
+                €
+              </p>
             <p
               style={{
                 backgroundColor:
