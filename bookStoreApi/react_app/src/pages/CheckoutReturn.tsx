@@ -62,7 +62,7 @@ const CheckoutReturn: React.FC = () => {
       ) : error ? (
         <p className="error">{error.message}</p>
       ) : (
-        <div className={`container ${windowSize.width > 769 ?"d-flex":"block"}d-flex mt-4`} style={{}}>
+        <div className={`container ${windowSize.width > 769 ?"d-flex":"block"} mt-4`} style={{}}>
           <ul className="p-3">
             <h4>Ordered Books</h4>
             {order?.order_details?.length > 0 ? (
