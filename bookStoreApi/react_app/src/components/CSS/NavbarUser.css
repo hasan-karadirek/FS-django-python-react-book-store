@@ -31,7 +31,7 @@
 }
 @media (max-width: 481px) {
   .nav-login-dropdown {
-    right: 35vw;
+    right: 10vw;
   }
   .nav-login-container {
     width: 80vw;
