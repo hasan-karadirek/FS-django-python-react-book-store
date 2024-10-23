@@ -36,14 +36,12 @@ CORS_ALLOWED_ORIGINS = (
     if os.getenv("ENV") == "development"
     else [
         "https://www.leflaneuramsterdam.com",
-        "http://localhost:8000",
         "https://leflaneuramsterdam.com",
     ]
 )
 CSRF_TRUSTED_ORIGINS = [
     "https://www.leflaneuramsterdam.com",
     "https://leflaneuramsterdam.com",
-    "http://localhost:8000",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -55,10 +53,10 @@ CORS_ALLOW_METHODS = [
 ]
 
 # Ensure SECURE_SSL_REDIRECT is set to True in production
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 # Optionally set SECURE_PROXY_SSL_HEADER if behind a proxy
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition
 

@@ -168,6 +168,11 @@ class ResetPasswordAPIView(APIView):
                     "Your password reset token is not correct",
                     status=status.HTTP_400_BAD_REQUEST,
                 )
+        else:
+            raise CustomAPIException(
+                    "Please provide a valid password",
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
 
         return Response({"success": True}, status=status.HTTP_200_OK)
 
