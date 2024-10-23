@@ -82,6 +82,12 @@ const Books: React.FC = () => {
         <meta property="og:image" content={Logo} />
       </Helmet>
       <div className="gap"></div>
+      {/* <div className="overlay"></div>
+      <div className="container shop-warning">
+              We are working on bringing our books to you online. Our shop is currently out of service, but soon it will be possible to buy books online.
+              <br/><br/>
+              <a href="/" className="btn btn-success">Go back to home</a>
+      </div> */}
       <nav className=" mt-3  fs-4 px-5" aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">

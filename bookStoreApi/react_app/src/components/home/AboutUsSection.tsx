@@ -9,7 +9,7 @@ const AboutUs: React.FC = () => {
       <div className="d-flex flex-column flex-lg-row">
         <Slide triggerOnce={true}>
           <div className="flex-fill about-us">
-            <h1>About Us</h1>
+            <h1>Let’s get intimate</h1>
             <br />
             <p>
               Welcome to the most exquisite world of Le Flaneur Amsterdam, a gem
@@ -18,7 +18,10 @@ const AboutUs: React.FC = () => {
               Enter this gate of wonder and the...
             </p>
             <p>
-              No, no. Really? Le Flaneur is an ordinary, second hand bookstore,
+              No, no. Really?
+            </p>
+            <p>
+              Le Flaneur is an ordinary, second hand bookstore,
               and proudly a physical one. This is an ordinary bookstore, meaning
               that, we mostly stock ordinary editions and wish to cater for
               ordinary people. Le Flaneur is not a classical antiquarian, or

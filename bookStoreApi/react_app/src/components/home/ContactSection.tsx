@@ -90,15 +90,7 @@ const ContactSection: React.FC = () => {
             <h2 style={{ paddingLeft: "1rem" }}>Get in Touch</h2>
             <br />
             <p style={{ padding: "1rem" }}>
-              You may wish to join out list to get posted about events and
-              performances… and potential monthly new listings in desired topics
-              of interests?? And HOW? Now some update. We have been
-              experimenting on turning the space into a performance room
-              starting with stand-up shows, a small gathering venue for book
-              presentations, talks (Think of juliette here) and readings. Take a
-              mental note, for eventual cooperation and participation. You can
-              also use the contact form to send us photos of the books that you
-              want to donate, trade or sell.
+            You may wish to join our list to get posted about upcoming events and performances. You can also use the contact form to send us photos of the books that you want to donate, trade or sell.
             </p>
             <div>
               <iframe
@@ -198,11 +190,11 @@ const ContactSection: React.FC = () => {
               >
                 <div className="day-row">
                   <div>Tuesday</div>
-                  <div>11:00 - 17:00</div>
+                  <div>13:00 - 19:30</div>
                 </div>
                 <div className="day-row">
                   <div>Wednesday / Monday</div>
-                  <div>13:00 - 19:30</div>
+                  <div>11:00 - 19:30</div>
                 </div>
                 <div className="day-row">
                   <div>Sunday</div>

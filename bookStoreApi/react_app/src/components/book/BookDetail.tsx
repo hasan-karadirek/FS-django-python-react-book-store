@@ -54,11 +54,12 @@ const BookDetail: React.FC<BookDetailProps> = ({ book }) => {
             {`${book.title} - ${book.author} - ${book.year} - ${book.publishing_house}`}{" "}
           </h1>
           <span id="book-price">€{book.price}</span>
-          <AddToCartButton
+          {book.status.toLocaleUpperCase() === "OPEN" ? <AddToCartButton
             bookId={book.id}
             btnClasses="btn btn-outline-success book-detail-btn"
             btnText="Add To Cart"
-          />
+          />:""}
+          
           <RemoveFromCartButton
             btnClasses="btn btn-danger book-detail-btn"
             btnText="Remove From Cart"

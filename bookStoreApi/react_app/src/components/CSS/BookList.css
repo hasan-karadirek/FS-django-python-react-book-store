@@ -46,6 +46,26 @@
   bottom: 10px;
   width: 80%;
 }
+.shop-warning{
+  width: 50vw;
+  background-color: bisque;
+  text-align: center;
+  padding: 20px;
+  position:fixed;
+  margin-left:30vw;
+  z-index: 2;
+  
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  z-index: 1; /* Below the .shop-warning div */
+}
+
 @media (max-width: 1024px) {
   .book-card {
     padding: 10px;
@@ -80,5 +100,9 @@
 @media (max-width: 350px) {
   .book-card {
     flex-basis: 100%;
+  }
+  .shop-warning{
+    margin-left: 10vw;
+    width: 80vw;
   }
 }
