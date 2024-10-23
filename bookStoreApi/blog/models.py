@@ -7,7 +7,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     image = models.ImageField(upload_to="book_images/")
-    created_at = models.DateTimeField(default=timezone.now, auto_now_add=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.title
@@ -17,7 +17,7 @@ class Form(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(blank=False, null=False)
     message = models.TextField()
-    created_at = models.DateTimeField(default=timezone.now, auto_now_add=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.name
