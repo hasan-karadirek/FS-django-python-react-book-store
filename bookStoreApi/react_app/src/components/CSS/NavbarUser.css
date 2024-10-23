@@ -22,7 +22,8 @@
 }
 @media (max-width: 992px) {
   .nav-login-dropdown {
-    right: 43vw;
+    right: 20vw;
+    bottom: 40vh;
   }
   .nav-login-container {
     width: 60vw;
@@ -30,7 +31,7 @@
 }
 @media (max-width: 481px) {
   .nav-login-dropdown {
-    right: 43vw;
+    right: 35vw;
   }
   .nav-login-container {
     width: 80vw;

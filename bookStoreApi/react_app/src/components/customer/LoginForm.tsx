@@ -89,6 +89,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
               name="email"
               value={formData.email}
               onChange={handleChange}
+              autoComplete="off"
               required
             />
           </div>
@@ -103,6 +104,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
               name="password"
               value={formData.password}
               onChange={handleChange}
+              autoComplete="off"
               required
             />
           </div>
