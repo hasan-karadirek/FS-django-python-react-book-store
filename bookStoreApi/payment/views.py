@@ -23,7 +23,7 @@ class MollieHookAPIView(APIView):
                     order.save()
                     for detail in order.order_details.all():
                         detail.book.status = "SOLD"
-                        detail.save()
+                        detail.book.save()
                     send_mail(
                         "Order Confirmation - Le Flaneur Amsterdam",
                         "We have recieved your order.",
@@ -40,7 +40,7 @@ class MollieHookAPIView(APIView):
                     order.status = payment.status.upper()
                     for detail in order.order_details.all():
                         detail.book.status = "OPEN"
-                        detail.save()
+                        detail.book.save()
                     order.save()
                     
                     send_mail(

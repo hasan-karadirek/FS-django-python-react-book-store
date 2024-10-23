@@ -15,6 +15,8 @@ from store.models import Order
 from store.serializers import OrderSerializer
 from django.core.mail import send_mail
 from django.conf import settings
+from core import create_email
+import os
 
 
 class UserRegistrationAPIView(APIView):
@@ -125,11 +127,12 @@ class ForgotPasswordAPIView(APIView):
                     token = Token.objects.create(user=customer)
 
                 send_mail(
-                    "Password Reset Link - La Fleneur Amsterdam",
-                    f"You can reset your password by following link: http:localhost:8080/customer/resetpassword?token={token.key}",
+                    "Password Reset Request - La Fleneur Amsterdam",
+                    f"You can reset your password by following link: {os.getenv("BASE_SERVER_URL")}/customer/resetpassword?token={token.key}",
                     settings.DEFAULT_FROM_EMAIL,
                     [customer.email],
                     fail_silently=True,
+                    html_message=create_email.reset_password_email(token.key)
                 )
             except Customer.DoesNotExist:
                 raise CustomAPIException(
