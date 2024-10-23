@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.mail import send_mail
 from django.conf import settings
+from core import create_email
 
 
 class MollieHookAPIView(APIView):
@@ -23,20 +24,6 @@ class MollieHookAPIView(APIView):
                     for detail in order.order_details.all():
                         detail.book.status = "SOLD"
                         detail.save()
-                    html_message=f"""
-                                <html>
-                                    <body>
-                                        <h1>Order Confirmation</h1>
-                                        <p>We have received your order at Le Flaneur Amsterdam.</p>
-                                        {
-                                            "".join(
-                                                f"<p>{detail.book.title}: €{detail.book.price}</p>"
-                                                for detail in order.order_details.all()
-                                            )   
-                                        }
-                                    </body>
-                                </html>
-                                """
                     send_mail(
                         "Order Confirmation - Le Flaneur Amsterdam",
                         "We have recieved your order.",
@@ -47,7 +34,7 @@ class MollieHookAPIView(APIView):
                             else order.address.email
                         ],
                         fail_silently=True,
-                        html_message=html_message
+                        html_message=create_email.order_confirmation_email(order)
                     )
                 elif payment.status in ["failed", "canceled", "expired"]:
                     order.status = payment.status.upper()
@@ -61,7 +48,8 @@ class MollieHookAPIView(APIView):
                         "Your payment is failed.",
                         settings.DEFAULT_FROM_EMAIL,
                         [order.customer.email if order.customer else order.email],
-                        fail_silently=True
+                        fail_silently=True,
+                        html_message=create_email.payment_failed_email(order)
                     )
                 return Response(status=status.HTTP_200_OK)
             except Order.DoesNotExist:

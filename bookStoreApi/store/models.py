@@ -97,16 +97,17 @@ class OrderDetail(models.Model):
         return f"Order Detail for Order {self.order.id}"
 
     def save(self, *args, **kwargs):
+        is_new = self.pk is None
         try:
             with transaction.atomic():
                 super().save(*args, **kwargs)
+                if is_new:
+                    book = Book.objects.get(pk=self.book_id)
+                    # ? Use F() expression to avoid race conditions
+                    self.order.cost = F("cost") + book.price
+                    self.order.save()
 
-                book = Book.objects.get(pk=self.book_id)
-                # ? Use F() expression to avoid race conditions
-                self.order.cost = F("cost") + book.price
-                self.order.save()
-
-                self.order.refresh_from_db()
+                    self.order.refresh_from_db()
 
         except (Book.DoesNotExist, Order.DoesNotExist):
             raise CustomAPIException("database orderDetail save error", 500)
