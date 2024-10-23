@@ -123,7 +123,7 @@ const CheckoutReturn: React.FC = () => {
                     : order?.status === "PENDING"
                       ? "yellow"
                       : "green",
-                color:"white",
+                color: order?.status === "PENDING" ? "black":"white",
                 fontWeight:"bold"
               }}
             >
