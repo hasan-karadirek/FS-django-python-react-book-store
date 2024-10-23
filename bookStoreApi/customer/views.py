@@ -128,7 +128,7 @@ class ForgotPasswordAPIView(APIView):
 
                 send_mail(
                     "Password Reset Request - La Fleneur Amsterdam",
-                    f"You can reset your password by following link: {os.getenv("BASE_SERVER_URL")}/customer/resetpassword?token={token.key}",
+                    f"You can reset your password by following link: {os.getenv('BASE_SERVER_URL')}/customer/resetpassword?token={token.key}",
                     settings.DEFAULT_FROM_EMAIL,
                     [customer.email],
                     fail_silently=True,
