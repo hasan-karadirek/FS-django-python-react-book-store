@@ -70,7 +70,7 @@ Handles overall store functionality:
 ### Steps
 
 1. **Clone the Repository**:  
-   git clone https://github.com/yourusername/FS-django-python-react-book-store.git
+   git clone https://github.com/hasan-karadirek/FS-django-python-react-book-store.git
 
 2. **Navigate to the Project Directory**:  
    cd FS-django-python-react-book-store/bookStoreApi
