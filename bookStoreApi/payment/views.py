@@ -23,23 +23,6 @@ class MollieHookAPIView(APIView):
                     for detail in order.order_details.all():
                         detail.book.status = "SOLD"
                         detail.save()
-                    send_mail(
-                        "Order Confirmation - Le Flaneur Amsterdam",
-                        "We have recieved your order.",
-                        settings.DEFAULT_FROM_EMAIL,
-                        [
-                            order.customer.email
-                            if order.customer
-                            else order.address.email
-                        ],
-                        fail_silently=True,
-                    )
-                elif payment.status in ["failed", "canceled", "expired"]:
-                    order.status = payment.status.upper()
-                    for detail in order.order_details.all():
-                        detail.book.status = "OPEN"
-                        detail.save()
-                    order.save()
                     html_message=f"""
                                 <html>
                                     <body>
@@ -55,12 +38,30 @@ class MollieHookAPIView(APIView):
                                 </html>
                                 """
                     send_mail(
+                        "Order Confirmation - Le Flaneur Amsterdam",
+                        "We have recieved your order.",
+                        settings.DEFAULT_FROM_EMAIL,
+                        [
+                            order.customer.email
+                            if order.customer
+                            else order.address.email
+                        ],
+                        fail_silently=True,
+                        html_message=html_message
+                    )
+                elif payment.status in ["failed", "canceled", "expired"]:
+                    order.status = payment.status.upper()
+                    for detail in order.order_details.all():
+                        detail.book.status = "OPEN"
+                        detail.save()
+                    order.save()
+                    
+                    send_mail(
                         "Payment Failed - Le Flaneur Amsterdam",
                         "Your payment is failed.",
                         settings.DEFAULT_FROM_EMAIL,
                         [order.customer.email if order.customer else order.email],
-                        fail_silently=True,
-                        html_message=html_message
+                        fail_silently=True
                     )
                 return Response(status=status.HTTP_200_OK)
             except Order.DoesNotExist:
