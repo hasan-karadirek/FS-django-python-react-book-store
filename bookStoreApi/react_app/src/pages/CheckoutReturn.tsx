@@ -114,7 +114,7 @@ const CheckoutReturn: React.FC = () => {
             <p>
               {order?.address.city} - {order?.address.country}
             </p>
-            <p>Total: {order?.cost} </p>
+            <p>Total: {order?.cost} € </p>
             <p
               style={{
                 backgroundColor:
