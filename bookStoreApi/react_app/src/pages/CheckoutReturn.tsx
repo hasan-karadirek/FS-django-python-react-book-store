@@ -5,8 +5,11 @@ import { Circles } from "react-loader-spinner";
 import Cookies from "js-cookie";
 import defaultBookImage from "../assets/defaultBookImage.webp";
 import { Link } from "react-router-dom";
+import "../components/CSS/Checkout.css";
+import useWindowSize from "../hooks/useWindowSize";
 
 const CheckoutReturn: React.FC = () => {
+  const windowSize = useWindowSize();
   // eslint-disable-next-line no-undef
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const orderInProgress = JSON.parse(
@@ -59,7 +62,7 @@ const CheckoutReturn: React.FC = () => {
       ) : error ? (
         <p className="error">{error.message}</p>
       ) : (
-        <div className="container d-flex mt-4" style={{}}>
+        <div className={`container ${windowSize.width > 769 ?"d-flex":"block"}d-flex mt-4`} style={{}}>
           <ul className="p-3">
             <h4>Ordered Books</h4>
             {order?.order_details?.length > 0 ? (
