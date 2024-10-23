@@ -20,6 +20,9 @@ class MollieHookAPIView(APIView):
                 if payment.status == "paid":
                     order.status = "PAID"
                     order.save()
+                    for detail in order.order_details.all():
+                        detail.book.status = "SOLD"
+                        detail.save()
                     send_mail(
                         "Order Confirmation - Le Flaneur Amsterdam",
                         "We have recieved your order.",
@@ -37,12 +40,27 @@ class MollieHookAPIView(APIView):
                         detail.book.status = "OPEN"
                         detail.save()
                     order.save()
+                    html_message=f"""
+                                <html>
+                                    <body>
+                                        <h1>Order Confirmation</h1>
+                                        <p>We have received your order at Le Flaneur Amsterdam.</p>
+                                        {
+                                            "".join(
+                                                f"<p>{detail.book.title}: €{detail.book.price}</p>"
+                                                for detail in order.order_details.all()
+                                            )   
+                                        }
+                                    </body>
+                                </html>
+                                """
                     send_mail(
                         "Payment Failed - Le Flaneur Amsterdam",
                         "Your payment is failed.",
                         settings.DEFAULT_FROM_EMAIL,
                         [order.customer.email if order.customer else order.email],
                         fail_silently=True,
+                        html_message=html_message
                     )
                 return Response(status=status.HTTP_200_OK)
             except Order.DoesNotExist:
