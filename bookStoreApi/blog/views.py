@@ -76,15 +76,15 @@ class CreateFormAPIView(APIView):
             serializer.save()
             # Add email
             send_mail(
-                    f"{serializer.validated_data["name"]} send  a form. Le Flaneur Amsterdam",
-                    f"You received a form from {serializer.validated_data["name"]}. You can view the form by following link: {os.getenv("BASE_SERVER_URL")}/admin/blog/form/{serializer.validated_data["id"]}",
+                    f"{serializer.validated_data['name']} send  a form. Le Flaneur Amsterdam",
+                    f"You received a form from {serializer.validated_data['name']}. You can view the form by following link: {os.getenv('BASE_SERVER_URL')}/admin/blog/form/{serializer.validated_data['id']}",
                     settings.DEFAULT_FROM_EMAIL,
                     [settings.DEFAULT_FROM_EMAIL],
                     fail_silently=True
                 )
             send_mail(
-                    f"We received your form. Le Flaneur Amsterdam",
-                    f"We received your form. We will contact with you as soon as possible.",
+                    "We received your form. Le Flaneur Amsterdam",
+                    "We received your form. We will contact with you as soon as possible.",
                     settings.DEFAULT_FROM_EMAIL,
                     [serializer.validated_data["email"]],
                     fail_silently=True
