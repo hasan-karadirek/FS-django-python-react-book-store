@@ -7,10 +7,12 @@ import Cookies from "js-cookie";
 import "../CSS/ContactSection.css";
 
 const ContactSection: React.FC = () => {
+  
+  const [formMessage,setFormMesage] = useState<String | null>(null)
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/blog/create-form/",
     (res) => {
-      return res;
+      setFormMesage("We have received your form successfully. We will contact with you as soon as possible.")
     },
   );
   const [formData, setFormData] = useState<ContactFormData>({
@@ -80,9 +82,7 @@ const ContactSection: React.FC = () => {
     });
   };
 
-  return error ? (
-    <p>{error.message}</p>
-  ) : (
+  return  (
     <>
       <div className="mt-4 d-flex flex-column flex-lg-row" id="contact-section">
         <div className="flex-grow-1" style={{ flexBasis: "45%" }}>
@@ -106,6 +106,7 @@ const ContactSection: React.FC = () => {
           <div className={`container my-5 ${width > 720 ? "me-5" : ""}`}>
             <h2>Contact Form</h2>
             <br />
+            {formMessage ? <p style={{color:"white",backgroundColor:"green",fontWeight:"bold"}}>{formMessage}</p>:""}
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="nameInput" className="form-label">
@@ -162,6 +163,7 @@ const ContactSection: React.FC = () => {
                   required
                 ></textarea>
               </div>
+              {error? <p color="red">{error.message}</p>:""}
               {isLoading ? (
                 <Circles
                   height="80"

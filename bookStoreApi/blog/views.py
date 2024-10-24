@@ -6,8 +6,10 @@ from core.custom_exceptions import CustomAPIException
 from core.mixins import IsPostExist, IsFormExist
 from .serializers import PostSerializer, FormSerializer
 from .models import Post, Form
-from django.core.paginator import Paginator, EmptyPage
 from core.helpers import pagination
+from django.core.mail import send_mail
+from django.conf import settings
+import os
 
 # Create your views here.
 class AddPostAPIView(APIView):
@@ -72,6 +74,21 @@ class CreateFormAPIView(APIView):
 
         if serializer.is_valid():
             serializer.save()
+            # Add email
+            send_mail(
+                    f"{serializer.validated_data["name"]} send  a form. Le Flaneur Amsterdam",
+                    f"You received a form from {serializer.validated_data["name"]}. You can view the form by following link: {os.getenv("BASE_SERVER_URL")}/admin/blog/form/{serializer.validated_data["id"]}",
+                    settings.DEFAULT_FROM_EMAIL,
+                    [settings.DEFAULT_FROM_EMAIL],
+                    fail_silently=True
+                )
+            send_mail(
+                    f"We received your form. Le Flaneur Amsterdam",
+                    f"We received your form. We will contact with you as soon as possible.",
+                    settings.DEFAULT_FROM_EMAIL,
+                    [serializer.validated_data["email"]],
+                    fail_silently=True
+                )
             response = {"success": True, "data": serializer.data}
             return Response(response, status=status.HTTP_201_CREATED)
         else:
