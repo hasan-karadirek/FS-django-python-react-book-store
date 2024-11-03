@@ -191,16 +191,12 @@ const ContactSection: React.FC = () => {
                 style={{ height: "auto" }}
               >
                 <div className="day-row">
-                  <div>Tuesday</div>
-                  <div>13:00 - 19:30</div>
-                </div>
-                <div className="day-row">
-                  <div>Wednesday / Monday</div>
-                  <div>11:00 - 19:30</div>
+                  <div>Monday / Saturday</div>
+                  <div>11:00 - 18:00</div>
                 </div>
                 <div className="day-row">
                   <div>Sunday</div>
-                  <div>No guarantee after 18:00</div>
+                  <div>13:00 - 18:00</div>
                 </div>
               </div>
             </div>
