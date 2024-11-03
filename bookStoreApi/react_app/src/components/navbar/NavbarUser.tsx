@@ -46,7 +46,7 @@ const NavbarUser: React.FC = () => {
         onMouseLeave={handleMouseLeave}
       >
         <img
-          style={{ height: "2rem"}}
+          id="navbar-user-icon"
           src={userIcon}
           alt="user-icon"
         />
