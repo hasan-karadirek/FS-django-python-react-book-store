@@ -23,16 +23,14 @@
 @media (max-width: 992px) {
   .nav-login-dropdown {
     right: 20vw;
-    bottom: 40vh;
+    bottom: 0;
   }
   .nav-login-container {
     width: 60vw;
   }
 }
 @media (max-width: 481px) {
-  .nav-login-dropdown {
-    right: 10vw;
-  }
+  
   .nav-login-container {
     width: 80vw;
   }
