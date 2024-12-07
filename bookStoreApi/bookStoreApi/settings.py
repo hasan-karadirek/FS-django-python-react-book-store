@@ -32,7 +32,7 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 
 
 CORS_ALLOWED_ORIGINS = (
-    ["http://localhost:8080"]
+    ["http://localhost:3000"]
     if os.getenv("ENV") == "development"
     else [
         "https://www.leflaneuramsterdam.com",

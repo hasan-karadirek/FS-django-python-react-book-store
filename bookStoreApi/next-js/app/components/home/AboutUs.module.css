@@ -1,0 +1,13 @@
+.about-us {
+  margin: auto;
+  padding: 15px;
+}
+#about-us-img {
+  width: 40vw;
+}
+
+@media (max-width: 992px) {
+  #about-us-img {
+    width: 100%;
+  }
+}
