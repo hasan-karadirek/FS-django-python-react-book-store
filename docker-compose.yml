@@ -17,7 +17,7 @@ services:
 
   nextjs:
     build:
-      context: ./nextjs
+      context: ./next-js
     container_name: nextjs-app
     ports:
       - "3000:3000"
