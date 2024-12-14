@@ -18,9 +18,17 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   btnClasses,
   btnText,
 }) => {
-  const { order, setOrder } = useContext(OrderContext);
+  const context = useContext(OrderContext);
+  if(!context){
+    throw new Error("Component must be used within an OrderProvider");
+  }
+  const { order, setOrder } = context
 
-  const { setCustomError } = useContext(ErrorContext);
+  const errorContext = useContext(ErrorContext);
+   if(!errorContext){
+    throw new Error("Component must be used within an ErrorProvider");
+   }
+   const { setCustomError } = errorContext;
 
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     `/store/add-to-cart/${bookId}/`,

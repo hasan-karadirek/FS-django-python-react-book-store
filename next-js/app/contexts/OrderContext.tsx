@@ -5,8 +5,8 @@ export interface OrderContextType {
   order: Order | null;
   setOrder: React.Dispatch<React.SetStateAction<Order | null>>;
 }
-export const OrderContext = createContext<OrderContextType | undefined>(
-  undefined,
+export const OrderContext = createContext<OrderContextType | null>(
+  null
 );
 
 interface OrderProviderProps {
@@ -15,9 +15,7 @@ interface OrderProviderProps {
 
 export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
   const [order, setOrder] = useState<Order | null>(
-    typeof window !== "undefined" && localStorage.getItem("order")
-      ? JSON.parse(localStorage.getItem("order"))
-      : null,
+     JSON.parse(localStorage.getItem("order") ?? "null")
   );
 
   return (

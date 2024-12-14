@@ -8,7 +8,12 @@ import Image from "next/image";
 
 const NavCart: React.FC = () => {
   const { width } = useWindowSize();
-  const { order } = useContext(OrderContext);
+  
+  const context = useContext(OrderContext);
+  if(!context || !context.order || !context.order.order_details){
+    throw new Error("Component must be used within an OrderProvider");
+  }
+  const { order } = context
   const [isHover, setIsHover] = useState<boolean>(false);
 
   const handleMouseEnter = () => {

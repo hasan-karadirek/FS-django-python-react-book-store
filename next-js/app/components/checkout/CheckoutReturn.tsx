@@ -13,7 +13,7 @@ const CheckoutReturn: React.FC = () => {
   // eslint-disable-next-line no-undef
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const orderInProgress = JSON.parse(
-    localStorage.getItem("orderInProgress"),
+    localStorage.getItem("orderInProgress") ?? "null",
   )?.order;
   const [order, setOrder] = useState<Order | null>(
     orderInProgress ? orderInProgress : null,

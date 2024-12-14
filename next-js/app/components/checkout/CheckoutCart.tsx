@@ -4,12 +4,16 @@ import { OrderContext } from "../../contexts/OrderContext";
 import RemoveFromCartButton from "./RemoveFromCartButton";
 import Link from "next/link";
 import Image from "next/image";
-
+import { OrderContextType } from "../../contexts/OrderContext";
 const CheckoutCart: React.FC = () => {
-  const { order } = useContext(OrderContext);
+  const context = useContext(OrderContext);
+  if(!context|| !context.order || !context.order.order_details){
+    throw new Error("Component must be used within an OrderProvider");
+  }
+  const { order } = context
   const BASE_SERVER_URL = process.env.NEXT_PUBLIC_BASE_SERVER_URL;
 
-  return order?.order_details.length > 0 ? (
+  return order.order_details.length > 0 ? (
     <ul className="checkout-cart">
       {order?.order_details?.map((detail, index) => (
         <li key={index} className="d-flex p-3 nav-cart-list-item">

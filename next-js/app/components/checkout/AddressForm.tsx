@@ -10,8 +10,17 @@ import { ErrorContext } from "../../contexts/ErrorContext";
 import Link from "next/link";
 
 const AddressForm: React.FC = () => {
-  const { order, setOrder } = useContext(OrderContext);
-  const { setCustomError } = useContext(ErrorContext);
+  const context = useContext(OrderContext);
+  if(!context || !context.order || !context.order.order_details){
+    throw new Error("Component must be used within an OrderProvider");
+  }
+  const { order, setOrder } = context
+  
+  const errorContext = useContext(ErrorContext);
+   if(!errorContext){
+    throw new Error("Component must be used within an ErrorProvider");
+   }
+   const { setCustomError } = errorContext;
   const [legalError, setLegalError] = useState<string | null>(null);
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/store/checkout/",

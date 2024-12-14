@@ -3,7 +3,11 @@ import React, { useContext, useEffect } from "react";
 import { ErrorContext } from "../../contexts/ErrorContext";
 
 const Alert: React.FC = () => {
-  const { customError, setCustomError } = useContext(ErrorContext);
+   const errorContext = useContext(ErrorContext);
+   if(!errorContext){
+    throw new Error("Component must be used within an ErrorProvider");
+   }
+   const { customError, setCustomError } = errorContext;
   useEffect(() => {
     if (customError) {
       setTimeout(() => {
