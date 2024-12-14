@@ -20,7 +20,6 @@ const Login: React.FC = () => {
       </nav>
       <LoginForm
         containerClasses="container login-form"
-        setIsLoginForm={null}
       />
     </>
   );

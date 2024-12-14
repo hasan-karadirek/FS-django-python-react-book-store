@@ -10,7 +10,7 @@ import { Circles } from "react-loader-spinner";
 
 interface LoginFormProps {
   containerClasses: string;
-  setIsLoginForm: React.Dispatch<React.SetStateAction<boolean | null>>;
+  setIsLoginForm?: React.Dispatch<React.SetStateAction<boolean | null>>;
 }
 const LoginForm: React.FC<LoginFormProps> = ({
   containerClasses,
