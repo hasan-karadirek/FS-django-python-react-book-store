@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  django:
+    build:
+      context: ./bookStoreApi
+    container_name: django-app
+    command: gunicorn --workers 3 --bind 0.0.0.0:8000 --timeout 600 bookStoreApi.wsgi:application
+    volumes:
+      - ./django:/usr/src/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env  
+
+  nextjs:
+    build:
+      context: ./nextjs
+    container_name: nextjs-app
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env  
+
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+
+volumes:
+  mysql-data:
