@@ -7,7 +7,7 @@ import { OrderProvider } from "./contexts/OrderContext";
 import { ErrorProvider } from "./contexts/ErrorContext";
 import dynamic from "next/dynamic";
 
-const Navbar = dynamic(()=>import("../app/components/navbar/Navbar"))
+const Navbar = dynamic(()=>import("../app/components/navbar/Navbar"), {ssr:false})
 export const metadata: Metadata = {
   title: "Le Flaneur Amsterdam - Second Hand Book Store",
   description:
