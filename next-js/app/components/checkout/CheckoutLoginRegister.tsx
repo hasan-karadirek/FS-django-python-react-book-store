@@ -5,7 +5,7 @@ import RegisterForm from "../customer/RegisterForm";
 import Cookies from "js-cookie";
 
 const CheckoutLoginRegister = () => {
-  const [isLoginForm, setIsLoginForm] = useState<boolean>(true);
+  const [isLoginForm, setIsLoginForm] = useState<boolean | null>(true);
   return (
     <div className="checkout-auth-forms">
       {Cookies.get("token") && localStorage.getItem("customer") ? (

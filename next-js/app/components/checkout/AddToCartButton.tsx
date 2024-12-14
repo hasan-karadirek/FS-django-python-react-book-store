@@ -65,7 +65,6 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
         Authorization: Cookies.get("token")
           ? `Token ${Cookies.get("token")}`
           : "",
-        "X-CSRFToken": csrfToken,
       },
     });
     return () => {

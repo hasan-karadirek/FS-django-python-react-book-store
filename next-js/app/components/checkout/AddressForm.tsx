@@ -73,8 +73,7 @@ const AddressForm: React.FC = () => {
         "Content-Type": "application/json",
         Authorization: Cookies.get("token")
           ? `Token ${Cookies.get("token")}`
-          : "",
-        "X-CSRFToken": csrfToken,
+          : ""
       },
       body: JSON.stringify(addressForm),
     });
