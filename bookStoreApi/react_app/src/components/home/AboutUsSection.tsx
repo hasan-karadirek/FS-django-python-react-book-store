@@ -11,7 +11,7 @@ const AboutUs: React.FC = () => {
           <div className="flex-fill about-us">
             <h1>Let’s get intimate</h1>
             <br />
-            <p>
+            <p>a
               Welcome to the most exquisite world of Le Flaneur Amsterdam, a gem
               for book lovers hidden in plain sight bordering the beautiful and
               cozy Jordaan and always attractive and hectic negenstraatjes.
