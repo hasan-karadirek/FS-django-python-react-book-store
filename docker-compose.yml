@@ -13,7 +13,7 @@ services:
     depends_on:
       - db
     env_file:
-      - .env  
+      - .env  # Use .env file for environment variables
 
   nextjs:
     build:
@@ -22,17 +22,20 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - .env  
+      - .env  # Use .env file for environment variables
 
   db:
     image: mysql:8.0
     container_name: mysql-db
     volumes:
       - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
-    env_file:
-      - .env
 
 volumes:
   mysql-data:
