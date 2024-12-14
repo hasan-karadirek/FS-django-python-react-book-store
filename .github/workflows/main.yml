@@ -1,0 +1,60 @@
+name: CI/CD Pipeline for Django and Next.js
+
+on:
+  push:
+    branches:
+      - react-to-nextjs
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy Applications
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      # step: step
+      - name: Debug Secrets
+        run: |
+          if [ -z "${{ secrets.SSH_PRIVATE_KEY }}" ]; then
+            echo "SSH_PRIVATE_KEY is empty or missing!"
+            exit 1
+          else
+            echo "SSH_PRIVATE_KEY is available."
+          fi
+
+      # Step 2: Set up SSH Agent
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Step 3: Copy files to server
+      - name: Copy files to server
+        run: |
+          rsync -avz --exclude='.git' --exclude='node_modules' --exclude='__pycache__' ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/path/to/project
+
+      # Step 4: Build and Deploy Applications on Server
+      - name: Build and Deploy Applications on Server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          cd /path/to/project
+          echo "Creating .env file with secrets..."
+          cat <<EOT > .env
+          SECRET_KEY=${{ secrets.SECRET_KEY }}
+          ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}
+          DB_NAME=${{ secrets.DB_NAME }}
+          DB_USER=${{ secrets.DB_USER }}
+          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          DEBUG=${{ secrets.DEBUG }}
+          MOLLIE_API_KEY=${{ secrets.MOLLIE_API_KEY }}
+          AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_STORAGE_BUCKET_NAME=${{ secrets.AWS_STORAGE_BUCKET_NAME }}
+          AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }}
+          EOT
+          echo "Deploying with Docker Compose..."
+          docker-compose down
+          docker-compose up -d --build
+          EOF
