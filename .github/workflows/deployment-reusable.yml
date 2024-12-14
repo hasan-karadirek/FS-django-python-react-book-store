@@ -1,12 +1,39 @@
-name: CI/CD Pipeline for Django and Next.js
+name: Deployment Reusable Workflow
 
 on:
-  push:
-    branches:
-      - react-to-nextjs
+  workflow_call:
+    secrets:
+      SSH_PRIVATE_KEY:
+        required: true
+      SSH_USER:
+        required: true
+      SSH_HOST:
+        required: true
+      SECRET_KEY:
+        required: true
+      ALLOWED_HOSTS:
+        required: true
+      DB_NAME:
+        required: true
+      DB_USER:
+        required: true
+      DB_PASSWORD:
+        required: true
+      DEBUG:
+        required: true
+      MOLLIE_API_KEY:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      AWS_STORAGE_BUCKET_NAME:
+        required: true
+      AWS_S3_REGION_NAME:
+        required: true
 
 jobs:
-  build-and-deploy:
+  deploy:
     name: Build and Deploy Applications
     runs-on: ubuntu-latest
 
