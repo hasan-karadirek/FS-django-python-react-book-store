@@ -1,39 +1,12 @@
-name: Deployment Reusable Workflow
+name: CI/CD Pipeline for Django and Next.js 3
 
 on:
-  workflow_call:
-    secrets:
-      SSH_PRIVATE_KEY:
-        required: true
-      SSH_USER:
-        required: true
-      SSH_HOST:
-        required: true
-      SECRET_KEY:
-        required: true
-      ALLOWED_HOSTS:
-        required: true
-      DB_NAME:
-        required: true
-      DB_USER:
-        required: true
-      DB_PASSWORD:
-        required: true
-      DEBUG:
-        required: true
-      MOLLIE_API_KEY:
-        required: true
-      AWS_ACCESS_KEY_ID:
-        required: true
-      AWS_SECRET_ACCESS_KEY:
-        required: true
-      AWS_STORAGE_BUCKET_NAME:
-        required: true
-      AWS_S3_REGION_NAME:
-        required: true
+  push:
+    branches:
+      - react-to-nextjs
 
 jobs:
-  deploy:
+  build-and-deploy:
     name: Build and Deploy Applications
     runs-on: ubuntu-latest
 
@@ -52,7 +25,6 @@ jobs:
       - name: Copy files to server
         run: |
           rsync -avz --exclude='.git' --exclude='node_modules' --exclude='__pycache__' ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/path/to/project
-
       # Step 4: Build and Deploy Applications on Server
       - name: Build and Deploy Applications on Server
         run: |
