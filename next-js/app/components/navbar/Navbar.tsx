@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import NavbarUser from "./NavbarUser";
 import dynamic from "next/dynamic";

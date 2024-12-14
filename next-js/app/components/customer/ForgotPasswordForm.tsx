@@ -2,7 +2,6 @@
 import React, { ChangeEvent, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import { Circles } from "react-loader-spinner";
-import Cookies from "js-cookie";
 
 interface ForgotPasswordFormData {
   email: string;
