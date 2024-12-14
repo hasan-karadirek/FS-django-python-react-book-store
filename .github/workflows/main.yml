@@ -21,7 +21,7 @@ jobs:
           echo "SSH_PRIVATE_KEY is empty or missing!"
           exit 1
           else
-          echo "SSH_PRIVATE_KEY is available."
+          echo "asda SSH_PRIVATE_KEY is available."
           fi
 
       # Step 3: Set up SSH Agent
