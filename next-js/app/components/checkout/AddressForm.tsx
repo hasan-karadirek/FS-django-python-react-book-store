@@ -60,7 +60,6 @@ const AddressForm: React.FC = () => {
     sale: false,
   });
   const BASE_SERVER_URL = process.env.NEXT_PUBLIC_BASE_SERVER_URL;
-  const csrfToken = Cookies.get("csrftoken");
   const submitForm = () => {
     const addressForm = {
       redirectUrl: `${BASE_SERVER_URL}/shop/checkout/return`,

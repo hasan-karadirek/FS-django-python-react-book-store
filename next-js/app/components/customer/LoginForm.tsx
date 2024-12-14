@@ -48,7 +48,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
       }
     },
   );
-  const csrfToken = Cookies.get("csrftoken");
   const submitForm = () => {
     performFetch({
       method: "POST",

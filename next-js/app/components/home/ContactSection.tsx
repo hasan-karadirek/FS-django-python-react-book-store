@@ -37,13 +37,10 @@ const ContactSection: React.FC = () => {
         form.append(`uploaded_images[${index}]`, file, file.name),
       );
     }
-    const csrfToken = Cookies.get("csrftoken");
+    
     performFetch({
       method: "POST",
       body: form,
-      headers: {
-        "X-CSRFToken": csrfToken,
-      },
     });
     return () => {
       if (!isLoading) {

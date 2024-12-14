@@ -21,13 +21,12 @@ const ForgotPasswordForm: React.FC = () => {
       }
     },
   );
-  const csrfToken = Cookies.get("csrftoken");
+  
   const submitForm = () => {
     performFetch({
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": csrfToken,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(formData),
     });

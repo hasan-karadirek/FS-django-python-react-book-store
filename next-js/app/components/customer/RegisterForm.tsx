@@ -42,7 +42,6 @@ const RegisterForm: React.FC = () => {
       }
     },
   );
-  const csrfToken = Cookies.get("csrftoken");
   const submitForm = () => {
     const registerData = {
       email: formData.email,
@@ -54,8 +53,7 @@ const RegisterForm: React.FC = () => {
     performFetch({
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": csrfToken,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(registerData),
     });
