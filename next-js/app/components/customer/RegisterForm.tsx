@@ -7,6 +7,9 @@ import { RegisterFormData } from "../../types/forms";
 import { Circles } from "react-loader-spinner";
 
 const RegisterForm: React.FC = () => {
+  if(typeof window == "undefined"){
+    throw new Error("This environment is not available for client-side rendering.")
+  }
   useEffect(() => {
     if (localStorage.getItem("customer") && Cookies.get("token")) {
       window.location.href = "/shop/books/";

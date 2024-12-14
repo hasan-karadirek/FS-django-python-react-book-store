@@ -5,6 +5,9 @@ import RegisterForm from "../customer/RegisterForm";
 import Cookies from "js-cookie";
 
 const CheckoutLoginRegister = () => {
+  if(typeof window == "undefined"){
+    throw new Error("This environment is not available for client-side rendering.")
+  }
   const [isLoginForm, setIsLoginForm] = useState<boolean | null>(true);
   return (
     <div className="checkout-auth-forms">

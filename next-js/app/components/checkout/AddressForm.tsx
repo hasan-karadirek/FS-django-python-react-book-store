@@ -10,6 +10,9 @@ import { ErrorContext } from "../../contexts/ErrorContext";
 import Link from "next/link";
 
 const AddressForm: React.FC = () => {
+  if(typeof window == "undefined"){
+    throw new Error("This environment is not available for client-side rendering.")
+  }
   const context = useContext(OrderContext);
   if(!context || !context.order || !context.order.order_details){
     throw new Error("Component must be used within an OrderProvider");

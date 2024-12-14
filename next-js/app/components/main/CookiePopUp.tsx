@@ -4,7 +4,9 @@ import Link from "next/link";
 
 const CookiePopUp: React.FC = () => {
   const [cookiePolicy, setCookiePolicy] = useState<boolean>(false);
-
+  if (typeof window == "undefined"){
+    throw new Error("This environment is not available for client-side rendering.")
+  }
   useEffect(() => {
     const cookieP = localStorage.getItem("cookiePolicy");
     if (cookieP) {

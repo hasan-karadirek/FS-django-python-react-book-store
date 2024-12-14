@@ -13,6 +13,9 @@ interface CustomerDashboardResponse {
 }
 
 const CustomerPage: React.FC = () => {
+  if(typeof window == "undefined"){
+    throw new Error("This environment is not available for client-side rendering.")
+  }
   const { width } = useWindowSize();
 
   const [dashboardInfo, setDashboardInfo] =

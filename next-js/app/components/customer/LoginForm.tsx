@@ -9,6 +9,7 @@ import { LoginResponse } from "../../types/responses";
 import { Circles } from "react-loader-spinner";
 
 interface LoginFormProps {
+  
   containerClasses: string;
   setIsLoginForm?: React.Dispatch<React.SetStateAction<boolean | null>>;
 }
@@ -16,6 +17,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
   containerClasses,
   setIsLoginForm,
 }) => {
+  
+  if(typeof window == "undefined"){
+    throw new Error("This environment is not available for client-side rendering.")
+  }
+
   useEffect(() => {
     if (localStorage.getItem("customer") && Cookies.get("token")) {
       window.location.href = "/shop/books/";

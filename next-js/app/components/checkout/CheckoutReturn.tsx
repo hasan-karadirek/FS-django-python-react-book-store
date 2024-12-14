@@ -9,6 +9,9 @@ import useWindowSize from "../../hooks/useWindowSize";
 import Image from "next/image";
 
 const CheckoutReturn: React.FC = () => {
+  if(typeof window == "undefined"){
+    throw new Error("This environment is not available for client-side rendering.")
+  }
   const windowSize = useWindowSize();
   // eslint-disable-next-line no-undef
   const intervalRef = useRef<NodeJS.Timeout | null>(null);

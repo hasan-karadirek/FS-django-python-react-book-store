@@ -14,6 +14,9 @@ interface OrderProviderProps {
 }
 
 export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
+  if(typeof window === "undefined"){
+    throw new Error("This environment is not available for client-side rendering.")
+  }
   const [order, setOrder] = useState<Order | null>(
      JSON.parse(localStorage.getItem("order") ?? "null")
   );
