@@ -14,15 +14,6 @@ jobs:
       # Step 1: Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v3
-      # step: step
-      - name: Debug Secrets
-        run: |
-          if [ -z "${{ secrets.SSH_PRIVATE_KEY }}" ]; then
-            echo "SSH_PRIVATE_KEY is empty or missing!"
-            exit 1
-          else
-            echo "SSH_PRIVATE_KEY is available."
-          fi
 
       # Step 2: Set up SSH Agent
       - name: Set up SSH
