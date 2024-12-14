@@ -1,42 +1,64 @@
-'use client';
-import React, { useEffect } from "react";
-import styles from "./Testimonials.module.css";
+"use client";
+import React, { useEffect, useRef } from "react";
 import { Carousel } from "bootstrap";
 import useWindowSize from "../../hooks/useWindowSize";
+import Image from "next/image";
 
 const Testimonials: React.FC = () => {
   const { width } = useWindowSize();
-  useEffect(() => {
-    const tCarousel = document.querySelector("#carousel-testimonials");
-    const carousel = new Carousel(tCarousel, {
-      interval: 5000,
-      wrap: true,
-      pause: false,
-    });
-    carousel.cycle();
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-    return () => {
-      carousel.dispose();
-    };
+  useEffect(() => {
+    if (carouselRef.current) {
+      const carousel = new Carousel(carouselRef.current, {
+        interval: 8000,
+        wrap: true,
+        pause: false,
+      });
+      carousel.cycle();
+
+      return () => {
+        carousel.dispose();
+      };
+    }
   }, []);
 
   return (
-    <div id="testimonials">
-      <div className=" testimonials">
+    <div id="testimonials" ref={carouselRef}>
+      <div className="testimonials">
         <div className="testimonials-images d-flex">
-          <img src="assets/reviewImage.jpg" alt="testimonials-image-1" />
-          <img src="assets/reviewImage2.jpg" alt="testimonials-image-2" />
+          <Image
+            src="/assets/reviewImage.jpg"
+            alt="testimonials-image-1"
+            width={300}
+            height={200}
+          />
+          <Image
+            src="/assets/reviewImage2.jpg"
+            alt="testimonials-image-2"
+            width={300}
+            height={200}
+          />
           {width > 768 ? (
             <>
-              <img src="assets/reviewImage3.jpg" alt="testimonials-image-3" />
-              <img src="assets/reviewImage4.jpg" alt="testimonials-image-4" />
+              <Image
+                src="/assets/reviewImage3.jpg"
+                alt="testimonials-image-3"
+                width={300}
+                height={200}
+              />
+              <Image
+                src="/assets/reviewImage4.jpg"
+                alt="testimonials-image-4"
+                width={300}
+                height={200}
+              />
             </>
           ) : (
             ""
           )}
         </div>
         <br />
-        
 
         <div
           id="carousel-testimonials"
@@ -66,7 +88,7 @@ const Testimonials: React.FC = () => {
           </div>
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <div className="testimonial-carousel-caption carousel-caption  d-md-block">
+              <div className="testimonial-carousel-caption carousel-caption d-md-block">
                 <div className="col-md-8 offset-md-2">
                   <div className="testimonial-card">
                     <p className="quote">
@@ -88,7 +110,7 @@ const Testimonials: React.FC = () => {
               </div>
             </div>
             <div className="carousel-item">
-              <div className="testimonial-carousel-caption carousel-caption  d-md-block">
+              <div className="testimonial-carousel-caption carousel-caption d-md-block">
                 <div className="col-md-8 offset-md-2">
                   <div className="testimonial-card">
                     <p className="quote">
@@ -110,7 +132,7 @@ const Testimonials: React.FC = () => {
               </div>
             </div>
             <div className="carousel-item">
-              <div className="testimonial-carousel-caption carousel-caption  d-md-block">
+              <div className="testimonial-carousel-caption carousel-caption d-md-block">
                 <div className="col-md-8 offset-md-2">
                   <div className="testimonial-card">
                     <p className="quote">

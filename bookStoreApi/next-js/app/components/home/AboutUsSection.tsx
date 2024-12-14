@@ -1,7 +1,7 @@
-'use client';
+"use client";
 import React from "react";
-import styles from "./AboutUs.module.css";
-  import { Slide } from "react-awesome-reveal";
+import { Slide } from "react-awesome-reveal";
+import Image from "next/image";
 
 const AboutUs: React.FC = () => {
   return (
@@ -17,20 +17,18 @@ const AboutUs: React.FC = () => {
               cozy Jordaan and always attractive and hectic negenstraatjes.
               Enter this gate of wonder and the...
             </p>
+            <p>No, no. Really?</p>
             <p>
-              No, no. Really?
-            </p>
-            <p>
-              Le Flaneur is an ordinary, second hand bookstore,
-              and proudly a physical one. This is an ordinary bookstore, meaning
-              that, we mostly stock ordinary editions and wish to cater for
-              ordinary people. Le Flaneur is not a classical antiquarian, or
-              seller of rare books, which we consider important in their own
-              ways, but we are more in love with the letter, rather than the
-              envelope. We also sell “things” in that sense, first editions,
-              antiquarian stuff, but do not necessarily chase them, and keep our
-              energy to offer books that matter, so that everybody reads and we
-              live ordinarily.
+              Le Flaneur is an ordinary, second hand bookstore, and proudly a
+              physical one. This is an ordinary bookstore, meaning that, we
+              mostly stock ordinary editions and wish to cater for ordinary
+              people. Le Flaneur is not a classical antiquarian, or seller of
+              rare books, which we consider important in their own ways, but we
+              are more in love with the letter, rather than the envelope. We
+              also sell “things” in that sense, first editions, antiquarian
+              stuff, but do not necessarily chase them, and keep our energy to
+              offer books that matter, so that everybody reads and we live
+              ordinarily.
             </p>
             <p>
               This is a second hand bookstore. It comes with the idea that
@@ -58,10 +56,12 @@ const AboutUs: React.FC = () => {
         </Slide>
         <div className="flex-fill about-us">
           <Slide triggerOnce={true}>
-            <img
+            <Image
               id="about-us-img"
-              src="assets/insideBackToFront.jpg"
+              src="/assets/insideBackToFront.jpg"
               className="d-block"
+              width={2000}
+              height={2000}
               alt="..."
             />
           </Slide>

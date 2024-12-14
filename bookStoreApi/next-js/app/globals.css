@@ -4,6 +4,7 @@
 }
 #about-us-img {
   width: 40vw;
+  height: auto;
 }
 
 @media (max-width: 992px) {
@@ -11,7 +12,6 @@
     width: 100%;
   }
 }
-
 
 .post-content {
   margin: auto;
@@ -39,7 +39,6 @@
   background-color: rgba(255, 0, 0, 0.226) !important;
 }
 
-
 .book-infos,
 .book-images {
   flex-basis: 45%;
@@ -49,7 +48,7 @@
 }
 .book-image {
   width: 100%;
-  max-height: 65vh;
+  height: auto;
 }
 
 .book-image-thumb {
@@ -94,6 +93,7 @@
   }
   .book-image {
     width: 50vw;
+    height: auto;
   }
   .book-image-thumb-container {
     width: 50vw !important;
@@ -110,16 +110,17 @@
   }
   .book-image-thumb-container {
     width: 100% !important;
+    height: auto;
   }
   .book-image {
     width: 100%;
     margin-bottom: 1rem;
+    height: auto;
   }
   .book-detail-btn {
     width: 50vw;
   }
 }
-
 
 .cards-container {
   display: flex;
@@ -169,15 +170,14 @@
   bottom: 10px;
   width: 80%;
 }
-.shop-warning{
+.shop-warning {
   width: 50vw;
   background-color: bisque;
   text-align: center;
   padding: 20px;
-  position:fixed;
-  margin-left:30vw;
+  position: fixed;
+  margin-left: 30vw;
   z-index: 2;
-  
 }
 .overlay {
   position: fixed;
@@ -224,12 +224,11 @@
   .book-card {
     flex-basis: 100%;
   }
-  .shop-warning{
+  .shop-warning {
     margin-left: 10vw;
     width: 80vw;
   }
 }
-
 
 .checkout-cart {
   flex-basis: 45%;
@@ -296,7 +295,6 @@
   }
 }
 
-
 .opening-hours-card {
   margin-bottom: 1rem;
 }
@@ -317,7 +315,6 @@
   padding: 5px 0;
 }
 
-
 .customer-order-accordion * {
   max-width: 35vw;
 }
@@ -328,7 +325,6 @@
     width: 100%;
   }
 }
-
 
 .footer {
   color: white;
@@ -359,7 +355,6 @@
   }
 }
 
-
 .login-form {
   width: 50%;
 }
@@ -369,7 +364,6 @@
     width: 100%;
   }
 }
-
 
 body {
   font-family: inter-light;
@@ -397,7 +391,18 @@ body {
   }
 }
 
-
+#logo-title {
+}
+@media (max-width: 778px) {
+  #logo-title {
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 481px) {
+  #logo-title {
+    font-size: 1rem;
+  }
+}
 .bg-transparent {
   width: 100%;
   background-color: #f8f9fa78 !important;
@@ -414,9 +419,9 @@ body {
 .navbar-brand {
   color: white;
 }
-#social-container {
+/* #social-container {
   padding: 1rem;
-}
+} */
 
 /* Sticky navbar style */
 
@@ -437,6 +442,7 @@ body {
 }
 #logo {
   height: 90px;
+  width: auto;
 }
 .navbar-nav .nav-item .nav-link {
   font-size: x-large;
@@ -462,7 +468,6 @@ body {
   }
 }
 
-
 .nav-login-container {
   position: absolute;
   right: 0.75rem;
@@ -475,39 +480,6 @@ body {
 .nav-user-container {
   display: block;
 }
-.nav-login-dropdown {
-  position: absolute;
-  background-color: #35393fdb;
-
-  right: 0;
-  border-radius: 1rem;
-}
-.nav-login-dropdown a {
-  color: white;
-}
-#navbar-user-icon{
-  height: 2rem;
-  padding-left: 1rem;
-}
-@media (max-width: 992px) {
-  #navbar-user-icon{
-    padding-left: 0;
-  }
-  .nav-login-dropdown {
-    right: 20vw;
-    bottom: 0;
-  }
-  .nav-login-container {
-    width: 60vw;
-  }
-}
-@media (max-width: 481px) {
-  
-  .nav-login-container {
-    width: 80vw;
-  }
-}
-
 
 #nav-cart {
   height: 2rem;
@@ -608,6 +580,9 @@ body {
   position: absolute;
   right: 50px;
 }
+.nav-cart-container {
+  padding-right: 15px;
+}
 .nav-cart-container-responsive {
   position: absolute;
   right: 1rem;
@@ -622,12 +597,10 @@ body {
   }
 }
 
-
 .register-container {
   max-width: 720px;
   margin-top: 2rem;
 }
-
 
 .testimonials-images img {
   height: 21vw;
@@ -703,7 +676,6 @@ body {
   font-style: italic;
   color: #6c757d;
 }
-
 
 .carousel {
   position: relative;

@@ -1,13 +1,17 @@
-import React, { ChangeEvent, useState } from "react";
+"use client";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import Cookies from "js-cookie";
-import { useLocation, useNavigate } from "react-router-dom";
-import "../CSS/RegisterForm.css";
 import { RegisterResponse } from "../../types/responses";
 import { RegisterFormData } from "../../types/forms";
 import { Circles } from "react-loader-spinner";
 
 const RegisterForm: React.FC = () => {
+  useEffect(() => {
+    if (localStorage.getItem("customer") && Cookies.get("token")) {
+      window.location.href = "/shop/books/";
+    }
+  }, []);
   const [formData, setFormData] = useState<RegisterFormData>({
     first_name: "",
     last_name: "",
@@ -15,9 +19,6 @@ const RegisterForm: React.FC = () => {
     passwordConfirm: "",
     email: "",
   });
-
-  const navigate = useNavigate();
-  const loc = useLocation();
 
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -27,13 +28,18 @@ const RegisterForm: React.FC = () => {
       const data = res.data as RegisterResponse;
       Cookies.set("token", data.token);
       localStorage.setItem("customer", JSON.stringify(data.customer));
-      data.order
-        ? localStorage.setItem("order", JSON.stringify(data.order))
-        : "";
-
-      loc.pathname.split("/")[loc.pathname.split("/").length - 1] === "register"
-        ? navigate("/shop/books/")
-        : location.reload();
+      if (data.order) {
+        localStorage.setItem("order", JSON.stringify(data.order));
+      }
+      const lastPathSegment =
+        window.location.pathname.split("/")[
+          window.location.pathname.split("/").length - 1
+        ];
+      if (lastPathSegment === "register") {
+        window.location.href = "/shop/books/";
+      } else {
+        window.location.reload();
+      }
     },
   );
   const csrfToken = Cookies.get("csrftoken");

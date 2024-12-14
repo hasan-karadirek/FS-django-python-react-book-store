@@ -1,7 +1,7 @@
+"use client";
 import React, { ChangeEvent, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import { Circles } from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 interface ForgotPasswordFormData {
@@ -9,7 +9,6 @@ interface ForgotPasswordFormData {
 }
 
 const ForgotPasswordForm: React.FC = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState<ForgotPasswordFormData>({
     email: "",
   });
@@ -18,7 +17,7 @@ const ForgotPasswordForm: React.FC = () => {
     "/customer/forgotpassword/",
     (res) => {
       if (res) {
-        navigate("/customer/login");
+        window.location.href = "/customer/login";
       }
     },
   );

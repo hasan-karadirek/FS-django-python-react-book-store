@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useContext, useEffect } from "react";
 import { ErrorContext } from "../../contexts/ErrorContext";
 
@@ -10,6 +10,7 @@ const Alert: React.FC = () => {
         setCustomError(null);
       }, 15000);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customError]);
   return (
     <>

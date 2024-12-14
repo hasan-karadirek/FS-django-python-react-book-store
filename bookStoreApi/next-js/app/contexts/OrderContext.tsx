@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { createContext, useState, ReactNode } from "react";
 import { Order } from "../types/models";
 export interface OrderContextType {
@@ -15,7 +15,9 @@ interface OrderProviderProps {
 
 export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
   const [order, setOrder] = useState<Order | null>(
-    typeof window !== "undefined" && localStorage.getItem("order") ? JSON.parse(localStorage.getItem("order")) : null,
+    typeof window !== "undefined" && localStorage.getItem("order")
+      ? JSON.parse(localStorage.getItem("order"))
+      : null,
   );
 
   return (

@@ -1,3 +1,4 @@
+"use client";
 import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import { OrderContext } from "../../contexts/OrderContext";
@@ -6,10 +7,10 @@ import { CheckoutResponse } from "../../types/responses";
 import { CheckoutFormData } from "../../types/forms";
 import { Order } from "../../types/models";
 import { ErrorContext } from "../../contexts/ErrorContext";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const AddressForm: React.FC = () => {
-  const { setOrder } = useContext(OrderContext);
+  const { order, setOrder } = useContext(OrderContext);
   const { setCustomError } = useContext(ErrorContext);
   const [legalError, setLegalError] = useState<string | null>(null);
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
@@ -35,6 +36,7 @@ const AddressForm: React.FC = () => {
       setOrder(error.data as Order);
       setCustomError(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
 
   const [formData, setFormData] = useState<CheckoutFormData>({
@@ -48,11 +50,11 @@ const AddressForm: React.FC = () => {
     privacy: false,
     sale: false,
   });
-  const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
+  const BASE_SERVER_URL = process.env.NEXT_PUBLIC_BASE_SERVER_URL;
   const csrfToken = Cookies.get("csrftoken");
   const submitForm = () => {
     const addressForm = {
-      redirectUrl: `${BASE_SERVER_URL}/shop/checkout-return`,
+      redirectUrl: `${BASE_SERVER_URL}/shop/checkout/return`,
       address: formData,
     };
 
@@ -215,7 +217,7 @@ const AddressForm: React.FC = () => {
               onChange={handleChange}
             />
             <label className="form-check-label" htmlFor="privacyCheckbox">
-              I read {<Link to="/privacy-policy">Privacy Policy</Link>}
+              I read {<Link href="/privacy-policy">Privacy Policy</Link>}
             </label>
           </div>
         </div>
@@ -230,17 +232,25 @@ const AddressForm: React.FC = () => {
               onChange={handleChange}
             />
             <label className="form-check-label" htmlFor="saleCheckbox">
-              I read {<Link to="/sales-agreement">Sales Agreement</Link>}
+              I read {<Link href="/sales-agreement">Sales Agreement</Link>}
             </label>
           </div>
           <p className="error">{legalError}</p>
         </div>
-        {isLoading ? (
-          ""
+
+        {order?.order_details.length > 0 ? (
+          isLoading ? (
+            ""
+          ) : (
+            <button
+              type="submit"
+              className="btn btn-success checkout-submit-btn"
+            >
+              Checkout
+            </button>
+          )
         ) : (
-          <button type="submit" className="btn btn-success checkout-submit-btn">
-            Checkout
-          </button>
+          ""
         )}
         {error ? <p className="error">{error.message}</p> : ""}
       </form>

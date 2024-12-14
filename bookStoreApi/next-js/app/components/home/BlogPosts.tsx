@@ -1,11 +1,11 @@
-'use client';
+"use client";
 import React, { useState, useRef, useEffect } from "react";
-import styles from "./BlogPosts.module.css";
 import { Slide, Zoom } from "react-awesome-reveal";
 import useFetch from "../../hooks/useFetch";
 import { Post } from "../../types/models";
 import { Circles } from "react-loader-spinner";
 import useWindowSize from "../../hooks/useWindowSize";
+import Image from "next/image";
 
 const PostDisplay: React.FC = () => {
   const [response, setResponse] = useState<Post[] | null>(null);
@@ -15,6 +15,7 @@ const PostDisplay: React.FC = () => {
       setResponse(res.data as Post[]);
     },
   );
+  
   const { width } = useWindowSize();
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const PostDisplay: React.FC = () => {
         cancelFetch();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     setActivePost(response ? response[0] : null);
@@ -61,7 +63,7 @@ const PostDisplay: React.FC = () => {
                 style={{ width: `${width > 992 ? "50vw" : "100%"}` }}
               >
                 {activePost ? (
-                  <img
+                  <Image
                     ref={imageRef}
                     onLoad={() =>
                       setImageHeight(imageRef.current?.clientHeight || 0)
@@ -69,6 +71,8 @@ const PostDisplay: React.FC = () => {
                     src={`${activePost?.image}`}
                     className="blog-post-img"
                     alt={`Active post: ${activePost?.title}`}
+                    width={2000}
+                    height={2000}
                   />
                 ) : (
                   <></>

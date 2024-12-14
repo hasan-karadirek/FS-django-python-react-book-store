@@ -1,19 +1,21 @@
-'use client';
+"use client";
 import React, { useState, ChangeEvent, useEffect } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import useFetch from "../../hooks/useFetch";
 import { ContactFormData } from "../../types/forms";
 import { Circles } from "react-loader-spinner";
 import Cookies from "js-cookie";
-import styles from "./ContactSection.module.css";
 
 const ContactSection: React.FC = () => {
-  
-  const [formMessage,setFormMesage] = useState<String | null>(null)
+  const [formMessage, setFormMesage] = useState<string | null>(null);
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/blog/create-form/",
     (res) => {
-      setFormMesage("We have received your form successfully. We will contact with you as soon as possible.")
+      if (res.success) {
+        setFormMesage(
+          "We have received your form successfully. We will contact with you as soon as possible.",
+        );
+      }
     },
   );
   const [formData, setFormData] = useState<ContactFormData>({
@@ -65,7 +67,7 @@ const ContactSection: React.FC = () => {
     return () => {
       cancelFetch();
     };
-  }, []);
+  }, [cancelFetch]);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -83,7 +85,7 @@ const ContactSection: React.FC = () => {
     });
   };
 
-  return  (
+  return (
     <>
       <div className="mt-4 d-flex flex-column flex-lg-row" id="contact-section">
         <div className="flex-grow-1" style={{ flexBasis: "45%" }}>
@@ -91,7 +93,9 @@ const ContactSection: React.FC = () => {
             <h2 style={{ paddingLeft: "1rem" }}>Get in Touch</h2>
             <br />
             <p style={{ padding: "1rem" }}>
-            You may wish to join our list to get posted about upcoming events and performances. You can also use the contact form to send us photos of the books that you want to donate, trade or sell.
+              You may wish to join our list to get posted about upcoming events
+              and performances. You can also use the contact form to send us
+              photos of the books that you want to donate, trade or sell.
             </p>
             <div>
               <iframe
@@ -107,7 +111,19 @@ const ContactSection: React.FC = () => {
           <div className={`container my-5 ${width > 720 ? "me-5" : ""}`}>
             <h2>Contact Form</h2>
             <br />
-            {formMessage ? <p style={{color:"white",backgroundColor:"green",fontWeight:"bold"}}>{formMessage}</p>:""}
+            {formMessage ? (
+              <p
+                style={{
+                  color: "white",
+                  backgroundColor: "green",
+                  fontWeight: "bold",
+                }}
+              >
+                {formMessage}
+              </p>
+            ) : (
+              ""
+            )}
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="nameInput" className="form-label">
@@ -164,7 +180,7 @@ const ContactSection: React.FC = () => {
                   required
                 ></textarea>
               </div>
-              {error? <p color="red">{error.message}</p>:""}
+              {error ? <p color="red">{error.message}</p> : ""}
               {isLoading ? (
                 <Circles
                   height="80"

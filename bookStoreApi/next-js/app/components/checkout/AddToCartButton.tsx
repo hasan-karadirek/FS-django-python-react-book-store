@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
 import { Order } from "../../types/models";
@@ -18,6 +19,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   btnText,
 }) => {
   const { order, setOrder } = useContext(OrderContext);
+
   const { setCustomError } = useContext(ErrorContext);
 
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
@@ -27,6 +29,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       setOrder(response.data as Order);
     },
   );
+
   useEffect(() => {
     if (error?.name === "expired_token" || error?.name === "invalid_token") {
       Cookies.remove("token");
@@ -40,6 +43,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       setOrder(error.data as Order);
       setCustomError(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
   const csrfToken = Cookies.get("csrftoken");
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -67,7 +71,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   ) : (
     <>
       <button
-        id={bookId.toString()}
+        id={`add-${bookId.toString()}`}
         onClick={handleClick}
         className={btnClasses}
       >

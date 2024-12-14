@@ -1,30 +1,32 @@
-'use client';
-import React, { useEffect } from "react";
+"use client";
+import React, { useEffect, useRef } from "react";
 import { Carousel } from "bootstrap";
+import Image from "next/image";
 
 const WelcomeSection: React.FC = () => {
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const mainCarousel = document.querySelector("#main-carousel");
-      if (mainCarousel) {
-        const carousel = new Carousel(mainCarousel, {
-          interval: 8000,
-          wrap: true,
-          pause: false,
-        });
-        carousel.cycle();
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-        return () => {
-          carousel.dispose();
-        };
-      }
+  useEffect(() => {
+    if (carouselRef.current) {
+      const carousel = new Carousel(carouselRef.current, {
+        interval: 8000,
+        wrap: true,
+        pause: false,
+      });
+      carousel.cycle();
+
+      return () => {
+        carousel.dispose();
+      };
     }
   }, []);
+
   return (
     <>
       <div
         id="main-carousel"
-        className= "main-slider  carousel carousel-white slide"
+        ref={carouselRef}
+        className="main-slider carousel carousel-white slide"
       >
         <div className="carousel-indicators">
           <button
@@ -50,40 +52,44 @@ const WelcomeSection: React.FC = () => {
         </div>
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img
-              src="assets/booksImg.jpeg"
+            <Image
+              src="/assets/booksImg.jpeg"
               style={{ objectFit: "cover" }}
               className="d-block w-100"
-              alt="..."
+              alt="Books Image"
+              width={1920}
+              height={1080}
+              priority
             />
-
-            <div className="carousel-caption  d-md-block">
+            <div className="carousel-caption d-md-block">
               <h1>Le Flaneur Amsterdam Second Hand Bookstore</h1>
               <p>Timeless books in numerous languages</p>
             </div>
           </div>
           <div className="carousel-item">
-            <img
-              src="assets/binnen.jpg"
+            <Image
+              src="/assets/binnen.jpg"
               style={{ objectFit: "cover" }}
               className="d-block w-100"
-              alt="..."
+              alt="Binnen Image"
+              width={1920}
+              height={1080}
             />
-
-            <div className="carousel-caption  d-md-block">
+            <div className="carousel-caption d-md-block">
               <h1>Le Flaneur Amsterdam Second Hand Bookstore</h1>
               <p>Timeless books in numerous languages</p>
             </div>
           </div>
           <div className="carousel-item">
-            <img
-              src="assets/slide3.jpg"
+            <Image
+              src="/assets/slide3.jpg"
               style={{ objectFit: "cover" }}
               className="d-block w-100"
-              alt="..."
+              alt="Slide 3 Image"
+              width={1920}
+              height={1080}
             />
-
-            <div className="carousel-caption  d-md-block">
+            <div className="carousel-caption d-md-block">
               <h1>Le Flaneur Amsterdam Second Hand Bookstore</h1>
               <p>Timeless books in numerous languages</p>
             </div>

@@ -12,7 +12,6 @@
   }
 }
 
-
 .post-content {
   margin: auto;
 }
@@ -38,7 +37,6 @@
 .accordion-button:not(.collapsed) {
   background-color: rgba(255, 0, 0, 0.226) !important;
 }
-
 
 .book-infos,
 .book-images {
@@ -120,7 +118,6 @@
   }
 }
 
-
 .cards-container {
   display: flex;
   flex-wrap: wrap;
@@ -169,15 +166,14 @@
   bottom: 10px;
   width: 80%;
 }
-.shop-warning{
+.shop-warning {
   width: 50vw;
   background-color: bisque;
   text-align: center;
   padding: 20px;
-  position:fixed;
-  margin-left:30vw;
+  position: fixed;
+  margin-left: 30vw;
   z-index: 2;
-  
 }
 .overlay {
   position: fixed;
@@ -224,12 +220,11 @@
   .book-card {
     flex-basis: 100%;
   }
-  .shop-warning{
+  .shop-warning {
     margin-left: 10vw;
     width: 80vw;
   }
 }
-
 
 .checkout-cart {
   flex-basis: 45%;
@@ -296,7 +291,6 @@
   }
 }
 
-
 .opening-hours-card {
   margin-bottom: 1rem;
 }
@@ -317,7 +311,6 @@
   padding: 5px 0;
 }
 
-
 .customer-order-accordion * {
   max-width: 35vw;
 }
@@ -328,7 +321,6 @@
     width: 100%;
   }
 }
-
 
 .footer {
   color: white;
@@ -359,7 +351,6 @@
   }
 }
 
-
 .login-form {
   width: 50%;
 }
@@ -369,7 +360,6 @@
     width: 100%;
   }
 }
-
 
 body {
   font-family: inter-light;
@@ -396,7 +386,6 @@ body {
     display: none;
   }
 }
-
 
 .bg-transparent {
   width: 100%;
@@ -461,7 +450,6 @@ body {
   }
 }
 
-
 .nav-login-container {
   position: absolute;
   right: 0.75rem;
@@ -484,12 +472,12 @@ body {
 .nav-login-dropdown a {
   color: white;
 }
-#navbar-user-icon{
+#navbar-user-icon {
   height: 2rem;
   padding-left: 1rem;
 }
 @media (max-width: 992px) {
-  #navbar-user-icon{
+  #navbar-user-icon {
     padding-left: 0;
   }
   .nav-login-dropdown {
@@ -501,12 +489,10 @@ body {
   }
 }
 @media (max-width: 481px) {
-  
   .nav-login-container {
     width: 80vw;
   }
 }
-
 
 #nav-cart {
   height: 2rem;
@@ -621,12 +607,10 @@ body {
   }
 }
 
-
 .register-container {
   max-width: 720px;
   margin-top: 2rem;
 }
-
 
 .testimonials-images img {
   height: 21vw;
@@ -702,5 +686,3 @@ body {
   font-style: italic;
   color: #6c757d;
 }
-
-

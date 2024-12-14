@@ -1,9 +1,8 @@
-'use client';
+"use client";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import { NextRouter, useRouter } from "next/router";
 
 import { LoginFormData } from "../../types/forms";
 import { LoginResponse } from "../../types/responses";
@@ -17,29 +16,36 @@ const LoginForm: React.FC<LoginFormProps> = ({
   containerClasses,
   setIsLoginForm,
 }) => {
+  useEffect(() => {
+    if (localStorage.getItem("customer") && Cookies.get("token")) {
+      window.location.href = "/shop/books/";
+    }
+  }, []);
+
   const [formData, setFormData] = useState<LoginFormData>({
     password: "",
     email: "",
   });
 
-  const [router,setRouter] = useState<NextRouter | null>(null)
-  useEffect(()=>{
-    const rt = useRouter();
-    setRouter(rt)
-  })
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/customer/login/",
     (res) => {
       const data = res.data as LoginResponse;
       Cookies.set("token", data.token);
       localStorage.setItem("customer", JSON.stringify(data.customer));
-      data.order
-        ? localStorage.setItem("order", JSON.stringify(data.order))
-        : "";
+      if (data.order) {
+        localStorage.setItem("order", JSON.stringify(data.order));
+      }
 
-      router?.asPath.split("/")[router.asPath.split("/").length - 1] === "login"
-        ? router.push("/shop/books/")
-        : window.location.reload();
+      const lastPathSegment =
+        window.location.pathname.split("/")[
+          window.location.pathname.split("/").length - 1
+        ];
+      if (lastPathSegment === "login") {
+        window.location.href = "/shop/books/";
+      } else {
+        window.location.reload();
+      }
     },
   );
   const csrfToken = Cookies.get("csrftoken");

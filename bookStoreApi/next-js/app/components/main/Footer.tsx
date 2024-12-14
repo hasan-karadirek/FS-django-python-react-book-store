@@ -1,12 +1,15 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import Link from "next/link";
+import Image from "next/image";
 
 const Footer: React.FC = () => {
   const { width } = useWindowSize();
   const [isFixed, setIsFixed] = useState<boolean | null>(
-    typeof window !== "undefined"? document.documentElement.scrollHeight < window.innerHeight:null
+    typeof window !== "undefined"
+      ? document.documentElement.scrollHeight < window.innerHeight
+      : null,
   );
 
   useEffect(() => {
@@ -43,7 +46,13 @@ const Footer: React.FC = () => {
       >
         <div className="footer-logo">
           <a className="navbar-brand" href="/">
-            <img id="logo" src="assets/logo.png" alt="logo" />
+            <Image
+              id="logo"
+              src="/assets/logo.png"
+              alt="logo"
+              width={200}
+              height={200}
+            />
             <span
               style={{
                 fontSize:

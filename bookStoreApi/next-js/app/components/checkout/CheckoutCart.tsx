@@ -1,27 +1,31 @@
+"use client";
 import React, { useContext } from "react";
 import { OrderContext } from "../../contexts/OrderContext";
 import RemoveFromCartButton from "./RemoveFromCartButton";
-import defaultBookImage from "../../assets/defaultBookImage.webp";
-import postnlLogo from "../../assets/postnl.png";
-import { Link } from "react-router-dom";
+import Link from "next/link";
+import Image from "next/image";
 
 const CheckoutCart: React.FC = () => {
   const { order } = useContext(OrderContext);
-  const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
-  return (
+  const BASE_SERVER_URL = process.env.NEXT_PUBLIC_BASE_SERVER_URL;
+
+  return order?.order_details.length > 0 ? (
     <ul className="checkout-cart">
       {order?.order_details?.map((detail, index) => (
         <li key={index} className="d-flex p-3 nav-cart-list-item">
-          <img
+          <Image
             className="nav-cart-list-image"
             src={
               detail.book.images.length > 0
                 ? `${BASE_SERVER_URL}${detail.book.images[0].image}`
-                : defaultBookImage
+                : "/assets/defaultBookImage.webp"
             }
+            alt={detail.book.title}
+            width={90} // Adjust dimensions as necessary
+            height={120}
           />
           <div className="nav-cart-list-body">
-            <Link to={`/shop/books/${detail.book.slug}`}>
+            <Link href={`/shop/books/${detail.book.slug}`}>
               <h4 className="cart-item-title">{`${detail.book.title} - ${detail.book.author} - ${detail.book.year} - ${detail.book.publishing_house}`}</h4>
             </Link>
             <div className="d-flex">
@@ -39,7 +43,12 @@ const CheckoutCart: React.FC = () => {
         <p>Subtotal : {order?.cost}€</p>
       </li>
       <li className="d-flex">
-        <img src={postnlLogo} style={{ width: "90px" }} alt="post-method" />
+        <Image
+          src="/assets/postnl.png"
+          alt="post-method"
+          width={90} // Adjust dimensions as necessary
+          height={40}
+        />
         <h4>
           PostNL Standard Deliver for{" "}
           {order?.order_details.length == 1 ? "Single Book" : "Multiple Books"}
@@ -53,9 +62,11 @@ const CheckoutCart: React.FC = () => {
         </p>
       </li>
       <li id="checkout-cart-list-cost">
-        <p> Total: {JSON.parse(order?.cost) + JSON.parse(order?.post_cost)}€</p>
+        <p>Total: {JSON.parse(order?.cost) + JSON.parse(order?.post_cost)}€</p>
       </li>
     </ul>
+  ) : (
+    <div className="container">Your cart is empty.</div>
   );
 };
 

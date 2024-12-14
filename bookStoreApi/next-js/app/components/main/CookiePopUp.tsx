@@ -1,11 +1,20 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-interface CookiePopUpProps {
-  setCookiePolicy: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
-const CookiePopUp: React.FC<CookiePopUpProps> = ({ setCookiePolicy }) => {
-  return (
+const CookiePopUp: React.FC = () => {
+  const [cookiePolicy, setCookiePolicy] = useState<boolean>(false);
+
+  useEffect(() => {
+    const cookieP = localStorage.getItem("cookiePolicy");
+    if (cookieP) {
+      setCookiePolicy(JSON.parse(cookieP));
+    }
+  }, [cookiePolicy]);
+
+  return cookiePolicy ? (
+    ""
+  ) : (
     <div
       className="modal"
       tabIndex={-1}
@@ -33,11 +42,11 @@ const CookiePopUp: React.FC<CookiePopUpProps> = ({ setCookiePolicy }) => {
             </p>
           </div>
           <div className="modal-footer">
-          <button
+            <button
               onClick={() => {
                 localStorage.setItem("cookiePolicy", "false");
                 setCookiePolicy(false);
-                window.location.href="https://google.com"
+                window.location.href = "https://google.com";
               }}
               type="button"
               className="btn btn-danger"

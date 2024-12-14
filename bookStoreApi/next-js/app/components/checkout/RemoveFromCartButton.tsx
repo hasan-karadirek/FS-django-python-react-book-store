@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useContext, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
 import { Order } from "../../types/models";
@@ -42,6 +42,7 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
       setOrder(error.data as Order);
       setCustomError(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
   const csrfToken = Cookies.get("csrftoken");
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -70,7 +71,7 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
   ) : order?.order_details?.some((detail) => detail.book.id === bookId) ? (
     <>
       <button
-        id={bookId.toString()}
+        id={`remove-${bookId.toString()}`}
         onClick={handleClick}
         className={btnClasses}
       >

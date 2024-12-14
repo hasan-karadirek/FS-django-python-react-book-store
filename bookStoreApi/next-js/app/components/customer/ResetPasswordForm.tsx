@@ -1,7 +1,7 @@
+"use client";
 import React, { ChangeEvent, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import { Circles } from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 interface ResetPasswordFormData {
@@ -10,7 +10,6 @@ interface ResetPasswordFormData {
 }
 
 const ResetPasswordForm: React.FC = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState<ResetPasswordFormData>({
     password: "",
     confirmPassword: "",
@@ -22,7 +21,7 @@ const ResetPasswordForm: React.FC = () => {
     `/customer/resetpassword/?token=${token}`,
     (res) => {
       if (res) {
-        navigate("/customer/login");
+        window.location.href = "/customer/login";
       }
     },
   );

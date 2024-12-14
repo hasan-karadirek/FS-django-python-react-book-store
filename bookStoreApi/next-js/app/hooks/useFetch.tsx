@@ -7,7 +7,7 @@ interface FetchOptions extends RequestInit {
   method?: "GET" | "POST" | "PUT" | "DELETE";
 }
 
-interface FetchResponse {
+export interface FetchResponse {
   success: boolean;
   msg?: string;
   data?: unknown;
