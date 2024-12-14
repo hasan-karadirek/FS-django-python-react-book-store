@@ -63,8 +63,7 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
       headers: {
         Authorization: Cookies.get("token")
           ? `Token ${Cookies.get("token")}`
-          : "",
-        "X-CSRFToken": csrfToken,
+          : ""
       },
     });
     return () => {
