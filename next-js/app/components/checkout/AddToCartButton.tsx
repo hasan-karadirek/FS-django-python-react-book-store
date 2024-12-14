@@ -53,7 +53,6 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
-  const csrfToken = Cookies.get("csrftoken");
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!Cookies.get("session_id")) {
@@ -64,7 +63,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       headers: {
         Authorization: Cookies.get("token")
           ? `Token ${Cookies.get("token")}`
-          : "",
+          : ""
       },
     });
     return () => {
