@@ -1,4 +1,4 @@
-name: CI/CD Pipeline for Django and Next.js 3
+name: CI/CD Pipeline for Django and Next.js
 
 on:
   push:
@@ -21,11 +21,22 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # Step 3: Copy files to server
+      # Step 3: Add remote server to known hosts
+      - name: Add remote server to known hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      # Step 4: Test SSH Connection
+      - name: Test SSH Connection
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'SSH Connection Successful!'"
+
+      # Step 5: Copy files to server
       - name: Copy files to server
         run: |
           rsync -avz --exclude='.git' --exclude='node_modules' --exclude='__pycache__' ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/path/to/project
-      # Step 4: Build and Deploy Applications on Server
+
+      # Step 6: Build and Deploy Applications on Server
       - name: Build and Deploy Applications on Server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
