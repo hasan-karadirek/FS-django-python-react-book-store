@@ -101,10 +101,10 @@ const useFetch = (route: string, onReceived: (data: FetchResponse) => void) => {
       setIsLoading(false);
     };
 
-    fetchData().catch((error: Error) => {
+    fetchData().catch((err: Error) => {
       const customError: CustomError = {
-        name: error.name,
-        message: error.message,
+        name: err.name,
+        message: err.message,
       };
       setError(customError);
       setIsLoading(false);

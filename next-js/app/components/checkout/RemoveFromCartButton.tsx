@@ -52,7 +52,6 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
-  const csrfToken = Cookies.get("csrftoken");
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!Cookies.get("session_id")) {
@@ -96,7 +95,6 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
           btnText
         )}
       </button>
-      {error ? <p className="error">{error.message}</p> : ""}
     </>
   ) : (
     ""
