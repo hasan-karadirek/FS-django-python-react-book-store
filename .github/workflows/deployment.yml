@@ -41,24 +41,50 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
           cd ~/leflaneur
+
           echo "Creating .env file with secrets..."
-          cat <<EOT > .env
-          SECRET_KEY=${{ secrets.SECRET_KEY }}
-          ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}
-          DB_NAME=${{ secrets.DB_NAME }}
-          DB_USER=${{ secrets.DB_USER }}
-          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-          DEBUG=${{ secrets.DEBUG }}
-          MOLLIE_API_KEY=${{ secrets.MOLLIE_API_KEY }}
-          AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_STORAGE_BUCKET_NAME=${{ secrets.AWS_STORAGE_BUCKET_NAME }}
-          AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }}
-          MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
+          echo "ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}" > .env
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
+          echo "AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }}" >> .env
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
+          echo "AWS_STORAGE_BUCKET_NAME=${{ secrets.AWS_STORAGE_BUCKET_NAME }}" >> .env
+          echo "BASE_SERVER_URL=${{ secrets.BASE_SERVER_URL }}" >> .env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DEBUG=${{ secrets.DEBUG }}" >> .env
+          echo "EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }}" >> .env
+          echo "EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }}" >> .env
+          echo "ENV=${{ secrets.ENV }}" >> .env
+          echo "MOLLIE_API_KEY=${{ secrets.MOLLIE_API_KEY }}" >> .env
+          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+          echo "NEXT_PUBLIC_BASE_SERVER_URL=${{ secrets.NEXT_PUBLIC_BASE_SERVER_URL }}" >> .env
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+
+           # Create .env file specifically for Next.js in the nextjs/ directory
+          echo "Creating .env file in leflaneur/next-js/ "
+          cat <<EOT > next-js/.env
+          NEXT_PUBLIC_BASE_SERVER_URL=${{ secrets.NEXT_PUBLIC_BASE_SERVER_URL }}
+          NEXT_PUBLIC_BASE_SERVER_SUB_URL=${{ secrets.NEXT_PUBLIC_BASE_SERVER_SUB_URL }}
           EOT
+          echo "Verifying .env file content:"
+          cat .env
+
           echo "Stopping existing containers..."
           docker-compose down
-          echo "Building and deploying containers without cache..."
-          docker-compose build --no-cache
+
+          echo "Building and deploying containers with build arguments..."
+          docker-compose build --no-cache \
+            --build-arg NEXT_PUBLIC_BASE_SERVER_URL=${{ secrets.NEXT_PUBLIC_BASE_SERVER_URL }}
+
           docker-compose up -d
+
+          echo "Deployment completed successfully!"
           EOF
+
+      # Step 7: Verify Running Containers
+      - name: Verify Running Containers
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker ps -a"
