@@ -35,6 +35,16 @@ jobs:
       - name: Copy files to server
         run: |
           rsync -avz --exclude='.git' --exclude='node_modules' --exclude='__pycache__' ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/leflaneur
+      # DEBUG SECRETS
+      - name: Debug Secrets
+        run: |
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY:0:4 }}***"
+          echo "ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS:0:4 }}***"
+          echo "DB_NAME=${{ secrets.DB_NAME:0:4 }}***"
+          echo "DB_USER=${{ secrets.DB_USER:0:4 }}***"
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD:0:4 }}***"
+          echo "DEBUG=${{ secrets.DEBUG }}"
+          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD:0:4 }}***"
 
       # Step 6: Build and Deploy Applications on Server
       - name: Build and Deploy Applications on Server
