@@ -13,13 +13,13 @@ import { clearLocalStorage, removeLocalStorage, setLocalStorage } from "@/app/ut
 const AddressForm: React.FC = () => {
   const context = useContext(OrderContext);
   if(!context || !context.order || !context.order.order_details){
-    throw new Error("Component must be used within an OrderProvider");
+    return null;
   }
   const { order, setOrder } = context
   
   const errorContext = useContext(ErrorContext);
    if(!errorContext){
-    throw new Error("Component must be used within an ErrorProvider");
+    return null;
    }
    const { setCustomError } = errorContext;
   const [legalError, setLegalError] = useState<string | null>(null);

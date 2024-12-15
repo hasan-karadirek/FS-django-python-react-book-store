@@ -5,7 +5,7 @@ import { ErrorContext } from "../../contexts/ErrorContext";
 const Alert: React.FC = () => {
    const errorContext = useContext(ErrorContext);
    if(!errorContext){
-    throw new Error("Component must be used within an ErrorProvider");
+    return null;
    }
    const { customError, setCustomError } = errorContext;
   useEffect(() => {

@@ -8,7 +8,7 @@ import { OrderContextType } from "../../contexts/OrderContext";
 const CheckoutCart: React.FC = () => {
   const context = useContext(OrderContext);
   if(!context|| !context.order || !context.order.order_details){
-    throw new Error("Component must be used within an OrderProvider");
+    return null;
   }
   const { order } = context
   const BASE_SERVER_URL = process.env.NEXT_PUBLIC_BASE_SERVER_URL;

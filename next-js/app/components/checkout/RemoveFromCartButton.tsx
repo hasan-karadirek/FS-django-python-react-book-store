@@ -21,12 +21,12 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
 }) => {
   const context = useContext(OrderContext);
   if(!context){
-    throw new Error("Component must be used within an OrderProvider");
+    return null;
   }
   const { order, setOrder } = context
   const errorContext = useContext(ErrorContext);
   if(!errorContext){
-   throw new Error("Component must be used within an ErrorProvider");
+   return null;
   }
   const { setCustomError } = errorContext;
 

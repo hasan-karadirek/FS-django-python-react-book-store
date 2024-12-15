@@ -11,7 +11,7 @@ const NavCart: React.FC = () => {
   
   const context = useContext(OrderContext);
   if(!context || !context.order || !context.order.order_details){
-    throw new Error("Component must be used within an OrderProvider");
+    return null;
   }
   const { order } = context
   const [isHover, setIsHover] = useState<boolean>(false);
