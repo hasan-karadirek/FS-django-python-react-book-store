@@ -63,6 +63,12 @@ jobs:
           echo "NEXT_PUBLIC_BASE_SERVER_URL=${{ secrets.NEXT_PUBLIC_BASE_SERVER_URL }}" >> .env
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
 
+           # Create .env file specifically for Next.js in the nextjs/ directory
+          echo "Creating .env file in leflaneur/next-js/ "
+          cat <<EOT > next-js/.env
+          NEXT_PUBLIC_BASE_SERVER_URL=${{ secrets.NEXT_PUBLIC_BASE_SERVER_URL }}
+          NEXT_PUBLIC_BASE_SERVER_SUB_URL=${{ secrets.NEXT_PUBLIC_BASE_SERVER_SUB_URL }}
+          EOT
           echo "Verifying .env file content:"
           cat .env
 
