@@ -42,14 +42,14 @@ ENV STATIC_ROOT=/usr/src/app/staticfiles
 WORKDIR /usr/src/app
 
 # Install dependencies
-COPY ./bookStoreApi/requirements.txt /usr/src/app/
+COPY ./requirements.txt /usr/src/app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install MySQL client
 RUN apt-get update && apt-get install -y default-mysql-client
 
 # Copy project files
-COPY ./bookStoreApi /usr/src/app/
+COPY ./ /usr/src/app/
 
 # Expose port for Gunicorn
 EXPOSE 8000
