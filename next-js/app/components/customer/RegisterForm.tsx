@@ -5,13 +5,11 @@ import Cookies from "js-cookie";
 import { RegisterResponse } from "../../types/responses";
 import { RegisterFormData } from "../../types/forms";
 import { Circles } from "react-loader-spinner";
+import { getLocalStorage, setLocalStorage } from "@/app/utils/LocalStorage";
 
 const RegisterForm: React.FC = () => {
-  if(typeof window == "undefined"){
-    throw new Error("This environment is not available for client-side rendering.")
-  }
   useEffect(() => {
-    if (localStorage.getItem("customer") && Cookies.get("token")) {
+    if (getLocalStorage("customer") && Cookies.get("token")) {
       window.location.href = "/shop/books/";
     }
   }, []);
@@ -30,9 +28,9 @@ const RegisterForm: React.FC = () => {
     (res) => {
       const data = res.data as RegisterResponse;
       Cookies.set("token", data.token);
-      localStorage.setItem("customer", JSON.stringify(data.customer));
+      setLocalStorage("customer", JSON.stringify(data.customer));
       if (data.order) {
-        localStorage.setItem("order", JSON.stringify(data.order));
+        setLocalStorage("order", JSON.stringify(data.order));
       }
       const lastPathSegment =
         window.location.pathname.split("/")[

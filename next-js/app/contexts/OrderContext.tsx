@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useState, ReactNode } from "react";
 import { Order } from "../types/models";
+import { getLocalStorage } from "../utils/LocalStorage";
 export interface OrderContextType {
   order: Order | null;
   setOrder: React.Dispatch<React.SetStateAction<Order | null>>;
@@ -14,11 +15,8 @@ interface OrderProviderProps {
 }
 
 export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
-  if(typeof window === "undefined"){
-    throw new Error("This environment is not available for client-side rendering.")
-  }
   const [order, setOrder] = useState<Order | null>(
-     JSON.parse(localStorage.getItem("order") ?? "null")
+     JSON.parse(getLocalStorage("order") ?? "null")
   );
 
   return (

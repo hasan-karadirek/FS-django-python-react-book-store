@@ -6,6 +6,7 @@ import { OrderContext } from "../../contexts/OrderContext";
 import Cookies from "js-cookie";
 import { Bars } from "react-loader-spinner";
 import { ErrorContext } from "../../contexts/ErrorContext";
+import { clearLocalStorage, setLocalStorage } from "@/app/utils/LocalStorage";
 
 interface RemoveFromCartButtonProps {
   bookId: number;
@@ -18,10 +19,6 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
   btnClasses,
   btnText,
 }) => {
-  if(typeof window == "undefined"){
-    throw new Error("This environment is not available for client-side rendering.")
-  }
-  
   const context = useContext(OrderContext);
   if(!context){
     throw new Error("Component must be used within an OrderProvider");
@@ -36,7 +33,7 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     `/store/remove-from-cart/${bookId}/`,
     (response) => {
-      localStorage.setItem("order", JSON.stringify(response.data));
+      setLocalStorage("order", JSON.stringify(response.data));
       setOrder(response.data as Order);
     },
   );
@@ -45,12 +42,12 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
     if (error?.name === "expired_token" || error?.name === "invalid_token") {
       Cookies.remove("token");
       Cookies.remove("session_id");
-      localStorage.clear();
+      clearLocalStorage();
       setCustomError(error);
       location.reload();
     }
     if (error?.name === "unavailable_books") {
-      localStorage.setItem("order", JSON.stringify(error.data));
+      setLocalStorage("order", JSON.stringify(error.data));
       setOrder(error.data as Order);
       setCustomError(error);
     }

@@ -3,15 +3,14 @@ import { useState } from "react";
 import LoginForm from "../customer/LoginForm";
 import RegisterForm from "../customer/RegisterForm";
 import Cookies from "js-cookie";
+import { getLocalStorage } from "@/app/utils/LocalStorage";
 
 const CheckoutLoginRegister = () => {
-  if(typeof window == "undefined"){
-    throw new Error("This environment is not available for client-side rendering.")
-  }
+ 
   const [isLoginForm, setIsLoginForm] = useState<boolean | null>(true);
   return (
     <div className="checkout-auth-forms">
-      {Cookies.get("token") && localStorage.getItem("customer") ? (
+      {Cookies.get("token") && getLocalStorage("customer") ? (
         ""
       ) : isLoginForm ? (
         <>

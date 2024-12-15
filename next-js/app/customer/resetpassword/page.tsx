@@ -1,6 +1,9 @@
 import React from "react";
-import ResetPasswordForm from "../../components/customer/ResetPasswordForm";
+import dynamic from "next/dynamic";
 
+const ResetPasswordForm = dynamic(() => import("../../components/customer/ResetPasswordForm"), {
+  ssr: false,
+});
 const ResetPassword: React.FC = () => {
   return (
     <>

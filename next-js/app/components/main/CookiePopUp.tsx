@@ -1,14 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { getLocalStorage, setLocalStorage } from "@/app/utils/LocalStorage";
 
 const CookiePopUp: React.FC = () => {
   const [cookiePolicy, setCookiePolicy] = useState<boolean>(false);
-  if (typeof window == "undefined"){
-    throw new Error("This environment is not available for client-side rendering.")
-  }
   useEffect(() => {
-    const cookieP = localStorage.getItem("cookiePolicy");
+    const cookieP = getLocalStorage("cookiePolicy");
     if (cookieP) {
       setCookiePolicy(JSON.parse(cookieP));
     }
@@ -46,7 +44,7 @@ const CookiePopUp: React.FC = () => {
           <div className="modal-footer">
             <button
               onClick={() => {
-                localStorage.setItem("cookiePolicy", "false");
+                setLocalStorage("cookiePolicy", "false");
                 setCookiePolicy(false);
                 window.location.href = "https://google.com";
               }}
@@ -57,7 +55,7 @@ const CookiePopUp: React.FC = () => {
             </button>
             <button
               onClick={() => {
-                localStorage.setItem("cookiePolicy", "true");
+                setLocalStorage("cookiePolicy", "true");
                 setCookiePolicy(true);
               }}
               type="button"

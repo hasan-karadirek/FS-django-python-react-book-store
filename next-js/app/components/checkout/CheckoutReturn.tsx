@@ -7,16 +7,15 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import useWindowSize from "../../hooks/useWindowSize";
 import Image from "next/image";
+import { getLocalStorage } from "@/app/utils/LocalStorage";
 
 const CheckoutReturn: React.FC = () => {
-  if(typeof window == "undefined"){
-    throw new Error("This environment is not available for client-side rendering.")
-  }
+  
   const windowSize = useWindowSize();
   // eslint-disable-next-line no-undef
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const orderInProgress = JSON.parse(
-    localStorage.getItem("orderInProgress") ?? "null",
+    getLocalStorage("orderInProgress") ?? "null",
   )?.order;
   const [order, setOrder] = useState<Order | null>(
     orderInProgress ? orderInProgress : null,

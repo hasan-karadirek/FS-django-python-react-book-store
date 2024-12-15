@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import useWindowSize from "../hooks/useWindowSize";
 import { Circles } from "react-loader-spinner";
+import { getLocalStorage, removeLocalStorage } from "../utils/LocalStorage";
 
 interface CustomerDashboardResponse {
   orders: Order[];
@@ -13,9 +14,7 @@ interface CustomerDashboardResponse {
 }
 
 const CustomerPage: React.FC = () => {
-  if(typeof window == "undefined"){
-    throw new Error("This environment is not available for client-side rendering.")
-  }
+  
   const { width } = useWindowSize();
 
   const [dashboardInfo, setDashboardInfo] =
@@ -30,7 +29,7 @@ const CustomerPage: React.FC = () => {
     },
   );
   useEffect(() => {
-    if (!Cookies.get("token") || !localStorage.getItem("customer")) {
+    if (!Cookies.get("token") || !getLocalStorage("customer")) {
       window.location.href = "/customer/login";
     }
     performFetch({
@@ -45,9 +44,9 @@ const CustomerPage: React.FC = () => {
   useEffect(() => {
     if (error?.name === "expired_token" || error?.name === "invalid_token") {
       Cookies.remove("token");
-      localStorage.removeItem("customer");
-      localStorage.removeItem("order");
-      localStorage.removeItem("orderInProgress");
+      removeLocalStorage("customer");
+      removeLocalStorage("order");
+      removeLocalStorage("orderInProgress");
       window.location.href = "/customer/login";
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,7 +71,7 @@ const CustomerPage: React.FC = () => {
           <div
             className="container"
             style={{ fontSize: "1.25rem", marginTop: "1rem" }}
-          >{`Dear ${JSON.parse(localStorage.getItem("customer") ?? "null")?.first_name},`}</div>
+          >{`Dear ${JSON.parse(getLocalStorage("customer") ?? "null")?.first_name},`}</div>
           <div className="accordion container my-5" id="accordion-orders">
             <h3>Your Previous Orders:</h3>
             {dashboardInfo?.orders.map((order) => (

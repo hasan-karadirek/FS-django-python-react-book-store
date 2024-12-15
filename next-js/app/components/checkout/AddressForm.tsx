@@ -8,11 +8,9 @@ import { CheckoutFormData } from "../../types/forms";
 import { Order } from "../../types/models";
 import { ErrorContext } from "../../contexts/ErrorContext";
 import Link from "next/link";
+import { clearLocalStorage, removeLocalStorage, setLocalStorage } from "@/app/utils/LocalStorage";
 
 const AddressForm: React.FC = () => {
-  if(typeof window == "undefined"){
-    throw new Error("This environment is not available for client-side rendering.")
-  }
   const context = useContext(OrderContext);
   if(!context || !context.order || !context.order.order_details){
     throw new Error("Component must be used within an OrderProvider");
@@ -29,8 +27,8 @@ const AddressForm: React.FC = () => {
     "/store/checkout/",
     (res) => {
       const data = res.data as CheckoutResponse;
-      localStorage.removeItem("order");
-      localStorage.setItem("orderInProgress", JSON.stringify(res.data));
+      removeLocalStorage("order");
+      setLocalStorage("orderInProgress", JSON.stringify(res.data));
       setOrder(data.order);
       window.location.href = data.redirectUrl;
     },
@@ -39,12 +37,12 @@ const AddressForm: React.FC = () => {
     if (error?.name === "expired_token" || error?.name === "invalid_token") {
       Cookies.remove("token");
       Cookies.remove("session_id");
-      localStorage.clear();
+      clearLocalStorage();
       setCustomError(error);
       location.reload();
     }
     if (error?.name === "unavailable_books") {
-      localStorage.setItem("order", JSON.stringify(error.data));
+      setLocalStorage("order", JSON.stringify(error.data));
       setOrder(error.data as Order);
       setCustomError(error);
     }

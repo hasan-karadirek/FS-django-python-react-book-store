@@ -2,7 +2,6 @@
 import React, { ChangeEvent, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import { Circles } from "react-loader-spinner";
-import Cookies from "js-cookie";
 
 interface ResetPasswordFormData {
   password: string;
@@ -20,9 +19,10 @@ const ResetPasswordForm: React.FC = () => {
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     `/customer/resetpassword/?token=${token}`,
     (res) => {
-      if (res) {
+      if (res && typeof window !== "undefined") {
         window.location.href = "/customer/login";
       }
+      
     },
   );
   

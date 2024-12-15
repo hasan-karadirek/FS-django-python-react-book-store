@@ -7,6 +7,7 @@ import Link from "next/link";
 import { LoginFormData } from "../../types/forms";
 import { LoginResponse } from "../../types/responses";
 import { Circles } from "react-loader-spinner";
+import { getLocalStorage, setLocalStorage } from "@/app/utils/LocalStorage";
 
 interface LoginFormProps {
   
@@ -17,13 +18,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
   containerClasses,
   setIsLoginForm,
 }) => {
-  
-  if(typeof window == "undefined"){
-    throw new Error("This environment is not available for client-side rendering.")
-  }
 
   useEffect(() => {
-    if (localStorage.getItem("customer") && Cookies.get("token")) {
+    if (getLocalStorage("customer") && Cookies.get("token")) {
       window.location.href = "/shop/books/";
     }
   }, []);
@@ -38,9 +35,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
     (res) => {
       const data = res.data as LoginResponse;
       Cookies.set("token", data.token);
-      localStorage.setItem("customer", JSON.stringify(data.customer));
+      setLocalStorage("customer", JSON.stringify(data.customer));
       if (data.order) {
-        localStorage.setItem("order", JSON.stringify(data.order));
+        setLocalStorage("order", JSON.stringify(data.order));
       }
 
       const lastPathSegment =
