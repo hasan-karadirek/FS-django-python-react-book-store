@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["bookstorestatic.s3.eu-north-1.amazonaws.com"],
+    domains: ["34.141.203.80"],
   },
   eslint: {
     // Disable ESLint during builds
