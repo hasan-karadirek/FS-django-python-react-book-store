@@ -12,16 +12,13 @@ import { clearLocalStorage, removeLocalStorage, setLocalStorage } from "@/app/ut
 
 const AddressForm: React.FC = () => {
   const context = useContext(OrderContext);
-  if(!context || !context.order || !context.order.order_details){
-    return null;
-  }
-  const { order, setOrder } = context
+  const order = context?.order || {order_details: []}
+  const setOrder = context?.setOrder || (function(){});
+  // const { order, setOrder } = context ? context : {order: {order_details: []},setOrder: ()=>{}};
   
   const errorContext = useContext(ErrorContext);
-   if(!errorContext){
-    return null;
-   }
-   const { setCustomError } = errorContext;
+  const setCustomError = errorContext?.setCustomError || function(){};
+  
   const [legalError, setLegalError] = useState<string | null>(null);
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/store/checkout/",

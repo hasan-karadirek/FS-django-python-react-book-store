@@ -4,11 +4,9 @@ import { ErrorContext } from "../../contexts/ErrorContext";
 
 const Alert: React.FC = () => {
    const errorContext = useContext(ErrorContext);
-   if(!errorContext){
-    return null;
-   }
-   const { customError, setCustomError } = errorContext;
-  useEffect(() => {
+   
+   const { customError, setCustomError } = errorContext ?  errorContext : {customError:{message:""},setCustomError:()=>{}};
+  useEffect(() => { 
     if (customError) {
       setTimeout(() => {
         setCustomError(null);

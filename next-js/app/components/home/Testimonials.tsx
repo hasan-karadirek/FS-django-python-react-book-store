@@ -30,28 +30,28 @@ const Testimonials: React.FC = () => {
           <Image
             src="/assets/reviewImage.jpg"
             alt="testimonials-image-1"
-            width={300}
-            height={200}
+            width={500}
+            height={500}
           />
           <Image
             src="/assets/reviewImage2.jpg"
             alt="testimonials-image-2"
-            width={300}
-            height={200}
+            width={500}
+            height={500}
           />
           {width > 768 ? (
             <>
               <Image
                 src="/assets/reviewImage3.jpg"
                 alt="testimonials-image-3"
-                width={300}
-                height={200}
+                width={500}
+                height={500}
               />
               <Image
                 src="/assets/reviewImage4.jpg"
                 alt="testimonials-image-4"
-                width={300}
-                height={200}
+                width={500}
+                height={500}
               />
             </>
           ) : (

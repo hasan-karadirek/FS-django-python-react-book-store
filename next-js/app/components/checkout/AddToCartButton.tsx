@@ -20,16 +20,13 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   btnText,
 }) => {
   const context = useContext(OrderContext);
-  if(!context){
-    return null;
-  }
-  const { order, setOrder } = context
+  const order = context?.order || {order_details: []}
+  const setOrder = context?.setOrder || (function(){});
+  
 
   const errorContext = useContext(ErrorContext);
-   if(!errorContext){
-    return null;
-   }
-   const { setCustomError } = errorContext;
+   
+   const  setCustomError  = errorContext?.setCustomError || function(){};
 
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     `/store/add-to-cart/${bookId}/`,

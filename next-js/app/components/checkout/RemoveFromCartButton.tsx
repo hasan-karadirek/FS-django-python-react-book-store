@@ -20,15 +20,11 @@ const RemoveFromCartButton: React.FC<RemoveFromCartButtonProps> = ({
   btnText,
 }) => {
   const context = useContext(OrderContext);
-  if(!context){
-    return null;
-  }
-  const { order, setOrder } = context
+  const order = context?.order || {order_details: []}
+  const setOrder = context?.setOrder || (function(){});
+  
   const errorContext = useContext(ErrorContext);
-  if(!errorContext){
-   return null;
-  }
-  const { setCustomError } = errorContext;
+  const  setCustomError  = errorContext?.setCustomError || function(){};
 
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     `/store/remove-from-cart/${bookId}/`,

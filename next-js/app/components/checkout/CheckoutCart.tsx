@@ -4,13 +4,13 @@ import { OrderContext } from "../../contexts/OrderContext";
 import RemoveFromCartButton from "./RemoveFromCartButton";
 import Link from "next/link";
 import Image from "next/image";
-import { OrderContextType } from "../../contexts/OrderContext";
+
+
 const CheckoutCart: React.FC = () => {
+
   const context = useContext(OrderContext);
-  if(!context|| !context.order || !context.order.order_details){
-    return null;
-  }
-  const { order } = context
+  const order = context?.order || {order_details: [], cost: "0", post_cost:"0"}
+  
   const BASE_SERVER_URL = process.env.NEXT_PUBLIC_BASE_SERVER_URL;
 
   return order.order_details.length > 0 ? (
