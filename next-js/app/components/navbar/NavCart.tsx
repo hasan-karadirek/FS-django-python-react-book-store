@@ -10,10 +10,7 @@ const NavCart: React.FC = () => {
   const { width } = useWindowSize();
   
   const context = useContext(OrderContext);
-  if(!context || !context.order || !context.order.order_details){
-    return null;
-  }
-  const { order } = context
+  const order = context?.order || { order_details: [], post_cost: "0", cost: "0" };
   const [isHover, setIsHover] = useState<boolean>(false);
 
   const handleMouseEnter = () => {
