@@ -63,7 +63,7 @@ jobs:
           echo "NEXT_PUBLIC_BASE_SERVER_URL=${{ secrets.NEXT_PUBLIC_BASE_SERVER_URL }}" >> .env
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
           echo "GCS_CREDENTIALS_JSON=${{ secrets.GCS_CREDENTIALS_JSON }}" >> .env
-          echo "GS_BUCKET_NAME=${{ secrets.GS_BUCKET_NAME }}" >> .env
+          echo "GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }}" >> .env
           echo "GCS_TYPE=${{ secrets.GCS_TYPE }}" >> .env
           echo "GCS_PROJECT_ID=${{ secrets.GCS_PROJECT_ID }}" >> .env
           echo "GCS_PRIVATE_KEY_ID=${{ secrets.GCS_PRIVATE_KEY_ID }}" >> .env
