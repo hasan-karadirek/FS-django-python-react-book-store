@@ -73,6 +73,7 @@ const PostDisplay: React.FC = () => {
                     alt={`Active post: ${activePost?.title}`}
                     width={2000}
                     height={2000}
+                    unoptimized={true}
                   />
                 ) : (
                   <></>

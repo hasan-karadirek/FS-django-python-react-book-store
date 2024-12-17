@@ -27,6 +27,7 @@ const BookDetailImages: React.FC<BookDetailImagesProps> = ({
         alt={title}
         width={2000}
         height={2000}
+        unoptimized={images.length >0 ? true : false}
         priority
       />
       <div className="d-flex w-100 book-image-thumb-container">
@@ -51,6 +52,7 @@ const BookDetailImages: React.FC<BookDetailImagesProps> = ({
             alt={`Thumbnail ${index + 1}`}
             width={100}
             height={100}
+            unoptimized={true}
           />
         ))}
       </div>

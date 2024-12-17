@@ -27,6 +27,7 @@ const CheckoutCart: React.FC = () => {
             alt={detail.book.title}
             width={90} // Adjust dimensions as necessary
             height={120}
+            unoptimized={detail.book.images.length > 0 ? true : false}
           />
           <div className="nav-cart-list-body">
             <Link href={`/shop/books/${detail.book.slug}`}>

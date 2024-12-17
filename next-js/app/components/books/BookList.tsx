@@ -35,6 +35,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                 alt={book.title}
                 width={2000}
                 height={2000}
+                unoptimized={book.images[0] ? true : false}
               />
             </Link>
             <div className="card-body">

@@ -66,6 +66,7 @@ const NavCart: React.FC = () => {
                     alt={detail.book.title}
                     width={200}
                     height={200}
+                    unoptimized={detail.book.images.length > 0 ? true : false}
                   />
                   <div className="nav-cart-list-body">
                     <Link
