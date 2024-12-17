@@ -73,7 +73,8 @@ jobs:
           cat .env
 
           echo "Stopping existing containers..."
-          docker-compose down
+          docker-compose down --remove-orphans
+          docker system prune -a -f
 
           echo "Building and deploying containers with build arguments..."
           docker-compose build --no-cache \
