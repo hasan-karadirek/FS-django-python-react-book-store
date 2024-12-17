@@ -163,17 +163,25 @@ import json
 from google.oauth2 import service_account
 
 # Parse the GCS credentials JSON from an environment variable
-print("GCS_CREDENTIALS_JSON:", os.getenv("GCS_CREDENTIALS_JSON"))
-GCS_CREDENTIALS_JSON = os.environ.get("GCS_CREDENTIALS_JSON")
-
-if not GCS_CREDENTIALS_JSON:
-    raise ValueError("GCS_CREDENTIALS_JSON environment variable is missing.")
+GCS_CREDENTIALS_DICT = {
+    "type": os.getenv("GCS_TYPE"),
+    "project_id": os.getenv("GCS_PROJECT_ID"),
+    "private_key_id": os.getenv("GCS_PRIVATE_KEY_ID"),
+    "private_key": os.getenv("GCS_PRIVATE_KEY").replace("\\n", "\n"),  # Handle newline escape
+    "client_email": os.getenv("GCS_CLIENT_EMAIL"),
+    "client_id": os.getenv("GCS_CLIENT_ID"),
+    "auth_uri": os.getenv("GCS_AUTH_URI"),
+    "token_uri": os.getenv("GCS_TOKEN_URI"),
+    "auth_provider_x509_cert_url": os.getenv("GCS_AUTH_PROVIDER_CERT_URL"),
+    "client_x509_cert_url": os.getenv("GCS_CLIENT_CERT_URL"),
+    "universe_domain": os.getenv("GCS_UNIVERSE_DOMAIN"),
+}
 try:
     GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
-        json.loads(GCS_CREDENTIALS_JSON)
+        GCS_CREDENTIALS_DICT
     )
 except Exception as e:
-    raise ValueError(f"Failed to parse GCS credentials: {e}")
+    raise ValueError(f"Failed to create GCS credentials: {e}")
 
 
 # Google Cloud Storage Settings
