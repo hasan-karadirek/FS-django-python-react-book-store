@@ -161,9 +161,9 @@ USE_TZ = True
 
 import json
 from google.oauth2 import service_account
-import os
 
 # Parse the GCS credentials JSON from an environment variable
+print("GCS_CREDENTIALS_JSON:", os.getenv("GCS_CREDENTIALS_JSON"))
 GCS_CREDENTIALS_JSON = os.environ.get("GCS_CREDENTIALS_JSON")
 
 if not GCS_CREDENTIALS_JSON:
