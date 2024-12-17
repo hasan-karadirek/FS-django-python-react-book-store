@@ -56,3 +56,11 @@ def find_active_order(request):
         )
 
     return open_order, open_order_created
+
+# Utility function to format serializer errors
+def format_serializer_errors(errors):
+    messages = []
+    for field, field_errors in errors.items():
+        # Join all error messages for a field into a single string
+        messages.append(f"{field}: {', '.join([str(err) for err in field_errors])}")
+    return " | ".join(messages)  # Join all field error messages

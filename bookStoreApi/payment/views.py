@@ -47,7 +47,7 @@ class MollieHookAPIView(APIView):
                         "Payment Failed - Le Flaneur Amsterdam",
                         "Your payment is failed.",
                         settings.DEFAULT_FROM_EMAIL,
-                        [order.customer.email if order.customer else order.email],
+                        [order.customer.email if order.customer else order.address.email],
                         fail_silently=True,
                         html_message=create_email.payment_failed_email(order)
                     )

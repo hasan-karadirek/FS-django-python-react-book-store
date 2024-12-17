@@ -3,6 +3,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from core.helpers import format_serializer_errors
 from .serializers import (
     UserSerializer,
     ForgotPasswordSerializer,
@@ -55,7 +56,7 @@ class UserRegistrationAPIView(APIView):
             }
 
             return Response(res_data, status=status.HTTP_201_CREATED)
-        raise CustomAPIException(str(serializer.errors), status=400)
+        raise CustomAPIException(format_serializer_errors(serializer.errors), status=400)
 
 
 class LoginAPIView(APIView):
