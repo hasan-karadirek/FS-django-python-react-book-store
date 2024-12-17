@@ -28,7 +28,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
               <Image
                 src={
                   book.images[0]
-                    ? `${BASE_SERVER_URL}${book.images[0].image}`
+                    ? `${book.images[0].image}`
                     : "/assets/defaultBookImage.webp"
                 }
                 className="card-img-top"

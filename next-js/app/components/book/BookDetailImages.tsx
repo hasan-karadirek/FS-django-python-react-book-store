@@ -21,7 +21,7 @@ const BookDetailImages: React.FC<BookDetailImagesProps> = ({
         className="book-image"
         src={
           images.length > 0
-            ? `${BASE_SERVER_URL}${images[bookImageIndex]?.image}`
+            ? `${images[bookImageIndex]?.image}`
             : "/assets/defaultBookImage.webp"
         }
         alt={title}
@@ -47,7 +47,7 @@ const BookDetailImages: React.FC<BookDetailImagesProps> = ({
             key={index}
             onClick={() => setBookImageIndex(index)}
             className="book-image-thumb"
-            src={`${BASE_SERVER_URL}${image.image}`}
+            src={`${image.image}`}
             alt={`Thumbnail ${index + 1}`}
             width={100}
             height={100}

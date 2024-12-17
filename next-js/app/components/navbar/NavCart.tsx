@@ -60,7 +60,7 @@ const NavCart: React.FC = () => {
                     className="nav-cart-list-image"
                     src={
                       detail.book.images.length > 0
-                        ? `${BASE_SERVER_URL}${detail.book.images[0].image}`
+                        ? `${detail.book.images[0].image}`
                         : "/assets/defaultBookImage.webp"
                     }
                     alt={detail.book.title}

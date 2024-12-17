@@ -159,7 +159,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-import json
 from google.oauth2 import service_account
 
 # Parse the GCS credentials JSON from an environment variable
