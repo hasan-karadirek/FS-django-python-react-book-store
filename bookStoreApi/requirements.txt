@@ -13,3 +13,4 @@ django-cors-headers==3.11.0
 boto3
 django-storages
 openpyxl
+google-cloud-storage

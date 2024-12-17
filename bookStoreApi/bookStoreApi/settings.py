@@ -159,35 +159,33 @@ USE_I18N = True
 
 USE_TZ = True
 
-# AWS s3
+import json
+from google.oauth2 import service_account
+import os
 
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_REGION_NAME = os.getenv(
-    "AWS_S3_REGION_NAME", default="us-east-1"
-)  # Change to your region
-AWS_S3_SIGNATURE_VERSION = "s3v4"
+# Parse the GCS credentials JSON from an environment variable
+GCS_CREDENTIALS_JSON = os.environ.get("GCS_CREDENTIALS_JSON")
 
-# Static files (CSS, JavaScript, Images)
-AWS_S3_CUSTOM_DOMAIN = (
-    f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
-)
+if not GCS_CREDENTIALS_JSON:
+    raise ValueError("GCS_CREDENTIALS_JSON environment variable is missing.")
+try:
+    GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
+        json.loads(GCS_CREDENTIALS_JSON)
+    )
+except Exception as e:
+    raise ValueError(f"Failed to parse GCS credentials: {e}")
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
+# Google Cloud Storage Settings
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
-STATICFILES_STORAGE = "book.backend_storage.StaticStorage"
-STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+GS_BUCKET_NAME = os.environ.get("GCS_BUCKET_NAME")
 
-# Media files settings
-DEFAULT_FILE_STORAGE = "book.backend_storage.MediaStorage"
-MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+# Set URLs for static and media
+STATIC_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/static/"
+MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/media/"
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend/static/react"),
-]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
