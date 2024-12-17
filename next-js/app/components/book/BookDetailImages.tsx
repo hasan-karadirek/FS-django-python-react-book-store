@@ -21,7 +21,7 @@ const BookDetailImages: React.FC<BookDetailImagesProps> = ({
         className="book-image"
         src={
           images.length > 0
-            ? `${images[bookImageIndex]?.image}`
+            ? `${BASE_SERVER_URL}${images[bookImageIndex]?.image}`
             : "/assets/defaultBookImage.webp"
         }
         alt={title}

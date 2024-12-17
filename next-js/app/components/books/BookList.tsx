@@ -17,7 +17,7 @@ const AddToCartButton = dynamic(() => import("../checkout/AddToCartButton"), {
 interface BookListProps {
   books: Book[] | null;
 }
-
+const BASE_SERVER_URL = process.env.NEXT_PUBLIC_BASE_SERVER_URL;
 const BookList: React.FC<BookListProps> = ({ books }) => {
   return (
     <div className="d-flex flex-wrap cards-container">
@@ -28,7 +28,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
               <Image
                 src={
                   book.images[0]
-                    ? `${book.images[0].image}`
+                    ? `${BASE_SERVER_URL}${book.images[0].image}`
                     : "/assets/defaultBookImage.webp"
                 }
                 className="card-img-top"
