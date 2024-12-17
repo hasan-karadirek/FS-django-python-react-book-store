@@ -64,6 +64,17 @@ jobs:
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
           echo "GCS_CREDENTIALS_JSON=${{ secrets.GCS_CREDENTIALS_JSON }}" >> .env
           echo "GS_BUCKET_NAME=${{ secrets.GS_BUCKET_NAME }}" >> .env
+          echo "GCS_TYPE=${{ secrets.GCS_TYPE }}" >> .env
+          echo "GCS_PROJECT_ID=${{ secrets.GCS_PROJECT_ID }}" >> .env
+          echo "GCS_PRIVATE_KEY_ID=${{ secrets.GCS_PRIVATE_KEY_ID }}" >> .env
+          echo "GCS_PRIVATE_KEY=${{ secrets.GCS_PRIVATE_KEY }}" >> .env
+          echo "GCS_CLIENT_EMAIL=${{ secrets.GCS_CLIENT_EMAIL }}" >> .env
+          echo "GCS_CLIENT_ID=${{ secrets.GCS_CLIENT_ID }}" >> .env
+          echo "GCS_AUTH_URI=${{ secrets.GCS_AUTH_URI }}" >> .env
+          echo "GCS_TOKEN_URI=${{ secrets.GCS_TOKEN_URI }}" >> .env
+          echo "GCS_AUTH_PROVIDER_CERT_URL=${{ secrets.GCS_AUTH_PROVIDER_CERT_URL }}" >> .env
+          echo "GCS_CLIENT_CERT_URL=${{ secrets.GCS_CLIENT_CERT_URL }}" >> .env
+          echo "GCS_UNIVERSE_DOMAIN=${{ secrets.GCS_UNIVERSE_DOMAIN }}" >> .env
 
            # Create .env file specifically for Next.js in the nextjs/ directory
           echo "Creating .env file in leflaneur/next-js/ "
