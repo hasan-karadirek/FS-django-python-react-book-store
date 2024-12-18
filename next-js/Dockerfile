@@ -20,4 +20,4 @@ COPY --from=builder /usr/src/app/package*.json ./
 RUN npm install --production
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["npm","run", "start", ">>", "/var/log/nextjs/app.log", "2>&1"]

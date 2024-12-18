@@ -8,6 +8,8 @@ services:
     command: gunicorn --workers 3 --bind 0.0.0.0:8000 --timeout 600 bookStoreApi.wsgi:application
     volumes:
       - ./bookStoreApi:/usr/src/app
+      - /var/log/docker/django-app:/var/log/django-app
+
     ports:
       - "8000:8000"
     depends_on:
@@ -19,6 +21,8 @@ services:
     build:
       context: ./next-js
     container_name: nextjs-app
+    volumes:
+      - /var/log/docker/nextjs-app:/var/log/nextjs-app
     ports:
       - "3000:3000"
     env_file:
@@ -29,6 +33,7 @@ services:
     container_name: mysql-db
     volumes:
       - mysql-data:/var/lib/mysql
+      - /var/log/docker/mysql-db:/var/log/mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
