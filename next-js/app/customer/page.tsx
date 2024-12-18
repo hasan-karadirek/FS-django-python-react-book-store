@@ -7,6 +7,7 @@ import Link from "next/link";
 import useWindowSize from "../hooks/useWindowSize";
 import { Circles } from "react-loader-spinner";
 import { getLocalStorage, removeLocalStorage } from "../utils/LocalStorage";
+import dynamic from "next/dynamic";
 
 interface CustomerDashboardResponse {
   orders: Order[];
@@ -14,7 +15,7 @@ interface CustomerDashboardResponse {
 }
 
 const CustomerPage: React.FC = () => {
-  
+  const DashboardWelcome = dynamic(()=>import("../components/customer/DashboardWelcome"), {ssr: false})
   const { width } = useWindowSize();
 
   const [dashboardInfo, setDashboardInfo] =
@@ -68,11 +69,8 @@ const CustomerPage: React.FC = () => {
         <p className="error">{error.message}</p>
       ) : (
         <>
-          <div
-            className="container"
-            style={{ fontSize: "1.25rem", marginTop: "1rem" }}
-          >{`Dear ${JSON.parse(getLocalStorage("customer") ?? "null")?.first_name},`}</div>
-          <div className="accordion container my-5" id="accordion-orders">
+          <DashboardWelcome />
+         <div className="accordion container my-5" id="accordion-orders">
             <h3>Your Previous Orders:</h3>
             {dashboardInfo?.orders.map((order) => (
               <div
