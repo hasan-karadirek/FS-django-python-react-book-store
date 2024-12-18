@@ -75,13 +75,13 @@ const Footer: React.FC = () => {
           <h5>Legals:</h5>
           <ul>
             <li>
-              <Link href="/privacy-policy">Privacy Policy</Link>
+              <Link href="/legals/privacyPolicy">Privacy Policy</Link>
             </li>
             <li>
-              <Link href="/sales-agreement">Sales Agreement</Link>
+              <Link href="/legals/salesAgreement">Sales Agreement</Link>
             </li>
             <li>
-              <Link href="/cookie-policy">Cookie Policy</Link>
+              <Link href="/legals/cookiePolicy">Cookie Policy</Link>
             </li>
           </ul>
         </div>
