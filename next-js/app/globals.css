@@ -210,6 +210,11 @@
     left: 1.5rem;
   }
 }
+@media (max-height: 768px) {
+  .book-list-btn {
+    bottom: 1px;
+  }
+}
 
 @media (max-width: 481px) {
   .search-select {
