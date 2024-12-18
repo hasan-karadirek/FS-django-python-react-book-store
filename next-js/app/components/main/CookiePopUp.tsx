@@ -1,28 +1,34 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { getLocalStorage, setLocalStorage } from "@/app/utils/LocalStorage";
 
 const CookiePopUp: React.FC = () => {
   const [cookiePolicy, setCookiePolicy] = useState<boolean>(false);
+  const ref=useRef<HTMLDivElement>(null);
   useEffect(() => {
     const cookieP = getLocalStorage("cookiePolicy");
-    if (cookieP) {
+    console.log(cookieP)
+    if (cookieP && cookieP === "true") {
       setCookiePolicy(JSON.parse(cookieP));
+      ref.current?.classList.remove("cookie-modal-active")
+      ref.current?.classList.add("cookie-modal-deactive")
+    }else if(cookieP === null || cookieP == "false"){
+      ref.current?.classList.remove("cookie-modal-deactive")
+      ref.current?.classList.add("cookie-modal-active")
     }
   }, [cookiePolicy]);
 
-  return cookiePolicy ? (
-    ""
-  ) : (
+  return  (
     <div
-      className="modal"
+      className="modal cookie-modal-deactive"
+      ref={ref}
       tabIndex={-1}
       style={{
         overflowX: "unset",
         overflowY: "unset",
-        display: "block",
         backgroundColor: "#0000008f",
+        
       }}
     >
       <div className="modal-dialog" style={{ top: "30vh" }}>

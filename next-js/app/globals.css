@@ -704,3 +704,13 @@ body {
 .main-slider .carousel-caption p {
   font-size: x-large;
 }
+
+
+/* # Cookie popup */
+
+.cookie-modal-deactive{
+  display: none;
+}
+.cookie-modal-active{
+  display: block;
+}
