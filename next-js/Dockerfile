@@ -18,6 +18,13 @@ COPY --from=builder /usr/src/app/.next ./.next
 COPY --from=builder /usr/src/app/public ./public
 COPY --from=builder /usr/src/app/package*.json ./
 RUN npm install --production
+
+# Ensure the log directory exists
+RUN mkdir -p /var/log/nextjs-app
+# Set environment to production
+ENV NODE_ENV=production
+
 EXPOSE 3000
 
-CMD ["npm","run", "start", ">>", "/var/log/nextjs/app.log", "2>&1"]
+# Use shell to handle log redirection
+CMD ["sh", "-c", "npm start >> /var/log/nextjs-app/app.log 2>&1"]
