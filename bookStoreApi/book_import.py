@@ -47,9 +47,8 @@ try:
             if get_or_none(row["CATALOGUS"]):
                 category, _ = Category.objects.get_or_create(title=row["CATALOGUS"])
             condition = ""
-            if not get_or_none(row["BOL CONDITION"]):
-                condition="NOT_SPECIFIED"
-            elif get_or_none(row["BOL CONDITION"]) == "Nieuw":
+            
+            if get_or_none(row["BOL CONDITION"]) == "Nieuw":
                 condition="NEW"
             elif get_or_none(row["BOL CONDITION"]) == "Als Nieuw":
                 condition="LIKE_NEW"

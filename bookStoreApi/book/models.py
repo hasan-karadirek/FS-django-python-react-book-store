@@ -53,7 +53,6 @@ class Book(models.Model):
         ("LIKE_NEW", "Like New"),
         ("GOOD", "Good"),
         ("REASONABLE", "Reasonable"),
-        ("NOT_SPECIFIED", "Not Specified"),
     ]
     statusChoices = [
         ("OPEN", "Open"),
