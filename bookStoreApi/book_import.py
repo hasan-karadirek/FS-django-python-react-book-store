@@ -48,11 +48,11 @@ try:
                 category, _ = Category.objects.get_or_create(title=row["CATALOGUS"])
             condition = ""
             
-            if get_or_none(row["BOL CONDITION"]) == "Nieuw":
+            if get_or_none(row["BOL CONDITION"]) == "nieuw":
                 condition="NEW"
-            elif get_or_none(row["BOL CONDITION"]) == "Als Nieuw":
+            elif get_or_none(row["BOL CONDITION"]) == "als nieuw":
                 condition="LIKE_NEW"
-            elif get_or_none(row["BOL CONDITION"]) == "Goed":
+            elif get_or_none(row["BOL CONDITION"]) == "goed":
                 condition="GOOD"
             else:
                 condition="REASONABLE"
