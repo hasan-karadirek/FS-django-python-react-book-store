@@ -8,7 +8,6 @@ const CookiePopUp: React.FC = () => {
   const ref=useRef<HTMLDivElement>(null);
   useEffect(() => {
     const cookieP = getLocalStorage("cookiePolicy");
-    console.log(cookieP)
     if (cookieP && cookieP === "true") {
       setCookiePolicy(JSON.parse(cookieP));
       ref.current?.classList.remove("cookie-modal-active")
