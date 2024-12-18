@@ -46,15 +46,17 @@ try:
             category = None
             if get_or_none(row["CATALOGUS"]):
                 category, _ = Category.objects.get_or_create(title=row["CATALOGUS"])
-            condition = (
-                "NEW"
-                if get_or_none(row["BOL CONDITION"]) == "Nieuw"
-                else "LIKE_NEW"
-                if get_or_none(row["BOL CONDITION"]) == "Als Nieuw"
-                else "GOOD"
-                if get_or_none(row["BOL CONDITION"]) == "Goed"
-                else "REASONABLE"
-            )
+            condition = ""
+            if not get_or_none(row["BOL CONDITION"]):
+                condition="NOT_SPECIFIED"
+            elif get_or_none(row["BOL CONDITION"]) == "Nieuw":
+                condition="NEW"
+            elif get_or_none(row["BOL CONDITION"]) == "Als Nieuw":
+                condition="LIKE_NEW"
+            elif get_or_none(row["BOL CONDITION"]) == "Goed":
+                condition="GOOD"
+            else:
+                condition="REASONABLE"
 
             book = Book.objects.create(
                 isbn=get_or_none(row["ISBN bol+winkeltjes"]),
