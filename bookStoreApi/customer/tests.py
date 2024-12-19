@@ -90,7 +90,7 @@ class CustomerLoginTests(APITestCase):
         Success: Login user.
         """
         case_user_data = copy.deepcopy(user_data)
-        response = self.client.post(self.login_url, {"email":self.case_user_data["email"],"password":case_user_data["password"]}, format="json")
+        response = self.client.post(self.login_url, {"email":case_user_data["email"],"password":case_user_data["password"]}, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue("token" in response.data["data"])
         self.assertTrue("customer" in response.data["data"])
@@ -168,7 +168,7 @@ class CustomerForgotPasswordTests(APITestCase):
         self.assertEqual(response.status_code,status.HTTP_200_OK)
         self.assertEqual(len(mail.outbox),1)
         self.assertIn(self.user.email,mail.outbox[0].to)
-        self.assertIn("Password Reset Link",mail.outbox[0].subject)      
+        self.assertIn("Password Reset Request",mail.outbox[0].subject)      
         self.assertIn("resetpassword?token=",mail.outbox[0].body)
     def test_user_forgot_password_fail(self):
         """

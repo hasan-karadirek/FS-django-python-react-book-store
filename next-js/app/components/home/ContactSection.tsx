@@ -43,9 +43,7 @@ const ContactSection: React.FC = () => {
       body: form,
     });
     return () => {
-      if (!isLoading) {
-        cancelFetch();
-      }
+      
     };
   };
 
@@ -61,10 +59,10 @@ const ContactSection: React.FC = () => {
   };
 
   useEffect(() => {
-    return () => {
+    if (!isLoading) {
       cancelFetch();
-    };
-  }, [cancelFetch]);
+    }
+  }, [isLoading,cancelFetch]);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
