@@ -42,6 +42,11 @@ const ContactSection: React.FC = () => {
       method: "POST",
       body: form,
     });
+    return () => {
+      if (!isLoading) {
+        cancelFetch();
+      }
+    };
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -55,11 +60,7 @@ const ContactSection: React.FC = () => {
     });
   };
 
-  useEffect(() => {
-    if (!isLoading) {
-      cancelFetch();
-    }
-  }, [cancelFetch]);
+
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
