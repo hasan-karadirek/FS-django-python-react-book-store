@@ -59,7 +59,7 @@ const ContactSection: React.FC = () => {
     if (!isLoading) {
       cancelFetch();
     }
-  }, [isLoading,cancelFetch]);
+  }, [cancelFetch]);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
