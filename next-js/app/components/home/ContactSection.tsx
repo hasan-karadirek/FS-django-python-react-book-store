@@ -42,9 +42,6 @@ const ContactSection: React.FC = () => {
       method: "POST",
       body: form,
     });
-    return () => {
-      
-    };
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
