@@ -5,8 +5,11 @@ import { Circles } from "react-loader-spinner";
 import Cookies from "js-cookie";
 import defaultBookImage from "../assets/defaultBookImage.webp";
 import { Link } from "react-router-dom";
+import "../components/CSS/Checkout.css";
+import useWindowSize from "../hooks/useWindowSize";
 
 const CheckoutReturn: React.FC = () => {
+  const windowSize = useWindowSize();
   // eslint-disable-next-line no-undef
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const orderInProgress = JSON.parse(
@@ -59,7 +62,7 @@ const CheckoutReturn: React.FC = () => {
       ) : error ? (
         <p className="error">{error.message}</p>
       ) : (
-        <div className="container d-flex mt-4" style={{}}>
+        <div className={`container ${windowSize.width > 769 ?"d-flex":"block"} mt-4`} style={{}}>
           <ul className="p-3">
             <h4>Ordered Books</h4>
             {order?.order_details?.length > 0 ? (
@@ -98,12 +101,6 @@ const CheckoutReturn: React.FC = () => {
                   : `${order?.post_cost}€`}
               </p>
             </li>
-            <li id="nav-cart-list-cost">
-              <p>
-                Total : {JSON.parse(order?.cost) + JSON.parse(order?.post_cost)}
-                €
-              </p>
-            </li>
           </ul>
           <div className="p-3">
             <h4 style={{ color: "black" }}>Order Address</h4>
@@ -114,7 +111,10 @@ const CheckoutReturn: React.FC = () => {
             <p>
               {order?.address.city} - {order?.address.country}
             </p>
-            <p>Total: {order?.cost} </p>
+            <p>
+                Total : {JSON.parse(order?.cost) + JSON.parse(order?.post_cost)}
+                €
+              </p>
             <p
               style={{
                 backgroundColor:
@@ -123,6 +123,8 @@ const CheckoutReturn: React.FC = () => {
                     : order?.status === "PENDING"
                       ? "yellow"
                       : "green",
+                color: order?.status === "PENDING" ? "black":"white",
+                fontWeight:"bold"
               }}
             >
               Status: {order?.status}{" "}

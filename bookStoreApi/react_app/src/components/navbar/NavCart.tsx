@@ -95,7 +95,7 @@ const NavCart: React.FC<NavCartProps> = ({ navContainerClass }) => {
               </li>
               <li id="nav-cart-list-checkout-btn">
                 <Link to="/shop/checkout">
-                  <button className="btn btn-success">Go to Checkout</button>
+                  <button onClick={()=>setIsHover(false)}className="btn btn-success">Go to Checkout</button>
                 </Link>
               </li>
             </>

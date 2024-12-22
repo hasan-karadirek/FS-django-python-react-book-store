@@ -6,6 +6,7 @@ class OrderDetailInline(admin.TabularInline):
     extra = 1
 class OrderAdmin(admin.ModelAdmin):
     search_fields = ["address__email","customer__email"]
+    list_display=("id","customer","address","status","created_at")
     inlines = [OrderDetailInline]
 
 # Register your models here.

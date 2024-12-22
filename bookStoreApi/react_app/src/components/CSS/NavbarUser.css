@@ -20,18 +20,24 @@
 .nav-login-dropdown a {
   color: white;
 }
+#navbar-user-icon{
+  height: 2rem;
+  padding-left: 1rem;
+}
 @media (max-width: 992px) {
+  #navbar-user-icon{
+    padding-left: 0;
+  }
   .nav-login-dropdown {
-    right: 43vw;
+    right: 20vw;
+    bottom: 0;
   }
   .nav-login-container {
     width: 60vw;
   }
 }
 @media (max-width: 481px) {
-  .nav-login-dropdown {
-    right: 43vw;
-  }
+  
   .nav-login-container {
     width: 80vw;
   }

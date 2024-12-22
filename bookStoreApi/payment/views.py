@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.mail import send_mail
 from django.conf import settings
+from core import create_email
 
 
 class MollieHookAPIView(APIView):
@@ -20,6 +21,9 @@ class MollieHookAPIView(APIView):
                 if payment.status == "paid":
                     order.status = "PAID"
                     order.save()
+                    for detail in order.order_details.all():
+                        detail.book.status = "SOLD"
+                        detail.book.save()
                     send_mail(
                         "Order Confirmation - Le Flaneur Amsterdam",
                         "We have recieved your order.",
@@ -30,19 +34,22 @@ class MollieHookAPIView(APIView):
                             else order.address.email
                         ],
                         fail_silently=True,
+                        html_message=create_email.order_confirmation_email(order)
                     )
                 elif payment.status in ["failed", "canceled", "expired"]:
                     order.status = payment.status.upper()
                     for detail in order.order_details.all():
                         detail.book.status = "OPEN"
-                        detail.save()
+                        detail.book.save()
                     order.save()
+                    
                     send_mail(
                         "Payment Failed - Le Flaneur Amsterdam",
                         "Your payment is failed.",
                         settings.DEFAULT_FROM_EMAIL,
-                        [order.customer.email if order.customer else order.email],
+                        [order.customer.email if order.customer else order.address.email],
                         fail_silently=True,
+                        html_message=create_email.payment_failed_email(order)
                     )
                 return Response(status=status.HTTP_200_OK)
             except Order.DoesNotExist:

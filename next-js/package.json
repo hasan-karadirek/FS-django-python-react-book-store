@@ -1,0 +1,36 @@
+{
+  "name": "next-js",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "js-cookie": "^3.0.5",
+    "next": "14.2.20",
+    "react": "^18",
+    "react-awesome-reveal": "^4.2.14",
+    "react-dom": "^18",
+    "react-helmet": "^6.1.0",
+    "react-loader-spinner": "^6.1.6"
+  },
+  "devDependencies": {
+    "@types/bootstrap": "^5.2.10",
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.20",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5"
+  }
+}

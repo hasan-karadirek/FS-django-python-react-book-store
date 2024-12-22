@@ -32,9 +32,9 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 
 
 CORS_ALLOWED_ORIGINS = (
-    ["http://localhost:8080"]
+    ["http://localhost:3000"]
     if os.getenv("ENV") == "development"
-    else [
+    else ["http://34.141.203.80:3000",
         "https://www.leflaneuramsterdam.com",
         "https://leflaneuramsterdam.com",
     ]
@@ -159,35 +159,40 @@ USE_I18N = True
 
 USE_TZ = True
 
-# AWS s3
+from google.oauth2 import service_account
 
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_REGION_NAME = os.getenv(
-    "AWS_S3_REGION_NAME", default="us-east-1"
-)  # Change to your region
-AWS_S3_SIGNATURE_VERSION = "s3v4"
+# Parse the GCS credentials JSON from an environment variable
+GCS_CREDENTIALS_DICT = {
+    "type": os.getenv("GCS_TYPE"),
+    "project_id": os.getenv("GCS_PROJECT_ID"),
+    "private_key_id": os.getenv("GCS_PRIVATE_KEY_ID"),
+    "private_key": os.getenv("GCS_PRIVATE_KEY").replace("\\n", "\n"),  # Handle newline escape
+    "client_email": os.getenv("GCS_CLIENT_EMAIL"),
+    "client_id": os.getenv("GCS_CLIENT_ID"),
+    "auth_uri": os.getenv("GCS_AUTH_URI"),
+    "token_uri": os.getenv("GCS_TOKEN_URI"),
+    "auth_provider_x509_cert_url": os.getenv("GCS_AUTH_PROVIDER_CERT_URL"),
+    "client_x509_cert_url": os.getenv("GCS_CLIENT_CERT_URL"),
+    "universe_domain": os.getenv("GCS_UNIVERSE_DOMAIN"),
+}
+try:
+    GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
+        GCS_CREDENTIALS_DICT
+    )
+except Exception as e:
+    raise ValueError(f"Failed to create GCS credentials: {e}")
 
-# Static files (CSS, JavaScript, Images)
-AWS_S3_CUSTOM_DOMAIN = (
-    f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
-)
 
+# Google Cloud Storage Settings
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
+GS_BUCKET_NAME = os.environ.get("GCS_BUCKET_NAME")
 
-STATICFILES_STORAGE = "book.backend_storage.StaticStorage"
-STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+# Set URLs for static and media
+STATIC_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/static/"
+MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/media/"
 
-# Media files settings
-DEFAULT_FILE_STORAGE = "book.backend_storage.MediaStorage"
-MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend/static/react"),
-]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
@@ -216,3 +221,21 @@ EMAIL_USE_SSL = False
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+#Logging
+if os.getenv("ENV") != "development":
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': '/var/log/django-app/app.log',
+            },
+        },
+        'root': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    }
