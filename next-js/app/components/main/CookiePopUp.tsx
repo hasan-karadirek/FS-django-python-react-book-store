@@ -39,20 +39,21 @@ const CookiePopUp: React.FC = () => {
             <p>
             Our website uses cookies to improve your experience and ensure its functionality. You can choose which cookies to allow:
 
-            - Necessary Cookies: Essential for the website to function properly.
-            - Marketing Cookies: Help us personalize content, tailor ads, and provide social media features.
+            <p>- Necessary Cookies: Essential for the website to function properly.</p>
+            <p>- Marketing Cookies: Help us personalize content, tailor ads, and provide social media features.</p>
             
             Please select your preference to continue using the website.{" "}
               <span>
-                Read our <Link href="/cookie-policy">Cookie Policy</Link>
+                Read our <Link href="/legals/cookiePolicy">Cookie Policy</Link>
               </span>
             </p>
           </div>
-          <div className="modal-footer">
+          <div className="modal-footer"> 
             <button
               onClick={() => {
-                setLocalStorage("cookiePolicy", "false");
-                setCookiePolicy(false);
+                /* TODO: There is no marketing cookies now. When added change the logic*/
+                setLocalStorage("cookiePolicy", "true");
+                setCookiePolicy(true);
               }}
               type="button"
               className="btn btn-danger"
