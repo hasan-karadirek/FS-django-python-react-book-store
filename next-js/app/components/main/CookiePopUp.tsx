@@ -37,10 +37,12 @@ const CookiePopUp: React.FC = () => {
           </div>
           <div className="modal-body">
             <p>
-              Our website uses cookies to ensure you get the best experience on
-              our site. Cookies help us personalize content, tailor ads, and
-              provide social media features. By continuing to use our site, you
-              accept our use of cookies.{" "}
+            Our website uses cookies to improve your experience and ensure its functionality. You can choose which cookies to allow:
+
+            - Necessary Cookies: Essential for the website to function properly.
+            - Marketing Cookies: Help us personalize content, tailor ads, and provide social media features.
+            
+            Please select your preference to continue using the website.{" "}
               <span>
                 Read our <Link href="/cookie-policy">Cookie Policy</Link>
               </span>
@@ -51,12 +53,11 @@ const CookiePopUp: React.FC = () => {
               onClick={() => {
                 setLocalStorage("cookiePolicy", "false");
                 setCookiePolicy(false);
-                window.location.href = "https://google.com";
               }}
               type="button"
               className="btn btn-danger"
             >
-              Reject Cookies
+              Use Necessary Cookies Only
             </button>
             <button
               onClick={() => {
@@ -66,7 +67,7 @@ const CookiePopUp: React.FC = () => {
               type="button"
               className="btn btn-success"
             >
-              Accept Cookies
+              Accept Marketing Cookies
             </button>
           </div>
         </div>
