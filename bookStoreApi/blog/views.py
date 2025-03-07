@@ -83,8 +83,8 @@ class CreateFormAPIView(APIView):
                     fail_silently=True
                 )
             send_mail(
-                    "We received your form. Le Flaneur Amsterdam",
-                    "We received your form. We will contact with you as soon as possible.",
+                    "Wij hebben uw contactformulier ontvangen. - Le Flaneur Amsterdam",
+                    "Wij hebben uw contactformulier ontvangen. Wij nemen zo spoedig mogelijk contact met u op.",
                     settings.DEFAULT_FROM_EMAIL,
                     [instance.email],
                     fail_silently=True
