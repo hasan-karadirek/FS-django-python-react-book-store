@@ -78,7 +78,7 @@ class Order(models.Model):
 
             order_details_count = self.order_details.count()
             if order_details_count == 1:
-                self.post_cost = 3.50
+                self.post_cost = 4.50
             elif order_details_count > 1 and cost < 50.00:
                 self.post_cost = 6.00
             elif cost >= 50.00:
