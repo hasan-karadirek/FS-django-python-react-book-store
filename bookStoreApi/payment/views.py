@@ -51,6 +51,14 @@ class MollieHookAPIView(APIView):
                         fail_silently=True,
                         html_message=create_email.payment_failed_email(order)
                     )
+                send_mail(
+                        f"Order {payment.status}",
+                        "You recieved an order with status: {payment.status}",
+                        settings.DEFAULT_FROM_EMAIL,
+                        [settings.DEFAULT_FROM_EMAIL],
+                        fail_silently=True,
+                        html_message=create_email.order_recieved_email(order)
+                    )
                 return Response(status=status.HTTP_200_OK)
             except Order.DoesNotExist:
                 raise CustomAPIException(

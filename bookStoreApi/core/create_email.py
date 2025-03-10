@@ -62,6 +62,30 @@ def payment_failed_email(order):
                 </body>
             </html>
             """
+def order_recieved_email(order):
+    return f"""
+            <html>
+                <body>
+                    <h2>Order recieved with payment status: {order.status}</h2>
+                    <p>You recieved an order with order id: {order.id}</p>
+                    <div>
+                    <h4>Order Details</h4>
+                    {
+                        "".join(
+                            f"<p>{detail.book.title}: €{detail.book.price}</p>"
+                            for detail in order.order_details.all()
+                        )   
+                    }
+                    </div>
+                    <div>
+                    <h2>Le Flaneur Amsterdam</h2>
+                    Prinsengracht 260 o
+                    1016 HG Amsterdam
+                    www.leflaneuramsterdam.com
+                    </div>
+                </body>
+            </html>
+            """
 def reset_password_email(key):
     return f"""
             <html>
