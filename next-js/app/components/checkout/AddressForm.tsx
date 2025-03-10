@@ -59,6 +59,7 @@ const AddressForm: React.FC = () => {
   });
   const BASE_SERVER_URL = process.env.NEXT_PUBLIC_BASE_SERVER_URL;
   const submitForm = () => {
+    formData.street = formData.street + " " + formData.house_no;
     const addressForm = {
       redirectUrl: `${BASE_SERVER_URL}/shop/checkout/return`,
       address: formData,
