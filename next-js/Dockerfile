@@ -8,6 +8,9 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 COPY ./public ./public
+
+RUN rm -rf .next
+
 RUN npm run build
 
 # Step 2: Serve the Next.js app
