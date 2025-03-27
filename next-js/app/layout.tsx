@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     siteName: "Le Flaneur Amsterdam Second Hand Book",
     images: [
       {
-        url: "/assets/logo.png/",
+        url: "/assets/logo.png",
         width: 1200,
         height: 630,
         alt: "logo",
