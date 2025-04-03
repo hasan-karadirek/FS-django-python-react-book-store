@@ -18,7 +18,8 @@ class BookTagInline(admin.TabularInline):
     extra = 1
 
 class BookAdmin(admin.ModelAdmin):
-    search_fields = ["id","title", "author__name", "category__title"]
+    search_fields = ["id","title", "author__name", "category__title", "env_no", "isbn","loc","publishing_house__name","author__name"]
+    list_display = ["title", "author", "category", "env_no", "isbn","loc","publishing_house","author","language","cover"]
     inlines = [BookImageInline,BookTagInline]  
 
 admin.site.register(Book, BookAdmin)
