@@ -44,21 +44,17 @@ for index, row in df.iterrows():
             name=row["UITGEVER"]
         )
     language = None
-    if get_or_none(row["CATALOGUS"]):
+    if get_or_none(row["TAAL"]):
         language, _ = Language.objects.get_or_create(name=row["TAAL"])
     category = None
     if get_or_none(row["CATALOGUS"]):
         category, _ = Category.objects.get_or_create(title=row["CATALOGUS"])
-    condition = ""
-    
-    if get_or_none(row["BOL CONDITION"]) == "nieuw":
-        condition="NEW"
-    elif get_or_none(row["BOL CONDITION"]) == "als nieuw":
-        condition="LIKE_NEW"
-    elif get_or_none(row["BOL CONDITION"]) == "goed":
-        condition="GOOD"
+        
+    condition = get_or_none(row["CONDITIE"])
+    if condition is None or condition !="New" or condition !="new":
+        condition = "Good"
     else:
-        condition="REASONABLE"
+        condition = "NEW"
     try:
         with transaction.atomic():
             book = Book.objects.create(
