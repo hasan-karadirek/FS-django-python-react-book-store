@@ -34,7 +34,7 @@ jobs:
       # Step 5: Copy files to server
       - name: Copy files to server
         run: |
-          rsync -avz --exclude='.git' --exclude='node_modules' --exclude='__pycache__' ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/leflaneur
+          rsync -avz --exclude='.git' --exclude='node_modules' --exclude='__pycache__' --exclude='.next' \./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/leflaneur
 
       # Step 6: Build and Deploy Applications on Server
       - name: Build and Deploy Applications on Server

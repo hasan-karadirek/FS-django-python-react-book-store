@@ -25,8 +25,8 @@ class MollieHookAPIView(APIView):
                         detail.book.status = "SOLD"
                         detail.book.save()
                     send_mail(
-                        "Order Confirmation - Le Flaneur Amsterdam",
-                        "We have recieved your order.",
+                        "Orderbevestiging - Le Flaneur Amsterdam",
+                        "Wij hebben uw bestelling ontvangen.",
                         settings.DEFAULT_FROM_EMAIL,
                         [
                             order.customer.email
@@ -44,12 +44,20 @@ class MollieHookAPIView(APIView):
                     order.save()
                     
                     send_mail(
-                        "Payment Failed - Le Flaneur Amsterdam",
-                        "Your payment is failed.",
+                        "Betaling mislukt - Le Flaneur Amsterdam",
+                        "Uw betaling mislukt!",
                         settings.DEFAULT_FROM_EMAIL,
                         [order.customer.email if order.customer else order.address.email],
                         fail_silently=True,
                         html_message=create_email.payment_failed_email(order)
+                    )
+                send_mail(
+                        f"Order {payment.status}",
+                        "You recieved an order with status: {payment.status}",
+                        settings.DEFAULT_FROM_EMAIL,
+                        [settings.DEFAULT_FROM_EMAIL],
+                        fail_silently=True,
+                        html_message=create_email.order_recieved_email(order)
                     )
                 return Response(status=status.HTTP_200_OK)
             except Order.DoesNotExist:
