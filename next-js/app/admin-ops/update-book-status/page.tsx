@@ -24,7 +24,7 @@ const UpdateBooksStatus: React.FC = () => {
     }, []);
 
     const [formData, setFormData] = useState({
-        full_name: "",
+        ids: "",
       });
       const { isLoading, error, performFetch, cancelFetch } = useFetch("/book/update-books-status/", (res) => {
         setSuccess(true);
@@ -83,7 +83,7 @@ const UpdateBooksStatus: React.FC = () => {
               ) :(<>
                 <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="full_nameInput" className="form-label">
+                  <label htmlFor="bookIdsInput" className="form-label">
                     Type books env_no that you want to update
                   </label>
                   <input
@@ -91,7 +91,7 @@ const UpdateBooksStatus: React.FC = () => {
                     className="form-control"
                     id="bookIdsInput"
                     name="ids"
-                    value={formData.full_name}
+                    value={formData.ids}
                     onChange={handleChange}
                     required
                   />
