@@ -168,7 +168,7 @@ class UpdateBooksStatusAPIView(APIView):
                 book = Book.objects.get(env_no=int(book_id))
                 books_to_update.append(book)
             except Book.DoesNotExist:
-                raise CustomAPIException("Book not found", status=status.HTTP_404_NOT_FOUND)
+                raise CustomAPIException(f"Book not found {book_id}", status=status.HTTP_404_NOT_FOUND)
         for book in books_to_update:
             book.status = "SOLD"
             book.save()
