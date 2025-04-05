@@ -27,7 +27,21 @@ services:
       - "3000:3000"
     env_file:
       - .env  # Use .env file for environment variables
-
+  redis:
+    image: "redis:latest"
+    container_name: bookstore-redis
+    ports:
+      - "6379:6379"
+  celery:
+    build:
+      context: .
+    container_name: bookstore-celery-worker
+    command: celery -A bookStoreApi worker -l INFO
+    depends_on:
+      - redis
+      - db
+    env_file:
+      - .env
   db:
     image: mysql:8.0
     container_name: mysql-db

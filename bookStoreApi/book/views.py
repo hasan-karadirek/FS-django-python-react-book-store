@@ -14,12 +14,10 @@ from core.mixins import IsBookExist
 from core.helpers import pagination
 from django.db.models import Q
 import openpyxl
-from io import BytesIO
-from django.http import FileResponse
-from django.utils import timezone
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import transaction
-
+from book.tasks import export_books_and_send_email
+from django.conf import settings
 
 # class AddBookAPIView(APIView):
 #     parser_classes = (MultiPartParser, FormParser)  # To handle file uploads
@@ -177,77 +175,6 @@ class UpdateBooksStatusAPIView(APIView):
 class ExportBooksAPIView(APIView):
     permission_classes = [permissions.IsAdminUser]
 
-    def get(self, request, *args, **kwargs):
-        workbook = openpyxl.Workbook()
-        sheet = workbook.active
-
-        header = [
-            "id",
-            "isbn",
-            "env_no",
-            "title",
-            "author",
-            "language",
-            "cover",
-            "publishing_house",
-            "year",
-            "edition",
-            "category",
-            "condition",
-            "condition_description",
-            "tags",
-            "price",
-            "entry",
-            "status",
-            "page",
-            "ant",
-            "cost",
-            "remain",
-            "loc",
-            "supplier",
-        ]
-        sheet.append(header)
-
-        books = Book.objects.all()
-
-        for book in books:
-            row = [
-                book.id,
-                book.isbn,
-                book.env_no,
-                book.title,
-                book.author.name if book.author else "",
-                book.language.name if book.language else "",
-                book.cover,
-                book.publishing_house.name if book.publishing_house else "",
-                book.year,
-                book.edition,
-                book.category.title if book.category else "",
-                book.condition,
-                book.condition_description,
-                ", ".join([tag.name for tag in book.tags.all()]),
-                book.price,
-                book.entry,
-                book.status,
-                book.page,
-                book.ant,
-                book.cost,
-                book.remain,
-                book.loc,
-                book.supplier,
-            ]
-            sheet.append(row)
-
-        file_stream = BytesIO()
-        workbook.save(file_stream)
-        file_stream.seek(0)
-
-        response = FileResponse(
-            file_stream,
-            content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        )
-        response[
-            "Content-Disposition"
-        ] = f'attachment; filename=books_{timezone.now().strftime("%Y%m%d_%H%M%S")}.xlsx'
-
-        return response
+    def get(self, request, *args, **kwargs):  
+        export_books_and_send_email.delay(settings.DEFAULT_FROM_EMAIL)
+        return Response({"success": True, "msg": "Export triggered"}, status=status.HTTP_200_OK)
