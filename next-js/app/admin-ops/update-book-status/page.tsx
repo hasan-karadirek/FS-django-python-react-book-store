@@ -12,9 +12,10 @@ const UpdateBooksStatus: React.FC = () => {
         authFetch.performFetch({
             method: "POST",
             headers: {
-                Authorization: Cookies.get("token")
+                "Authorization": Cookies.get("token")
                   ? `Token ${Cookies.get("token")}`
                   : "",
+                "X-CSRFToken": Cookies.get("csrftoken") || "",
               },
         });
         return () => {
