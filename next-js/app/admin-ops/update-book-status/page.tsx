@@ -34,9 +34,10 @@ const UpdateBooksStatus: React.FC = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: Cookies.get("token")
+            "Authorization": Cookies.get("token")
               ? `Token ${Cookies.get("token")}`
-              : ""
+              : "",
+            "X-CSRFToken": Cookies.get("csrftoken") || "",
           },
           body: JSON.stringify(formData),
         });
