@@ -163,7 +163,7 @@ class UpdateBooksStatusAPIView(APIView):
         books_to_update = []
         for book_id in book_ids:
             try:
-                book = Book.objects.get(id=book_id)
+                book = Book.objects.get(env_no = book_id)
                 books_to_update.append(book)
             except Book.DoesNotExist:
                 raise CustomAPIException("Book not found", status=status.HTTP_404_NOT_FOUND)
