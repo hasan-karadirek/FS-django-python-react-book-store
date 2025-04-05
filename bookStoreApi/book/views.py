@@ -18,6 +18,7 @@ from io import BytesIO
 from django.http import FileResponse
 from django.utils import timezone
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.db import transaction
 
 
 # class AddBookAPIView(APIView):
@@ -153,6 +154,23 @@ class UpdateBooksAPIView(APIView):
         
         raise CustomAPIException("Request body is not valid", 400)
 
+class UpdateBooksStatusAPIView(APIView):
+    permission_classes = [permissions.IsAdminUser]
+
+    @transaction.atomic
+    def put(self, request, *args, **kwargs):
+        book_ids = request.data.get("ids").replace(" ","").split(",")
+        books_to_update = []
+        for book_id in book_ids:
+            try:
+                book = Book.objects.get(id=book_id)
+                books_to_update.append(book)
+            except Book.DoesNotExist:
+                raise CustomAPIException("Book not found", status=status.HTTP_404_NOT_FOUND)
+        for book in books_to_update:
+            book.status = "SOLD"
+            book.save()
+        return Response({"success": True, "msg": "Books updated successfully"}, status=status.HTTP_200_OK)
 
 class ExportBooksAPIView(APIView):
     permission_classes = [permissions.IsAdminUser]
