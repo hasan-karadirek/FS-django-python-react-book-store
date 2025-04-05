@@ -82,7 +82,7 @@ class Book(models.Model):
     year = models.IntegerField(
         validators=[
             MinValueValidator(1700),
-            MaxValueValidator(datetime.date.today().year),
+            MaxValueValidator(3000),
         ],
         null=True,
     )
@@ -113,7 +113,7 @@ class Book(models.Model):
     remain = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     loc = models.CharField(max_length=255, default="no-loc")
     supplier = models.CharField(max_length=255, default="unknown supplier")
-    slug = models.CharField(max_length=255, null=True)
+    slug = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f"{self.title if self.title else ''} - {self.author.name if self.author else ''} - {self.year if self.year else ''}"
