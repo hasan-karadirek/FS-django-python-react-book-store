@@ -20,7 +20,8 @@ urlpatterns = [
     path("languages/", GetAllLanguagesApiView.as_view(), name="get-languages"),
     path("export-books/", ExportBooksAPIView.as_view(), name="export-books"),
     path("update-books/", UpdateBooksAPIView.as_view(), name="update-books"),
+    path("update-books-status/", UpdateBooksStatusAPIView.as_view(), name="update-books-status"),
     path("<str:slug>/", GetBookAPIView.as_view(), name="get-book"),
     path("", GetBooksAPIView.as_view(), name="get-books"),
-    path("update-books-status/", UpdateBooksStatusAPIView.as_view(), name="update-books-status"),
+    
 ]
