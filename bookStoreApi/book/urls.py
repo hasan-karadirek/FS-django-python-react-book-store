@@ -9,6 +9,7 @@ from .views import (
     GetAllLanguagesApiView,
     ExportBooksAPIView,
     UpdateBooksAPIView,
+    UpdateBooksStatusAPIView
 )
 
 urlpatterns = [
@@ -21,4 +22,5 @@ urlpatterns = [
     path("update-books/", UpdateBooksAPIView.as_view(), name="update-books"),
     path("<str:slug>/", GetBookAPIView.as_view(), name="get-book"),
     path("", GetBooksAPIView.as_view(), name="get-books"),
+    path("update-books-status/", UpdateBooksStatusAPIView.as_view(), name="update-books-status"),
 ]
