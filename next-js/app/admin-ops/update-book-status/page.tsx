@@ -10,7 +10,7 @@ const UpdateBooksStatus: React.FC = () => {
     const [success, setSuccess] = useState(false);
     useEffect(() => {
         authFetch.performFetch({
-            method: "POST",
+            method: "GET",
             headers: {
                 "Authorization": Cookies.get("token")
                   ? `Token ${Cookies.get("token")}`
