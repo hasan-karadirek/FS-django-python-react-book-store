@@ -42,6 +42,9 @@ services:
       - db
     env_file:
       - .env
+    volumes:
+      - ./bookStoreApi:/usr/src/app
+      - /var/log/docker/django-app:/var/log/django-app
   db:
     image: mysql:8.0
     container_name: mysql-db
