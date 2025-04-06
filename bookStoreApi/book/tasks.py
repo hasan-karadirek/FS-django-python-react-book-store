@@ -18,7 +18,7 @@ def export_books_and_send_email(recipient_email):
     ]
     sheet.append(header)
 
-    books = Book.objects.all()
+    books = Book.objects.filter(status="OPEN").all()
 
     for book in books:
         row = [
