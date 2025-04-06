@@ -2,8 +2,7 @@
 from email.message import EmailMessage
 from io import BytesIO
 from celery import shared_task
-import csv
-from datetime import datetime, timezone
+from django.utils import timezone
 from .models import Book  
 import openpyxl
 
