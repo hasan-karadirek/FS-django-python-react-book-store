@@ -1,5 +1,5 @@
 # book/tasks.py
-from email.message import EmailMessage
+from django.core.mail import EmailMessage
 from io import BytesIO
 from celery import shared_task
 from django.utils import timezone
