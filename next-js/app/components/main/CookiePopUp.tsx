@@ -29,7 +29,7 @@ const CookiePopUp: React.FC = () => {
         backgroundColor: "#0000008f",
         
       }}
-    >
+    data-nosnippet>
       <div className="modal-dialog" style={{ top: "30vh" }}>
         <div className="modal-content">
           <div className="modal-header">
