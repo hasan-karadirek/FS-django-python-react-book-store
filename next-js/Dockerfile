@@ -30,4 +30,4 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # Use shell to handle log redirection
-CMD ["sh", "-c", "npm start >> /var/log/nextjs-app/app.log 2>&1"]
+CMD ["node", "--max-old-space-size=256", "node_modules/.bin/next", "start"]
