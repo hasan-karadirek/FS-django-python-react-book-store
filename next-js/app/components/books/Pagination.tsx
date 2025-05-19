@@ -7,13 +7,19 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
-  const updatePage = (page: number) => {
+  const url = new URL(window.location.href);
+  const updatePage = (e: React.MouseEvent<HTMLAnchorElement>,page:number) => {
+    e.preventDefault();
     if (typeof window !== "undefined") {
-      const url = new URL(window.location.href);
+      
       url.searchParams.set("page", page.toString());
       window.location.href = url.toString();
     }
   };
+  const pageUrl = (page: number) => {
+    url.searchParams.set("page", page.toString());
+    return url.toString();
+  }
 
   return (
     <nav style={{ display: "flex", justifyContent: "center", padding: "1rem" }}>
@@ -23,9 +29,9 @@ const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
         >
           <a
             className="page-link"
-            href="#"
+            href={pageUrl(1)}
             tabIndex={-1}
-            onClick={() => updatePage(1)}
+            onClick={(e) => updatePage(e, 1)}
             aria-disabled={pagination?.current_page > 1 ? "false" : "true"}
           >
             First
@@ -36,9 +42,9 @@ const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
         >
           <a
             className="page-link"
-            href="#"
+            href={pageUrl(pagination?.current_page - 1)}
             tabIndex={-1}
-            onClick={() => updatePage(pagination?.current_page - 1)}
+            onClick={(e) => updatePage(e, pagination?.current_page - 1)}
             aria-disabled={pagination?.current_page > 1 ? "false" : "true"}
           >
             Previous
@@ -48,8 +54,8 @@ const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
           <li className="page-item">
             <a
               className="page-link"
-              onClick={() => updatePage(pagination?.current_page - 1)}
-              href="#"
+              onClick={(e) => updatePage(e, pagination?.current_page - 1)}
+              href={pageUrl(pagination?.current_page - 1)}
             >
               {pagination?.current_page - 1}
             </a>
@@ -58,16 +64,16 @@ const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
           ""
         )}
         <li className="page-item active" aria-current="page">
-          <a className="page-link" href="#">
+          <a className="page-link" href={pageUrl(pagination?.current_page)}>
             {pagination?.current_page}
           </a>
         </li>
         {pagination?.current_page < pagination?.total_pages ? (
           <li className="page-item">
             <a
-              onClick={() => updatePage(pagination?.current_page + 1)}
+              onClick={(e) => updatePage(e, pagination?.current_page + 1)}
               className="page-link"
-              href="#"
+              href={pageUrl(pagination?.current_page + 1)}
             >
               {pagination?.current_page + 1}
             </a>
@@ -78,13 +84,13 @@ const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
         <li className="page-item">
           <a
             className="page-link"
-            onClick={() => updatePage(pagination?.current_page + 1)}
+            onClick={(e) => updatePage(e, pagination?.current_page + 1)}
             aria-disabled={
               pagination?.current_page < pagination?.total_pages
                 ? "false"
                 : "true"
             }
-            href="#"
+            href={pageUrl(pagination?.current_page +1)}
           >
             Next
           </a>
@@ -94,13 +100,13 @@ const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
         >
           <a
             className="page-link"
-            onClick={() => updatePage(pagination?.total_pages)}
+            onClick={(e) => updatePage(e, pagination?.total_pages)}
             aria-disabled={
               pagination?.current_page < pagination?.total_pages
                 ? "false"
                 : "true"
             }
-            href="#"
+            href={pageUrl(pagination?.total_pages)}
           >
             Last {pagination?.total_pages}
           </a>
