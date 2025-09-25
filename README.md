@@ -98,7 +98,7 @@ Handles overall store functionality:
    docker build -t book-store-app .  
    docker run -p 8000:8000 book-store-app
 
-## Usage
+## Usage tip
 
 Once the server is running, visit the application in your browser:
 
