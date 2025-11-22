@@ -1,4 +1,4 @@
-# FS Django Python React Book Store
+# FS Django Python React Book Store.
 
 This project is a full-stack web application for managing a book store, built using Django (Python) for the backend and React (JavaScript) for the frontend. The backend provides RESTful APIs, while the frontend offers an interactive user interface for customers to browse and purchase books. Docker is used to simplify deployment, ensuring that the application can be run in a containerized environment.
 
